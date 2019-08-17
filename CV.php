@@ -168,16 +168,21 @@
       margin-bottom: 3px;
     }
 
-    button{
-      position: relative;
-      margin-top: 10px;
-      margin-left:85%;
-    }
 
     #pdfbtn{ 
       outline : 0;
       background-color : #1F54AB;
       color : white;
+    }
+    
+    #back{ 
+      outline : 0;
+      color : white;
+      
+    }
+    button
+    {
+    	width: 180px;
     }
 
     a{
@@ -187,8 +192,15 @@
     </style>
 </head>
   <body>
+  <div class="container">
 
-  <button  id ="pdfbtn" class="btn" onclick="ExportPdf()">Export to PDF<!--  <i class="fa fa-file-pdf-o" style="font-size:35px;color:red"></i> --></button>
+
+  <button id="back" class="btn btn-warning btn-lg" onclick="gotoProfile()" >Close</button>
+
+  <button  id ="pdfbtn" class="btn btn-lg btn-success" onclick="ExportPdf()" style="float: right">Export to PDF<!--  <i class="fa fa-file-pdf-o" style="font-size:35px;color:red"></i> --></button>
+
+   </div>
+ 
 
 		<!-- MAIN CV CONTENT -->
 		<div id ="cv" >
@@ -610,6 +622,12 @@ kendo.drawing
         kendo.drawing.pdf.saveAs(group, "CV.pdf")
     });
 }
+function gotoProfile()
+{
+	window.location = "http://localhost/FacultyManagementSystem/profile.php";
+}
+
+
     </script>
     <style>
 
