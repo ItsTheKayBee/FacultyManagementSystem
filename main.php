@@ -812,7 +812,11 @@ function validateGivePriv()
 							else
 								echo $email[$j];
 							echo "</td>";
-							echo "</tr>";
+							if($eid==165000 or $eid==165001){
+								echo "<td><span class='glyphicon glyphicon-trash' style='font-size:18px;color:red'></span></td></tr>";
+							}
+							else
+								echo "</tr>";
 						}
 					?>
 					</tbody>
