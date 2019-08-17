@@ -50,14 +50,23 @@ while($row2 = mysqli_fetch_assoc($result2))
   <title>Priveleges : <?php echo $eid; ?></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+
   <script type="text/javascript">
 
 	    $(document).ready(function()
 	    {
+	        $('#datetimepicker1').datetimepicker();
+	        $('#datetimepicker2').datetimepicker();
 	        $("#privs").hide();
 	        $("#assprivs").click(function(e)
 	        {
@@ -65,8 +74,9 @@ while($row2 = mysqli_fetch_assoc($result2))
 
 	        });
 	    });
-
+       
 	</script>
+
 	<script type="text/javascript" src="main_js.js"></script>
   <script>
 
@@ -1001,13 +1011,29 @@ function validateGivePriv()
   							</div>
   						</div>
   					<hr>
-  					<div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group">
-  						FROM:<input onfocus="(this.type='date')" class="form-control" onblur="(this.type='text')" id ="from" name="from">
+  					<div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row">
+  						FROM:
+        
+	                <div class='input-group date' id='datetimepicker1'>
+	                    <input type='text' class="form-control" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+						
   					</div>
-  					<div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group">
-  						TO: <input onfocus="(this.type='date')"class="form-control"  onblur="(this.type='text')" id ="to" name="to">
+					</div>
+  					<div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row" style="float: right">
+  						TO:
+        
+	                <div class='input-group date' id='datetimepicker2'>
+	                    <input type='text' class="form-control" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+						
   					</div>
-  					<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 form-group">
+  					</div>
+  					<div  class="form-group">
   						<select  name="datecategory" class="required-entry form-control" id ="datecategory">
   							<option value="">Select Date Field</option>
   							<option class="datele" value="0" label="Personal Details - Date Of Birth"></option>
