@@ -15,7 +15,7 @@
 		{
 			background-color : #3C2AE6;
 			border : none;
-			border-radius : 0px;
+			border-radius : 0;
 		}
 
 		.right

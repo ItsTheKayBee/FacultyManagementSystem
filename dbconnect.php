@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost","root","","Faculty") or die("Connection failed".mysqli_connect_error());
+$conn = mysqli_connect("localhost","root","","faculty") or die("Connection failed".mysqli_connect_error());
 date_default_timezone_set("Asia/Kolkata");
 
 $sql = "SELECT * FROM edit";

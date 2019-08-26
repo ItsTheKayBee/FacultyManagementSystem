@@ -1,125 +1,125 @@
- $(document).ready(function() {
-        var numberIncr = 1; // used to increment the name for the inputs
+$(document).ready(function() {
+	var numberIncr = 1; // used to increment the name for the inputs
 
-        function addInput() {
-        	document.getElementById("limitidjour").innerHTML="";
-			var flag =0;
-        	if ( numberIncr<10) 
-        	{
-        		var checker = document.getElementById("jourcoauthname"+numberIncr).value;
-        		if (checker.trim() == "")
-        		{
-        			flag=1;
-        		}	
-        	}
-        	if (flag==1) 
-        	{
-        		alert("Please Fill The Previous Co-Author Details Completely")
-        	}
-        	else{
+	function addInput() {
+		document.getElementById("limitidjour").innerHTML="";
+		var flag =0;
+		if ( numberIncr<10)
+		{
+			var checker = document.getElementById("jourcoauthname"+numberIncr).value;
+			if (checker.trim() == "")
+			{
+				flag=1;
+			}
+		}
+		if (flag==1)
+		{
+			alert("Please Fill The Previous Co-Author Details Completely")
+		}
+		else{
 
-	        	if(numberIncr<=9){
-	        		numberIncr++;
-		            $('#inputs').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="cojour'+numberIncr+'">Co Author Name: </label><input class="form-control" id="jourcoauthname'+numberIncr+'" placeholder ="* Co author '+numberIncr+'" name="name'+numberIncr+'" /><p></p>'));
-		            $('#inputs').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="cojour2'+numberIncr+'">Co Author Affiliation: </label><input class="form-control" id="jourcoauthnameaff'+numberIncr+'" placeholder ="Co author '+numberIncr+' affiliation" name="name'+numberIncr+'_affiliation" /><b><span style="cursor: pointer; color:#337ab7; background:none;"id="remove_'+numberIncr+'" class="remove btn-primary"><b>Remove</b></span></b><p></p>'));
-		            numberIncr1=numberIncr-1;
-	          		if (numberIncr>2) {
-	        		$("#remove_"+numberIncr1).hide();
+			if(numberIncr<=9){
+				numberIncr++;
+				$('#inputs').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="cojour'+numberIncr+'">Co Author Name: </label><input class="form-control" id="jourcoauthname'+numberIncr+'" placeholder ="* Co author '+numberIncr+'" name="name'+numberIncr+'" /><p></p>'));
+				$('#inputs').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="cojour2'+numberIncr+'">Co Author Affiliation: </label><input class="form-control" id="jourcoauthnameaff'+numberIncr+'" placeholder ="Co author '+numberIncr+' affiliation" name="name'+numberIncr+'_affiliation" /><b><span style="cursor: pointer; color:#337ab7; background:none;"id="remove_'+numberIncr+'" class="remove btn-primary"><b>Remove</b></span></b><p></p>'));
+				numberIncr1=numberIncr-1;
+				if (numberIncr>2) {
+					$("#remove_"+numberIncr1).hide();
 
-		        	}
-		    	}
-		        else
-		        document.getElementById("limitidjour").innerHTML=" Only 10 Co Authors can be added";
-	        }
-	    }
-        // set handler for addInput button click
-        $("#addInput").on('click', addInput);
+				}
+			}
+			else
+				document.getElementById("limitidjour").innerHTML=" Only 10 Co Authors can be added";
+		}
+	}
+	// set handler for addInput button click
+	$("#addInput").on('click', addInput);
 
-        // initialize the validator
-        var nIncr = 1; // used to increment the name for the inputs
+	// initialize the validator
+	var nIncr = 1; // used to increment the name for the inputs
 
-        function addInputConf() {
-        	document.getElementById("limitidconf").innerHTML="";
-        	var flag1 =0;
-      
-        	if ( nIncr<10) 
-        	{
-        		var checker1 = document.getElementById("confcoauthname"+nIncr).value;
-        		if (checker1.trim() == "")
-        		{
-        			flag1=1;
-        		}	
-        	}
-        	if (flag1==1) 
-        	{
-        		alert("Please Fill The Previous Co-Author Details Completely")
-        	}
-        	else{
+	function addInputConf() {
+		document.getElementById("limitidconf").innerHTML="";
+		var flag1 =0;
 
-		          if(nIncr<=9){
-			        	nIncr++;
-			         	$('#inputsconf').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="coconf'+nIncr+'">Co Author Name: </label><input class="form-control" id="confcoauthname'+nIncr+'" placeholder ="* Co author '+nIncr+'" name="name'+nIncr+'" /><p></p>'));
-			         	$('#inputsconf').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="coconf2'+nIncr+'">Co Author Affiliation: </label><input class="form-control" id="confcoauthnameaff'+nIncr+'" placeholder ="Co author '+nIncr+' affiliation" name="name'+nIncr+' affiliation" /><span style="cursor: pointer; color:#337ab7;" id="removeConf_'+nIncr+'" class="removeConf"><b>Remove</b></span><p></p>'));
-			          	nIncr1=nIncr-1;
-				        if (nIncr>2) {
-				        	$("#removeConf_"+nIncr1).hide();
-			        	}
-		          	}
-		          	else
-		       			document.getElementById("limitidconf").innerHTML=" Only 10 Co Authors can be added";
-		       	}
-        }
-        // set handler for addInput button click
-        $("#addInputConf").on('click', addInputConf);
+		if ( nIncr<10)
+		{
+			var checker1 = document.getElementById("confcoauthname"+nIncr).value;
+			if (checker1.trim() == "")
+			{
+				flag1=1;
+			}
+		}
+		if (flag1==1)
+		{
+			alert("Please Fill The Previous Co-Author Details Completely")
+		}
+		else{
 
-        $('#inputs').on('click','.remove',function(){
-        	document.getElementById("limitidjour").innerHTML="";
-		  var id = this.id;
-		  var split_id = id.split("_");
-		  var deleteindex = split_id[1];
-		  //alert(deleteindex);
-		 // var deleteindex = 2;
-		  // Remove <div> with id
-		  //alert(deleteindex);
-		  $("#cojour"+deleteindex).remove();
-		  $("#cojour2"+deleteindex).remove();
-		  $("#jourcoauthname" +deleteindex).remove();
-		  $("#jourcoauthnameaff" +deleteindex).remove();
-		  $("#remove_" +deleteindex).remove();
+			if(nIncr<=9){
+				nIncr++;
+				$('#inputsconf').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="coconf'+nIncr+'">Co Author Name: </label><input class="form-control" id="confcoauthname'+nIncr+'" placeholder ="* Co author '+nIncr+'" name="name'+nIncr+'" /><p></p>'));
+				$('#inputsconf').append($('<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3" id="coconf2'+nIncr+'">Co Author Affiliation: </label><input class="form-control" id="confcoauthnameaff'+nIncr+'" placeholder ="Co author '+nIncr+' affiliation" name="name'+nIncr+' affiliation" /><span style="cursor: pointer; color:#337ab7;" id="removeConf_'+nIncr+'" class="removeConf"><b>Remove</b></span><p></p>'));
+				nIncr1=nIncr-1;
+				if (nIncr>2) {
+					$("#removeConf_"+nIncr1).hide();
+				}
+			}
+			else
+				document.getElementById("limitidconf").innerHTML=" Only 10 Co Authors can be added";
+		}
+	}
+	// set handler for addInput button click
+	$("#addInputConf").on('click', addInputConf);
 
-
-		  numberIncr--;
-		  if (numberIncr>=2) {
-        		$("#remove_"+numberIncr).show();
-        	}
-		  $("#inputs").trim();
-
-		 });
-
-        $('#inputsconf').on('click','.removeConf',function(){
-        	document.getElementById("limitidconf").innerHTML="";
-		  var id = this.id;
-		  var split_id = id.split("_");
-		  var deleteindex = split_id[1];
-		  //alert(deleteindex);
-		  //var deleteindex = 2;
-		  // Remove <div> with id
-		 // alert(deleteindex);
-		  $("#coconf"+deleteindex).remove();
-		  $("#coconf2"+deleteindex).remove();
-		  $("#confcoauthname" +deleteindex).remove();
-		  $("#confcoauthnameaff" +deleteindex).remove();
-		  $("#removeConf_" +deleteindex).remove();
-		  nIncr--;
-			if (nIncr>=2) {
-        		$("#removeConf_"+nIncr).show();
-        	}
-		  $("#inputsconf").trim();
-		 });
+	$('#inputs').on('click','.remove',function(){
+		document.getElementById("limitidjour").innerHTML="";
+		var id = this.id;
+		var split_id = id.split("_");
+		var deleteindex = split_id[1];
+		//alert(deleteindex);
+		// var deleteindex = 2;
+		// Remove <div> with id
+		//alert(deleteindex);
+		$("#cojour"+deleteindex).remove();
+		$("#cojour2"+deleteindex).remove();
+		$("#jourcoauthname" +deleteindex).remove();
+		$("#jourcoauthnameaff" +deleteindex).remove();
+		$("#remove_" +deleteindex).remove();
 
 
+		numberIncr--;
+		if (numberIncr>=2) {
+			$("#remove_"+numberIncr).show();
+		}
+		$("#inputs").trim();
 
-   });
+	});
+
+	$('#inputsconf').on('click','.removeConf',function(){
+		document.getElementById("limitidconf").innerHTML="";
+		var id = this.id;
+		var split_id = id.split("_");
+		var deleteindex = split_id[1];
+		//alert(deleteindex);
+		//var deleteindex = 2;
+		// Remove <div> with id
+		// alert(deleteindex);
+		$("#coconf"+deleteindex).remove();
+		$("#coconf2"+deleteindex).remove();
+		$("#confcoauthname" +deleteindex).remove();
+		$("#confcoauthnameaff" +deleteindex).remove();
+		$("#removeConf_" +deleteindex).remove();
+		nIncr--;
+		if (nIncr>=2) {
+			$("#removeConf_"+nIncr).show();
+		}
+		$("#inputsconf").trim();
+	});
+
+
+
+});
 
 // 1. PERSONAL //
 function projguided()
@@ -177,20 +177,20 @@ function projguided()
 		if (projstud1name.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud1name").innerHTML = "* Please Enter Student Name";
-		document.project.projstud1name.style = "border:2px solid red";
+			document.getElementById("projstud1name").innerHTML = "* Please Enter Student Name";
+			document.project.projstud1name.style = "border:2px solid red";
 		}
 		if(s1email.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud1emailerr").innerHTML = "* Please Enter Student Email";
-		document.project.projstud1email.style = "border:2px solid red";
+			document.getElementById("projstud1emailerr").innerHTML = "* Please Enter Student Email";
+			document.project.projstud1email.style = "border:2px solid red";
 		}
 		if(projstud1roll.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud1roll").innerHTML = "* Please Enter Student Roll Number";
-		document.project.projstud1roll.style = "border:2px solid red";
+			document.getElementById("projstud1roll").innerHTML = "* Please Enter Student Roll Number";
+			document.project.projstud1roll.style = "border:2px solid red";
 		}
 		if(s1email.trim()=="")
 			document.getElementById("projstud1email").focus();
@@ -205,20 +205,20 @@ function projguided()
 		if (projstud2name.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud2name").innerHTML = "* Please Enter Student Name";
-		document.project.projstud2name.style = "border:2px solid red";
+			document.getElementById("projstud2name").innerHTML = "* Please Enter Student Name";
+			document.project.projstud2name.style = "border:2px solid red";
 		}
 		if(s2email.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud2emailerr").innerHTML = "* Please Enter Student Email";
-		document.project.projstud2email.style = "border:2px solid red";
+			document.getElementById("projstud2emailerr").innerHTML = "* Please Enter Student Email";
+			document.project.projstud2email.style = "border:2px solid red";
 		}
 		if(projstud2roll.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud2roll").innerHTML = "* Please Enter Student Roll Number";
-		document.project.projstud2roll.style = "border:2px solid red";
+			document.getElementById("projstud2roll").innerHTML = "* Please Enter Student Roll Number";
+			document.project.projstud2roll.style = "border:2px solid red";
 		}
 		if(s2email.trim()=="")
 			document.getElementById("projstud2email").focus();
@@ -232,20 +232,20 @@ function projguided()
 		if (projstud3name.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud3name").innerHTML = "* Please Enter Student Name";
-		document.project.projstud3name.style = "border:2px solid red";
+			document.getElementById("projstud3name").innerHTML = "* Please Enter Student Name";
+			document.project.projstud3name.style = "border:2px solid red";
 		}
 		if(s3email.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Student Email";
-		document.project.projstud3email.style = "border:2px solid red";
+			document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Student Email";
+			document.project.projstud3email.style = "border:2px solid red";
 		}
 		if(projstud3roll.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud3roll").innerHTML = "* Please Enter Student Roll Number";
-		document.project.projstud3roll.style = "border:2px solid red";
+			document.getElementById("projstud3roll").innerHTML = "* Please Enter Student Roll Number";
+			document.project.projstud3roll.style = "border:2px solid red";
 		}
 		if(s3email.trim()=="")
 			document.getElementById("projstud3email").focus();
@@ -259,20 +259,20 @@ function projguided()
 		if (projstud4name.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud4name").innerHTML = "* Please Enter Student Name";
-		document.project.projstud4name.style = "border:2px solid red";
+			document.getElementById("projstud4name").innerHTML = "* Please Enter Student Name";
+			document.project.projstud4name.style = "border:2px solid red";
 		}
 		if(s4email.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud4emailerr").innerHTML = "* Please Enter Student Email";
-		document.project.projstud4email.style = "border:2px solid red";
+			document.getElementById("projstud4emailerr").innerHTML = "* Please Enter Student Email";
+			document.project.projstud4email.style = "border:2px solid red";
 		}
 		if(projstud4roll.trim()=="")
 		{
 			projflag=1;
-		document.getElementById("projstud4roll").innerHTML = "* Please Enter Student Roll Number";
-		document.project.projstud4roll.style = "border:2px solid red";
+			document.getElementById("projstud4roll").innerHTML = "* Please Enter Student Roll Number";
+			document.project.projstud4roll.style = "border:2px solid red";
 		}
 		if(s4email.trim()=="")
 			document.getElementById("projstud4email").focus();
@@ -285,8 +285,8 @@ function projguided()
 
 
 	if(name.trim()=="" && date==""){
-	alert("* Please Enter all compulsory Fields for Projects Guided");
-	return false;
+		alert("* Please Enter all compulsory Fields for Projects Guided");
+		return false;
 	}
 	if(name.trim()=="" || name==null)
 	{
@@ -302,38 +302,38 @@ function projguided()
 	}
 
 	if((!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s1email))) && (s1email != ""))
-		 {
-			document.getElementById("projstud1emailerr").innerHTML = "* Please Enter Valid Email";
-			projflag=1;
-			document.project.projstud1email.style = "border:2px solid red";
-		 }
+	{
+		document.getElementById("projstud1emailerr").innerHTML = "* Please Enter Valid Email";
+		projflag=1;
+		document.project.projstud1email.style = "border:2px solid red";
+	}
 
 	if((!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s2email))) && (s2email != ""))
-	 		 {
-	 			document.getElementById("projstud2emailerr").innerHTML = "* Please Enter Valid Email";
-	 			projflag=1;
-	 			document.project.projstud2email.style = "border:2px solid red";
-	 		 }
+	{
+		document.getElementById("projstud2emailerr").innerHTML = "* Please Enter Valid Email";
+		projflag=1;
+		document.project.projstud2email.style = "border:2px solid red";
+	}
 
 	if((!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s3email))) && (s3email != ""))
-		 		 {
-		 			document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Valid Email";
-		 			projflag=1;
-		 			document.project.projstud3email.style = "border:2px solid red";
-		 		 }
+	{
+		document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Valid Email";
+		projflag=1;
+		document.project.projstud3email.style = "border:2px solid red";
+	}
 
 	if((!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s3email))) && (s3email != ""))
-			 		 {
-			 			document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Valid Email";
-			 			projflag=1;
-			 			document.project.projstud3email.style = "border:2px solid red";
-			 		 }
+	{
+		document.getElementById("projstud3emailerr").innerHTML = "* Please Enter Valid Email";
+		projflag=1;
+		document.project.projstud3email.style = "border:2px solid red";
+	}
 	if((!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(s4email))) && (s4email != ""))
-			 		 {
-			 			document.getElementById("projstud4emailerr").innerHTML = "* Please Enter Valid Email";
-			 			projflag=1;
-			 			document.project.projstud4email.style = "border:2px solid red";
-			 		 }
+	{
+		document.getElementById("projstud4emailerr").innerHTML = "* Please Enter Valid Email";
+		projflag=1;
+		document.project.projstud4email.style = "border:2px solid red";
+	}
 
 
 	if (date == "" || date == null)
@@ -342,8 +342,8 @@ function projguided()
 	if(name.trim() == "" || name == null)
 		document.getElementById("projtitleid").focus();
 
-		if(projflag == 1)
-			return false;
+	if(projflag == 1)
+		return false;
 }
 
 function validatePersonal()
@@ -367,7 +367,7 @@ function validatePersonal()
 	while ( (!formValid) && (i < radios.length) )
 	{
 		if (radios[i].checked) formValid = true;
-			i++;
+		i++;
 	}
 
 	document.getElementById("name").innerHTML = "";
@@ -419,11 +419,11 @@ function validatePersonal()
 		document.personal.email.style = "border:2px solid red";
 	}
 	else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(y)))
-		 {
-			document.getElementById("email").innerHTML = "* Please Enter Valid Email";
-			emailflag=1;
-			document.personal.email.style = "border:2px solid red";
-		 }
+	{
+		document.getElementById("email").innerHTML = "* Please Enter Valid Email";
+		emailflag=1;
+		document.personal.email.style = "border:2px solid red";
+	}
 
 	if (z == "")
 	{
@@ -454,18 +454,18 @@ function validatePersonal()
 
 	if (x == "" || (!(/^([a-zA-Z ]{2,30})$/.test(x)))){
 		document.getElementById("n").focus();
-    //alert("hi");
-  }
-  else if (!formValid)
-			document.getElementById("g").focus();
-		 else if (y == "" || y == null || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(y)))
-				document.getElementById("e").focus();
-			  else if (z == "" || z == null || !(/^[7-9][0-9]{9}$/.test(z)))
-					document.getElementById("c").focus();
-				   else if (a == "" || a == null)
-						document.getElementById("d").focus();
-						else if (b.trim() == "" || b == null)
-							document.getElementById("a").focus();
+		//alert("hi");
+	}
+	else if (!formValid)
+		document.getElementById("g").focus();
+	else if (y == "" || y == null || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(y)))
+		document.getElementById("e").focus();
+	else if (z == "" || z == null || !(/^[7-9][0-9]{9}$/.test(z)))
+		document.getElementById("c").focus();
+	else if (a == "" || a == null)
+		document.getElementById("d").focus();
+	else if (b.trim() == "" || b == null)
+		document.getElementById("a").focus();
 
 	if(nameflag==1 || emailflag==1 || contactflag==1 || dateflag==1 || addressflag==1 || genflag==1)
 		return false;
@@ -511,7 +511,7 @@ function ac1()
 	if(sscinst.trim() == "")
 		document.getElementById("sscinstitute_id").focus();
 	else if(sscmarks== "")
-			document.getElementById("sscmarks_id").focus();
+		document.getElementById("sscmarks_id").focus();
 
 	if(sscflag == 1)
 		return false;
@@ -555,7 +555,7 @@ function ac2()
 	if(hscinst.trim() == "")
 		document.getElementById("hscinstitute_id").focus();
 	else if(hscmarks== "")
-			document.getElementById("hscmarks_id").focus();
+		document.getElementById("hscmarks_id").focus();
 
 	if(hscflag == 1)
 		return false;
@@ -608,9 +608,9 @@ function ac3()
 	if(btechinst.trim() == "")
 		document.getElementById("btechinstitute_id").focus();
 	else if(btechmarks== "")
-			document.getElementById("btechmarks_id").focus();
-		else if(btechdegree.trim() == "")
-				document.getElementById("sel1").focus();
+		document.getElementById("btechmarks_id").focus();
+	else if(btechdegree.trim() == "")
+		document.getElementById("sel1").focus();
 
 
 	if(btechflag == 1)
@@ -663,9 +663,9 @@ function ac4()
 	if(mtechinst.trim() == "")
 		document.getElementById("mtechinstitute_id").focus();
 	else if(mtechmarks== "")
-			document.getElementById("mtechmarks_id").focus();
-		else if(mtechdegree.trim()=="")
-				document.getElementById("sel2").focus();
+		document.getElementById("mtechmarks_id").focus();
+	else if(mtechdegree.trim()=="")
+		document.getElementById("sel2").focus();
 
 	if(mtechflag == 1)
 		return false;
@@ -716,9 +716,9 @@ function ac5()
 	if(phdinst.trim() == "")
 		document.getElementById("phdinstitute_id").focus();
 	else if(phdmarks== "")
-			document.getElementById("phdmarks_id").focus();
-		else if(phddegree.trim()=="")
-			document.getElementById("sel3").focus();
+		document.getElementById("phdmarks_id").focus();
+	else if(phddegree.trim()=="")
+		document.getElementById("sel3").focus();
 
 	if(phdflag == 1)
 		return false;
@@ -730,11 +730,7 @@ function ac5()
 function edit()
 {
 
-	var abc = document.getElementById("category_id").value;
-
-
-	//alert(abc);
-	//alert("asdsad");
+	var course_type = document.getElementById("category_id").value;
 	dynamicdropdown(abc);
 }
 function setter()
@@ -751,7 +747,15 @@ function dynamicdropdown(listindex)
 	{
 		case "UG" :
 			document.getElementById("subcategory").options[0]=new Option("Please select UG course","");
-			document.getElementById("subcategory").options[1]=new Option("UITC301-Engineering Mathematics 3","UITC301-Engineering Mathematics 3");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					document.getElementById('subcategory').innerHTML=this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "courses_taught.php?q=UG", true);
+			xmlhttp.send();
+			/*document.getElementById("subcategory").options[1]=new Option("UITC301-Engineering Mathematics 3","UITC301-Engineering Mathematics 3");
 			document.getElementById("subcategory").options[2]=new Option("UITC302-Database Management Systems","UITC302-Database Management Systems");
 			document.getElementById("subcategory").options[3]=new Option("UITC303-Data Structures","UITC303-Data Structures");
 			document.getElementById("subcategory").options[4]=new Option("UITC304-Design Logic Design and Applications","UITC304-Design Logic Design and Applications");
@@ -779,47 +783,60 @@ function dynamicdropdown(listindex)
 			//document.getElementById("subcategory").options[23]=new Option("UITI601-IDC","UITI601-IDC");
 			document.getElementById("subcategory").options[21]=new Option("UITC701-Software Testing and Quality Assurance","UITC701-Software Testing and Quality Assurance");
 			document.getElementById("subcategory").options[22]=new Option("UITC702-Artificial Intelligence","UITC702-Artificial Intelligence");
-      		document.getElementById("subcategory").options[23]=new Option("UITC703-Modeling and Simulation","UITC703-Modeling and Simulation");
-      		document.getElementById("subcategory").options[24]=new Option("UITC704-Big Data Analytics","UITC704-Big Data Analytics");
-      		//document.getElementById("subcategory").options[28]=new Option("UITE701-Digital Image Processing","UITE701-Digital Image Processing");
-      		//document.getElementById("subcategory").options[29]=new Option("UITE702-Advanced Image Processing","UITE702-Advanced Image Processing");
-      		//document.getElementById("subcategory").options[30]=new Option("UITE703-Search Engine Optimization","UITE703-Search Engine Optimization");
-      		//document.getElementById("subcategory").options[31]=new Option("UITE704-Software Architecture","UITE704-Software Architecture");
-      		//document.getElementById("subcategory").options[32]=new Option("UITE705-Usability Engineering","UITE705-Usability Engineering");
-      		//document.getElementById("subcategory").options[33]=new Option("UITE706-Advanced Computer Network","UITE706-Advanced Computer Engineering");
+			document.getElementById("subcategory").options[23]=new Option("UITC703-Modeling and Simulation","UITC703-Modeling and Simulation");
+			document.getElementById("subcategory").options[24]=new Option("UITC704-Big Data Analytics","UITC704-Big Data Analytics");
+			//document.getElementById("subcategory").options[28]=new Option("UITE701-Digital Image Processing","UITE701-Digital Image Processing");
+			//document.getElementById("subcategory").options[29]=new Option("UITE702-Advanced Image Processing","UITE702-Advanced Image Processing");
+			//document.getElementById("subcategory").options[30]=new Option("UITE703-Search Engine Optimization","UITE703-Search Engine Optimization");
+			//document.getElementById("subcategory").options[31]=new Option("UITE704-Software Architecture","UITE704-Software Architecture");
+			//document.getElementById("subcategory").options[32]=new Option("UITE705-Usability Engineering","UITE705-Usability Engineering");
+			//document.getElementById("subcategory").options[33]=new Option("UITE706-Advanced Computer Network","UITE706-Advanced Computer Engineering");
 			//document.getElementById("subcategory").options[37]=new Option("UITL701-Software Testing and Quality Assurance","UITL701-Software Testing and Quality Assurance");
 			//document.getElementById("subcategory").options[38]=new Option("UITL702-Artificial Intelligence","UITL702-Artificial Intelligence");
-      		//document.getElementById("subcategory").options[39]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
-      		//document.getElementById("subcategory").options[40]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
-      		//document.getElementById("subcategory").options[34]=new Option("UITP701-Project A","UITP704-Project A");
-      		document.getElementById("subcategory").options[25]=new Option("UITC801-Software Project Management","UITC801-Software Project Management");
-      		document.getElementById("subcategory").options[26]=new Option("UITC802-Cloud Computing","UITC801-Cloud Computing");
-      		document.getElementById("subcategory").options[27]=new Option("UITC803-Soft Computing","UITC803-Soft Computing");
-      		document.getElementById("subcategory").options[28]=new Option("UITE801-Digital Marketing","UITE801-Digital Marketing");
-      	    document.getElementById("subcategory").options[29]=new Option("UITE802-Robotics","UITE802-Robotics");
-      		document.getElementById("subcategory").options[30]=new Option("UITE803-Digital Forensics","UITC803-Digital Forensics");
-      		document.getElementById("subcategory").options[31]=new Option("UITE804-Internet Of Things","UITE804-Internet of Things");
-      		document.getElementById("subcategory").options[32]=new Option("UITE805-Geographical Information System","UITE805-Geographical Information System");
+			//document.getElementById("subcategory").options[39]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
+			//document.getElementById("subcategory").options[40]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
+			//document.getElementById("subcategory").options[34]=new Option("UITP701-Project A","UITP704-Project A");
+			document.getElementById("subcategory").options[25]=new Option("UITC801-Software Project Management","UITC801-Software Project Management");
+			document.getElementById("subcategory").options[26]=new Option("UITC802-Cloud Computing","UITC801-Cloud Computing");
+			document.getElementById("subcategory").options[27]=new Option("UITC803-Soft Computing","UITC803-Soft Computing");
+			document.getElementById("subcategory").options[28]=new Option("UITE801-Digital Marketing","UITE801-Digital Marketing");
+			document.getElementById("subcategory").options[29]=new Option("UITE802-Robotics","UITE802-Robotics");
+			document.getElementById("subcategory").options[30]=new Option("UITE803-Digital Forensics","UITC803-Digital Forensics");
+			document.getElementById("subcategory").options[31]=new Option("UITE804-Internet Of Things","UITE804-Internet of Things");
+			document.getElementById("subcategory").options[32]=new Option("UITE805-Geographical Information System","UITE805-Geographical Information System");
 			//document.getElementById("subcategory").options[50]=new Option("UITL801-Software Project Management Laboratory","UITL801-Software Project Management Laboratory");
-      		//document.getElementById("subcategory").options[51]=new Option("UITL802-Cloud Computing Laboratory","UITL801-Cloud Computing Laboratory");
-      		//document.getElementById("subcategory").options[52]=new Option("UITL803-Soft Computing Laboratory","UITL803-Soft Computing Laboratory");
-
+			//document.getElementById("subcategory").options[51]=new Option("UITL802-Cloud Computing Laboratory","UITL801-Cloud Computing Laboratory");
+			//document.getElementById("subcategory").options[52]=new Option("UITL803-Soft Computing Laboratory","UITL803-Soft Computing Laboratory");
+*/
 			break;
-
-
-
 		case "PG" :
 			document.getElementById("subcategory").options[0]=new Option("Please select PG course","");
-			document.getElementById("subcategory").options[1]=new Option("1PIS101-Network Design and Network Security","1PIS101-Network Design and Network Security");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					document.getElementById('subcategory').innerHTML=this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "courses_taught.php?q=PG", true);
+			xmlhttp.send();
+			/*document.getElementById("subcategory").options[1]=new Option("1PIS101-Network Design and Network Security","1PIS101-Network Design and Network Security");
 			document.getElementById("subcategory").options[2]=new Option("1PISC102-Digital Forensics and Analysis","1PIS102-Digital Forensics and Analysis");
 			document.getElementById("subcategory").options[3]=new Option("1PISC103-Software Vulnerability and Analysis","1PISC103-Software Vulnerability and Analysis");
 			document.getElementById("subcategory").options[4]=new Option("1PISC104-Modelling and Analysis of Security Protocols","1PISC104-Modelling and Analysis of Security Protocols");
 			document.getElementById("subcategory").options[5]=new Option("1PISC105-Cryptography and Public Key Infrastructure","1PISC105-Cryptography and Public Key Infrastructure");
 			document.getElementById("subcategory").options[6]=new Option("1PISC201-Information Security Compliance","1PISC201-Information Security Compliance");
-			break;
+			*/break;
 		case "Labcourses" :
 			document.getElementById("subcategory").options[0]=new Option("Please select lab course","");
-			document.getElementById("subcategory").options[1]=new Option("UITL301-Database Management Systems","UITL301-Database Management Systems");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					document.getElementById('subcategory').innerHTML=this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "courses_taught.php?q=Labcourses", true);
+			xmlhttp.send();
+			/*document.getElementById("subcategory").options[1]=new Option("UITL301-Database Management Systems","UITL301-Database Management Systems");
 			document.getElementById("subcategory").options[2]=new Option("UITL302-Data Structures","UITL302-Data Structures");
 			document.getElementById("subcategory").options[3]=new Option("UITL303-Design Logic Design and Applications","UITL303-Design Logic Design and Applications");
 			document.getElementById("subcategory").options[4]=new Option("UITL304-Programming Laboratory 1","UITL304-Programming Laboratory 1");
@@ -837,39 +854,53 @@ function dynamicdropdown(listindex)
 			document.getElementById("subcategory").options[16]=new Option("UITL604-Development Frameworks","UITL604-Development Frameworks");
 			document.getElementById("subcategory").options[17]=new Option("UITL701-Software Testing and Quality Assurance","UITL701-Software Testing and Quality Assurance");
 			document.getElementById("subcategory").options[18]=new Option("UITL702-Artificial Intelligence","UITL702-Artificial Intelligence");
-      document.getElementById("subcategory").options[19]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
-      document.getElementById("subcategory").options[20]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
-    	document.getElementById("subcategory").options[21]=new Option("UITL801-Software Project Management","UITL801-Software Project Management");
-      document.getElementById("subcategory").options[22]=new Option("UITL802-Cloud Computing","UITL801-Cloud Computing");
-      document.getElementById("subcategory").options[23]=new Option("UITL803-Soft Computing","UITL803-Soft Computing");
-
+			document.getElementById("subcategory").options[19]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
+			document.getElementById("subcategory").options[20]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
+			document.getElementById("subcategory").options[21]=new Option("UITL801-Software Project Management","UITL801-Software Project Management");
+			document.getElementById("subcategory").options[22]=new Option("UITL802-Cloud Computing","UITL801-Cloud Computing");
+			document.getElementById("subcategory").options[23]=new Option("UITL803-Soft Computing","UITL803-Soft Computing");
+*/
 			break;
 		case "AC" :
 			document.getElementById("subcategory").options[0]=new Option("Please select audit course","");
-			document.getElementById("subcategory").options[1]=new Option("UITA401-Python Programming-A concise Introduction","UITA401-Python Programming-A concise Introduction");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					document.getElementById('subcategory').innerHTML=this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "courses_taught.php?q=AC", true);
+			xmlhttp.send();
+			/*document.getElementById("subcategory").options[1]=new Option("UITA401-Python Programming-A concise Introduction","UITA401-Python Programming-A concise Introduction");
 			document.getElementById("subcategory").options[2]=new Option("UITA402-Core Java","UITA402-Core Java");
 			document.getElementById("subcategory").options[3]=new Option("UITA403-UI Design","UITA403-UI Design");
 			document.getElementById("subcategory").options[4]=new Option("UITA404-Basics of Web Programming","UITA404-Basics of Web Programming");
-
+*/
 			break;
-		 case "IDC" :
+		case "IDC" :
 			document.getElementById("subcategory").options[0]=new Option("Please select IDC","");
-			document.getElementById("subcategory").options[1]=new Option("UITI601-Management Information Systems ","UITI601-Management Information Systems ");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					document.getElementById('subcategory').innerHTML=this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "courses_taught.php?q=IDC", true);
+			xmlhttp.send();
+			/*document.getElementById("subcategory").options[1]=new Option("UITI601-Management Information Systems ","UITI601-Management Information Systems ");
 			document.getElementById("subcategory").options[2]=new Option("UITI602-Software Engineering","UITI602-Software Engineering");
 			document.getElementById("subcategory").options[3]=new Option("UITI603-Cyber Security Awareness","UITI603 Cyber Security Awareness");
 			document.getElementById("subcategory").options[3]=new Option("UITI604-E-Business","UITI604-E-Business");
 			document.getElementById("subcategory").options[3]=new Option("UITI605-IT as Enabler for Start- up","UITI605-IT as Enabler for Start- up");
 			document.getElementById("subcategory").options[3]=new Option("UITI606-Social Media","UITI606-Social Media");
 			document.getElementById("subcategory").options[3]=new Option("UITI607-Business Analytics","UITI607-Business Analytics");
-			break;
+			*/break;
 	}
-
 	return true;
 }
 
 function coursesvalidation()
 {
-
 	var course = document.coursestaught.category.value;
 	var subcategory= document.coursestaught.subcategory.value;
 	var year = document.coursestaught.courseyear.value;
@@ -920,11 +951,11 @@ function coursesvalidation()
 	if(course==0)
 		document.getElementById("category_id").focus();
 	else if(subcategory==0)
-			document.getElementById("subcategory").focus();
-		 else if(year==0)
-				document.getElementById("courseyear_id").focus();
-			  else if(sem==0)
-					document.getElementById("coursesem_id").focus();
+		document.getElementById("subcategory").focus();
+	else if(year==0)
+		document.getElementById("courseyear_id").focus();
+	else if(sem==0)
+		document.getElementById("coursesem_id").focus();
 
 	if( courseflag == 1)
 		return false;
@@ -1065,7 +1096,7 @@ function validateJour()
 	document.publicationjournal.jour_coauth_nameaff1.style = "";
 	document.getElementById("jour_coauth_nameaff1").innerHTML ="";
 
-if(journal_pub_name.trim() == "" && journal_title.trim() == "" && journal_impact.trim() == "" && journal_vol.trim() == "" && journal_issue.trim() == "" && journal_pg.trim() == "" && journal_name.trim() == ""  && jour_date == "" && journal_cite.trim() == ""  && journal_issn.trim() == ""  && jour_coauth_name1 == "" && jour_coauth_nameaff1 == "")
+	if(journal_pub_name.trim() == "" && journal_title.trim() == "" && journal_impact.trim() == "" && journal_vol.trim() == "" && journal_issue.trim() == "" && journal_pg.trim() == "" && journal_name.trim() == ""  && jour_date == "" && journal_cite.trim() == ""  && journal_issn.trim() == ""  && jour_coauth_name1 == "" && jour_coauth_nameaff1 == "")
 	{
 		alert("* Please Enter all Compulsory Fields for Journals");
 		return false;
@@ -1074,49 +1105,49 @@ if(journal_pub_name.trim() == "" && journal_title.trim() == "" && journal_impact
 
 
 
-if (journal_cite.trim() == "" || journal_cite == null)
-{
-	pjflag=1;
-	document.getElementById("journal_cite").innerHTML = "* Please Enter Citation Index";
-	document.publicationjournal.journal_cite.style = "border:2px solid red";
-}
-if (journal_issn.trim() == "" || journal_issn == null)
-{
-	pjflag=1;
-	document.getElementById("journal_issn").innerHTML = "* Please Enter Journal ISSN";
-	document.publicationjournal.journal_issn.style = "border:2px solid red";
-}
-if (journal_pg.trim() == "" || journal_pg == null)
-{
-	pjflag=1;
-	document.getElementById("journal_pg").innerHTML = "* Please Enter Page no.";
-	document.publicationjournal.journal_pg.style = "border:2px solid red";
-}
-if (journal_issue.trim() == "" || journal_issue == null)
-{
-	pjflag=1;
-	document.getElementById("journal_issue").innerHTML = "* Please Enter Issue no.";
-	document.publicationjournal.journal_issue.style = "border:2px solid red";
-}
-if (journal_vol.trim() == "" || journal_vol == null)
-{
-	pjflag=1;
-	document.getElementById("journal_vol").innerHTML = "* Please Enter Journal Volume";
-	document.publicationjournal.journal_vol.style = "border:2px solid red";
-}
-if (journal_impact.trim() == "" || journal_impact == null)
-{
-	pjflag=1;
-	document.getElementById("journal_impact").innerHTML = "* Please Enter Impact Factor";
-	document.publicationjournal.journal_impact.style = "border:2px solid red";
-}
+	if (journal_cite.trim() == "" || journal_cite == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_cite").innerHTML = "* Please Enter Citation Index";
+		document.publicationjournal.journal_cite.style = "border:2px solid red";
+	}
+	if (journal_issn.trim() == "" || journal_issn == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_issn").innerHTML = "* Please Enter Journal ISSN";
+		document.publicationjournal.journal_issn.style = "border:2px solid red";
+	}
+	if (journal_pg.trim() == "" || journal_pg == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_pg").innerHTML = "* Please Enter Page no.";
+		document.publicationjournal.journal_pg.style = "border:2px solid red";
+	}
+	if (journal_issue.trim() == "" || journal_issue == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_issue").innerHTML = "* Please Enter Issue no.";
+		document.publicationjournal.journal_issue.style = "border:2px solid red";
+	}
+	if (journal_vol.trim() == "" || journal_vol == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_vol").innerHTML = "* Please Enter Journal Volume";
+		document.publicationjournal.journal_vol.style = "border:2px solid red";
+	}
+	if (journal_impact.trim() == "" || journal_impact == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_impact").innerHTML = "* Please Enter Impact Factor";
+		document.publicationjournal.journal_impact.style = "border:2px solid red";
+	}
 
-if (journal_title.trim() == "" || journal_title == null)
-{
-	pjflag=1;
-	document.getElementById("journal_title").innerHTML = "* Please Enter Paper's Title";
-	document.publicationjournal.journal_title.style = "border:2px solid red";
-}
+	if (journal_title.trim() == "" || journal_title == null)
+	{
+		pjflag=1;
+		document.getElementById("journal_title").innerHTML = "* Please Enter Paper's Title";
+		document.publicationjournal.journal_title.style = "border:2px solid red";
+	}
 	if (journal_name.trim() == "" || journal_name == null)
 	{
 		pjflag=1;
@@ -1169,7 +1200,7 @@ if (journal_title.trim() == "" || journal_title == null)
 	else if(journal_fauth == "NO" && journal_fauthor == "")
 	{
 		var journal_fauthor = document.publicationjournal.journal_fauth_val.value;
-			document.getElementById("journal_fauth").focus();
+		document.getElementById("journal_fauth").focus();
 	}
 	else if(jour_coauth_name1 == "" || jour_coauth_name1 == null)
 		document.getElementById("jourcoauthname1").focus();
@@ -1203,7 +1234,7 @@ if (journal_title.trim() == "" || journal_title == null)
 
 function validateConf()
 {
-  //alert("helllo");
+	//alert("helllo");
 	var conf_name = document.publicationconf.conf_name.value;
 	//var conf_title = document.publicationconf.conf_title.value;
 	var pubdate = document.publicationconf.pubdate.value;
@@ -1257,75 +1288,75 @@ function validateConf()
 
 
 	if(conf_name.trim() == "" && pubdate.trim() == "" && conf_hindex.trim() == "" && conf_pubname == "" && conf_proname == "" && conf_themename == ""
-	 && conf_pg == "" && conf_issn == "" && conf_orgname == "" && conf_place == "" && conf_cite == "" && name1 == "" && name1_affiliation == "")
+		&& conf_pg == "" && conf_issn == "" && conf_orgname == "" && conf_place == "" && conf_cite == "" && name1 == "" && name1_affiliation == "")
 	{
 		alert("* Please Enter all compulsory Fields for Conferences");
 		return false;
 	}
 	if (conf_name.trim() == "" || conf_name == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_name").innerHTML = "* Please Enter the Conference Name";
 		document.publicationconf.conf_name.style = "border:2px solid red";
 	}
 
 	if (pubdate.trim() == "" || pubdate == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("pubdate").innerHTML = "* Please Enter the Publication Date";
 		document.publicationconf.pubdate.style = "border:2px solid red";
 	}
 	if (conf_hindex.trim() == "" || conf_hindex == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_hindex").innerHTML = "* Please Enter the H Index";
 		document.publicationconf.conf_hindex.style = "border:2px solid red";
 	}
 	if (conf_pubname == "" || conf_pubname == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_pubname").innerHTML = "* Please Enter Publisher's Name";
 		document.publicationconf.conf_pubname.style = "border:2px solid red";
 	}
 	if (conf_proname == "" || conf_proname == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_proname").innerHTML = "* Please Enter the Proceeding Name";
 		document.publicationconf.conf_proname.style = "border:2px solid red";
 	}
 	if (conf_themename == "" || conf_themename == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_themename").innerHTML = "* Please Enter the Theme";
 		document.publicationconf.conf_themename.style = "border:2px solid red";
 	}
 	if (conf_pg == "" || conf_pg == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_pg").innerHTML = "* Please Enter the Page No";
 		document.publicationconf.conf_pg.style = "border:2px solid red";
 	}
 	if (conf_issn == "" || conf_issn == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_issn").innerHTML = "* Please Enter the ISSN No";
 		document.publicationconf.conf_issn.style = "border:2px solid red";
 	}
 	if (conf_orgname == "" || conf_orgname == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_orgname").innerHTML = "* Please Enter the Organiser's Name";
 		document.publicationconf.conf_orgname.style = "border:2px solid red";
 	}
 	if (conf_place == "" || conf_place == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_place").innerHTML = "* Please Enter the Proceeding";
 		document.publicationconf.conf_place.style = "border:2px solid red";
 	}
 	if (conf_cite == "" || conf_cite == null)
 	{
-    	pcflag=1;
+		pcflag=1;
 		document.getElementById("conf_cite").innerHTML = "* Please Enter the Proceeding";
 		document.publicationconf.conf_cite.style = "border:2px solid red";
 	}
@@ -1364,7 +1395,7 @@ function validateConf()
 	else if(conf_fauth == "NO" && (conf_fauth_val == "" || conf_fauth_val == null))
 	{
 		var conf_fauth_val = document.publicationconf.conf_fauth_val.value;
-			document.getElementById("conf_fauth").focus();
+		document.getElementById("conf_fauth").focus();
 	}
 
 	else if( name1 == "" || name1 == null)
@@ -1397,13 +1428,13 @@ function validateConf()
 	else if (conf_orgname == "" || conf_orgname == null)
 		document.getElementById("conf_orgid").focus();
 
-	 else if (conf_place == "" || conf_place == null)
+	else if (conf_place == "" || conf_place == null)
 		document.getElementById("conf_placeid").focus();
 
 	else if (conf_cite == "" || conf_cite == null)
 		document.getElementById("conf_citeid").focus();
 
-	 if( pcflag == 1)
+	if( pcflag == 1)
 		return false;
 }
 
@@ -1432,21 +1463,21 @@ function validateAttended()
 
 	if (attendedname.trim() == "" || attendedname == null)
 	{
-    	sa=1;
+		sa=1;
 		document.getElementById("attendedname").innerHTML = "* Please Enter the STTP Attended Name";
 		document.sttpattended.attendedname.style = "border:2px solid red";
 	}
 
 	if (datefromattended == "" || datefromattended == null)
 	{
-    	sa=1;
+		sa=1;
 		document.getElementById("datefromattended").innerHTML = "* Please Enter STTP Start Date";
 		document.sttpattended.datefromattended.style = "border:2px solid red";
 	}
 
 	if (datetoattended == "" || datetoattended == null)
 	{
-    	sa=1;
+		sa=1;
 		document.getElementById("datetoattended").innerHTML = "* Please Enter STTP End Date";
 		document.sttpattended.datetoattended.style = "border:2px solid red";
 	}
@@ -1509,9 +1540,9 @@ function sttpo()
 	if(oname.trim()=="")
 		document.getElementById("organizedname_id").focus();
 	else if(ofrom=="")
-			document.getElementById("datefromorganized_id").focus();
-		 else if(oto=="")
-				document.getElementById("datetoorganized_id").focus();
+		document.getElementById("datefromorganized_id").focus();
+	else if(oto=="")
+		document.getElementById("datetoorganized_id").focus();
 
 	if(so == 1)
 		return false;
@@ -1539,7 +1570,7 @@ function validateDeli()
 	}
 	if (deliveredname.trim() == "" || deliveredname == null)
 	{
-    	sd=1;
+		sd=1;
 		document.getElementById("deliveredname").innerHTML = "* Please Enter the STTP Delivered Name";
 		document.sttpdelivered.deliveredname.style = "border:2px solid red";
 	}
@@ -1547,14 +1578,14 @@ function validateDeli()
 
 	if (datefromdelivered == "" || datefromdelivered == null)
 	{
-    	sd=1;
+		sd=1;
 		document.getElementById("datefromdelivered").innerHTML = "* Please Enter STTP Start Date";
 		document.sttpdelivered.datefromdelivered.style = "border:2px solid red";
 	}
 
 	if (datetodelivered == "" || datetodelivered == null)
 	{
-    	sd=1;
+		sd=1;
 		document.getElementById("datetodelivered").innerHTML = "* Please Enter STTP End Date";
 		document.sttpdelivered.datetodelivered.style = "border:2px solid red";
 	}
@@ -1617,7 +1648,7 @@ function co()
 	if(cocurrname.trim()=="")
 		document.getElementById("cocurrname_id").focus();
 	else if(cocurrdate=="")
-			document.getElementById("cocurrdate_id").focus();
+		document.getElementById("cocurrdate_id").focus();
 
 	if(cocurrflag == 1)
 		return false;
@@ -1661,7 +1692,7 @@ function extra()
 	if(extraname.trim()=="")
 		document.getElementById("extraname1").focus();
 	else if(extradate=="")
-			document.getElementById("extradate1").focus();
+		document.getElementById("extradate1").focus();
 
 	if( extraflag == 1 )
 		return false;
