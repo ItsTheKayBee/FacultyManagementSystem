@@ -659,14 +659,31 @@ include 'homepage_php.php';
                             <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
                             <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                                 <div class="category_div" id ="category_div">
-                                    <select name="category" class="required-entry form-control" id ="category_id" onchange="dynamicdropdown(options[this.selectedIndex].value);">
+                                   <!-- <select name="category" class="required-entry form-control" id ="category_id" onchange="dynamicdropdown(options[this.selectedIndex].value);">
                                         <option value="">* Select course type</option>
                                         <option value="UG">UG</option>
                                         <option value="PG">PG</option>
                                         <option value="Labcourses">Lab Courses</option>
                                         <option value="AC">Audit Course</option>
                                         <option value="IDC">IDC</option>
-                                    </select>
+                                    </select>-->
+                                    <?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
+                                        $res = $conn->query($sql);
+                                        echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>*Select Course Type</option>";
+                                        while ($row = $res->fetch_assoc()) {
+                                            if ($res->num_rows > 0) {
+                                                $course_type = $row['course_type_name'];
+                                                $course_value=$course_type;
+                                                if($course_value=="Lab Course"){
+                                                    $course_value="Labcourses";
+                                                }
+                                                if($course_value=="Audit Course"){
+                                                    $course_value="AC";
+                                                }
+                                                echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
+                                            }
+                                        }
+                                    echo "</select>";?>
                                     <span class="error" id ="coursetype"></span>
                                 </div>
                             </div>
