@@ -172,7 +172,7 @@ include 'profile_php.php'; ?>
         }
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).Viewy(function () {
             $('img').on('click', function () {
                 var image = $(this).attr('src');
                 //alert(image);
@@ -225,7 +225,6 @@ include 'profile_php.php'; ?>
 <nav class="col-sm-3 col-lg-2 col-md-4 col-xs-3" id ="myScrollspy">
     <ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border:0.4px solid light-grey; padding:10px">
         <li><center>PROFILE</center></li>
-        <hr>
         <li id ="sectionA"><a href="#section1">Personal Details</a></li>
         <li id ="sectionB"><a href="#section2">Academic Qualifications</a></li>
         <li id ="sectionC"><a href="#section3">Courses Taught</a></li>
@@ -249,10 +248,11 @@ include 'profile_php.php'; ?>
         </li>
         <li id ="sectionF"><a href="#section6">Co curricular activities</a></li>
         <li id ="sectionG"><a href="#section7">Extra curricular activities</a></li>
+        <li><a href="#awards">Awards and Achievements</a></li>
         <hr>
         <li id ="sectionW"><a href="main.php#section21">Faculty List</a></li>
         <li id ="sectionX"><a href="main.php#section24">Assign Profile Rights</a></li>
-        <li id ="sectionY"><a href="main.php#section22">Add Member</a></li>
+        <li id ="sectionY"><a href="main.php#section22">Admin Control</a></li>
         <li id ="sectionZ"><a href="main.php#section23">Report Generation</a></li>
     </ul>
 </nav>
@@ -630,9 +630,9 @@ include 'profile_php.php'; ?>
                         $coverbook="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'b','academic'=>'','sttp'=>'','cid'=>($pubbooks-1));
+                        $myData1 = array('pub'=>'b','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubbooks-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $coverbook='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $coverbook='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     $myData = array('val'=>3,'id'=>($pubbooks-1));
                     $arg = base64_encode( json_encode($myData) );
@@ -741,17 +741,17 @@ include 'profile_php.php'; ?>
                         $jourcert="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'jcerti','academic'=>'','sttp'=>'','cid'=>($pubjour-1));
+                        $myData1 = array('pub'=>'jcerti','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubjour-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $jourcert='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $jourcert='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     if($row["Paper_PDF"] == null)
                         $jourpdf="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'jpaper','academic'=>'','sttp'=>'','cid'=>($pubjour-1));
+                        $myData1 = array('pub'=>'jpaper','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubjour-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $jourpdf='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $jourpdf='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     $myData = array('val'=>4, 'id'=>($pubjour-1));
                     $arg = base64_encode( json_encode($myData) );
@@ -908,26 +908,26 @@ include 'profile_php.php'; ?>
                         $confposterpdf = "PDF not inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'cposter','academic'=>'','sttp'=>'','cid'=>($pubconf-1));
+                        $myData1 = array('pub'=>'cposter','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubconf-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $confposterpdf='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $confposterpdf='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
 
                     if($row["Certificate"] == null)
                         $confcert="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'ccerti','academic'=>'','sttp'=>'','cid'=>($pubconf-1));
+                        $myData1 = array('pub'=>'ccerti','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubconf-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $confcert='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $confcert='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     if($row["Paper_Pdf"] == null)
                         $confpdf="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'cpaper','academic'=>'','sttp'=>'','cid'=>($pubconf-1));
+                        $myData1 = array('pub'=>'cpaper','academic'=>'','sttp'=>'','awd'=>'','cid'=>($pubconf-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $confpdf='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $confpdf='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     $myData = array('val'=>5, 'id'=>($pubconf-1));
                     $arg = base64_encode( json_encode($myData) );
@@ -1085,9 +1085,9 @@ include 'profile_php.php'; ?>
                         $sttpcert="PDF Not Inserted";
                     else
                     {
-                        $myData1 = array('pub'=>'','academic'=>'','sttp'=>'1','cid'=>($sttpattended-1));
+                        $myData1 = array('pub'=>'','academic'=>'','sttp'=>'1','awd'=>'','cid'=>($sttpattended-1));
                         $arg1 = base64_encode( json_encode($myData1) );
-                        $sttpcert='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+                        $sttpcert='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
                     }
                     $myData = array('val'=>6, 'id'=>($sttpattended-1));
                     $arg = base64_encode( json_encode($myData) );
@@ -1202,9 +1202,7 @@ include 'profile_php.php'; ?>
             }
             ?>
         </div>
-
         <div id ="section6">
-
             <legend><h1>Co-curricular Activities  <a href="homepage.php#section6"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
             $sql="SELECT * FROM co_curricular WHERE Emp10_Id=$empid";
@@ -1243,7 +1241,6 @@ include 'profile_php.php'; ?>
             }
             ?>
         </div>
-
         <div id ="section7">
             <legend><h1>Extra Activities  <a href="homepage.php#section7"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
@@ -1283,8 +1280,54 @@ include 'profile_php.php'; ?>
             }
             ?>
         </div>
-        <br>
-        <br>
+        <br><br>
+        <div id ="awards">
+            <legend><h1>Awards and Achievements  <a href="homepage.php#awards"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
+            <?php
+            $sql="SELECT * FROM awards WHERE emp_id=".$empid;
+            $result=$conn->query($sql);
+            if(mysqli_num_rows($result) > 0)
+            {
+                echo "<div class='table-responsive'>";
+                $award=1;
+                echo "<table class='table table-bordered' border='1px' width='100%'>";
+                echo "<tr>";
+                echo "<th>Sr.No.</th>";
+                echo "<th colspan='2'>Options</th>";
+                echo "<th>Award Title</th>";
+                echo "<th id='awddesc'>Description</th>";
+                echo "<th>Issuer</th>";
+                echo "<th>Honour Date</th>";
+                echo "<th>Certificate</th>";
+                echo "</tr>";
+                while($row=mysqli_fetch_assoc($result))
+                {
+                    if($row["certificate"] == null)
+                        $awdcert="PDF Not Inserted";
+                    else
+                    {
+                        $myData1 = array('pub'=>'','academic'=>'','sttp'=>'','awd'=>'1','cid'=>($award-1));
+                        $arg_awd = base64_encode( json_encode($myData1) );
+                        $awdcert='<a href="showpdf.php?parameter='.$arg_awd.'">View</a>';
+                    }
+                    $myData = array('val'=>11, 'id'=>($award-1));
+                    $arg = base64_encode( json_encode($myData) );
+                    echo '<tr><td>'.$award.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
+                    if($row["award_title"] != "") echo '<td>'.$row["award_title"].'</td>';else echo "<td>-</td>";
+                    if($row["award_desc"] != "") echo '<td>'.$row["award_desc"].'</td>';else echo "<td>-</td>";
+                    if($row["award_issuer"] != "") echo '<td>'.$row["award_issuer"].'</td>';else echo "<td>-</td>";
+                    if($row["award_date"] != "") echo '<td>'.$row["award_date"].'</td>';else echo "<td>-</td>";
+                    echo '<td><center>'.$awdcert.'</center></td></tr>';
+                    $award++;
+                }
+                echo "</table>";
+                echo "</div>";
+            }
+            else{
+                echo "<h4>No Awards or Achievements Registered</h4>";
+            }
+            ?>
+        </div><br><br>
     </div>
     <br><br>
 </div>

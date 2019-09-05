@@ -419,9 +419,6 @@ if(isset($_POST["submitcourses"]))
 	$coursesem=$_POST["coursesem"];
 	$courseyear=$_POST["courseyear"];
 
-
-
-
 	$ql="SELECT * from courses";
 	$query=mysqli_query($conn,$ql);
 	while($row=mysqli_fetch_assoc($query))

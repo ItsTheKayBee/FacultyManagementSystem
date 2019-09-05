@@ -8,7 +8,7 @@
 
 		if($val==1)
 		{
-			echo "<style> #section3{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section3{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -17,7 +17,7 @@
 
 		if($val==2)
 		{
-			echo "<style> #section4{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section4{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -26,7 +26,7 @@
 
 		if($val==3)
 		{
-			echo "<style> #section41{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section41{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -35,7 +35,7 @@
 
 		if($val==4)
 		{
-			echo "<style> #section42{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section42{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -44,7 +44,7 @@
 
 		if($val==5)
 		{
-			echo "<style> #section43{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section43{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -53,7 +53,7 @@
 
 		if($val==6)
 		{
-			echo "<style> #section51{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section51{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -62,7 +62,7 @@
 
 		if($val==7)
 		{
-			echo "<style> #section52{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section52{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -71,7 +71,7 @@
 
 		if($val==8)
 		{
-			echo "<style> #section53{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section53{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -80,7 +80,7 @@
 
 		if($val==9)
 		{
-			echo "<style> #section6{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section6{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
@@ -89,11 +89,19 @@
 
 		if($val==10)
 		{
-			echo "<style> #section7{ display:block; visibility:vissible; } </style>";
+			echo "<style> #section7{ display:block; visibility:visible; } </style>";
 		}
 		else
 		{
 			echo "<style> #section7{ display:none; visibility:hidden; } </style>";
+		}
+		if($val==11)
+		{
+			echo "<style> #awards{ display:block; visibility:visible; } </style>";
+		}
+		else
+		{
+			echo "<style> #awards{ display:none; visibility:hidden; } </style>";
 		}
 
 ?>

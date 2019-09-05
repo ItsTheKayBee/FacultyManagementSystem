@@ -167,6 +167,7 @@ include 'homepage_php.php';
 
         <li><a href="#section6">Co curricular activities</a></li>
         <li><a href="#section7">Extra curricular activities</a></li>
+        <li><a href="#awards">Awards and Achievements</a></li>
     </ul>
 </nav>
 
@@ -659,30 +660,30 @@ include 'homepage_php.php';
                             <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
                             <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                                 <div class="category_div" id ="category_div">
-                                   <!-- <select name="category" class="required-entry form-control" id ="category_id" onchange="dynamicdropdown(options[this.selectedIndex].value);">
-                                        <option value="">* Select course type</option>
-                                        <option value="UG">UG</option>
-                                        <option value="PG">PG</option>
-                                        <option value="Labcourses">Lab Courses</option>
-                                        <option value="AC">Audit Course</option>
-                                        <option value="IDC">IDC</option>
-                                    </select>-->
+                                    <!-- <select name="category" class="required-entry form-control" id ="category_id" onchange="dynamicdropdown(options[this.selectedIndex].value);">
+                                         <option value="">* Select course type</option>
+                                         <option value="UG">UG</option>
+                                         <option value="PG">PG</option>
+                                         <option value="Labcourses">Lab Courses</option>
+                                         <option value="AC">Audit Course</option>
+                                         <option value="IDC">IDC</option>
+                                     </select>-->
                                     <?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
-                                        $res = $conn->query($sql);
-                                        echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>*Select Course Type</option>";
-                                        while ($row = $res->fetch_assoc()) {
-                                            if ($res->num_rows > 0) {
-                                                $course_type = $row['course_type_name'];
-                                                $course_value=$course_type;
-                                                if($course_value=="Lab Course"){
-                                                    $course_value="Labcourses";
-                                                }
-                                                if($course_value=="Audit Course"){
-                                                    $course_value="AC";
-                                                }
-                                                echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
+                                    $res = $conn->query($sql);
+                                    echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
+                                    while ($row = $res->fetch_assoc()) {
+                                        if ($res->num_rows > 0) {
+                                            $course_type = $row['course_type_name'];
+                                            $course_value=$course_type;
+                                            if($course_value=="Lab Course"){
+                                                $course_value="Labcourses";
                                             }
+                                            if($course_value=="Audit Course"){
+                                                $course_value="AC";
+                                            }
+                                            echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
                                         }
+                                    }
                                     echo "</select>";?>
                                     <span class="error" id ="coursetype"></span>
                                 </div>
@@ -716,7 +717,7 @@ include 'homepage_php.php';
                                 <span class="error" id ="courseyear1"></span>
                             </div>
                         </div>
-                        <!--<br><br><br>
+                        <br><br><br>
                         <div class="form-group">
                             <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Semester: </label>
                             <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
@@ -733,13 +734,12 @@ include 'homepage_php.php';
                                 </select>
                                 <span class="error" id ="coursesem1"></span>
                             </div>
-                        </div>-->
+                        </div>
                         <br><br><br>
                         <div class="form-group">
-                            <input type="submit"  type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
+                            <input type="submit"  type="submit" <?php /*if($gender=='null') echo "disabled title='Please fill Personal details first'"*/?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
                         </div>
                 </form>
-
             </div>
         </div>
 
@@ -1021,24 +1021,28 @@ include 'homepage_php.php';
                 <legend>Co-Authors</legend>
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Name : </label>
-                    <input type="text" id ="jourcoauthname1" class="form-control" name="jour_coauth_name1" placeholder="* Co Author 1">
-                    <span class="=error" id ="jour_coauth_name1" style="color:red;"></span>
-                    <br>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" id ="jourcoauthname1" class="form-control" name="jour_coauth_name1" placeholder="* Co Author 1">
+                        <span class="=error" id ="jour_coauth_name1" style="color:red;"></span>
+                    </div>
+                    <br><br><br>
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Affiliation : </label>
-                    <input type="text" id ="jourcoauthnameaff1" class="form-control" name="jour_coauth_nameaff1" placeholder="Co Author 1 affiliation">
-                    <span class="=error" id ="jour_coauth_nameaff1" style="color:red;"></span>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" id ="jourcoauthnameaff1" class="form-control" name="jour_coauth_nameaff1" placeholder="Co Author 1 affiliation">
+                        <span class="=error" id ="jour_coauth_nameaff1" style="color:red;"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div id ="inputs">
 
                     </div>
                 </div>
+                <br><br><br>
                 <div class="form-group">
                     <input type="button" style="color:white;" class="btn btn-primary btn-md" value="Add co authors" id ="addInput"/><br>
                     <span class="error" id ="limitidjour"></span>
                     <br>
                 </div>
-                <legend></legend>
                 <br><br><br>
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Publisher's Name: </label>
@@ -1202,18 +1206,23 @@ include 'homepage_php.php';
                 <legend>Co-Authors</legend>
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Name : </label>
-                    <input type="text" id ="confcoauthname1" class="form-control" name="name1" placeholder="* Co Author 1">
-                    <span class="=error" id ="name1" style="color:red;"></span>
-                    <br>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" id ="confcoauthname1" class="form-control" name="name1" placeholder="* Co Author 1">
+                        <span class="=error" id ="name1" style="color:red;"></span>
+                    </div>
+                    <br><br><br>
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Affiliation : </label>
-                    <input type="text" id ="confcoauthnameaff1" class="form-control" name="name1_affiliation" placeholder="Co Author 1 affiliation">
-                    <span class="=error" id ="name1_affiliation" style="color:red;"></span>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" id ="confcoauthnameaff1" class="form-control" name="name1_affiliation" placeholder="Co Author 1 affiliation">
+                        <span class="=error" id ="name1_affiliation" style="color:red;"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div id ="inputsconf">
 
                     </div>
                 </div>
+                <br><br><br>
                 <div class="form-group">
                     <input type="button" style="color:white;" class="btn btn-primary btn-md" value="Add co authors" id ="addInputConf"/><br>
                     <span class="error" id ="limitidconf"></span>
@@ -1731,7 +1740,57 @@ include 'homepage_php.php';
             </form>
         </div>
     </div>
-
+    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+        <div id ="awards">
+            <form method="POST" onsubmit="return awards()" name="awards_form">
+                <fieldset>
+                    <legend><h2>Awards and Achievements</h2></legend>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Title :</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" class="form-control" placeholder="* Title of the Award/Achievement" name = "award_name" id ="award_name">
+                            <span class="error" id ="awdname"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Honour Date :</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input onfocus="(this.type='date')" <?php if(!empty($err[44])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" name="award_date" placeholder="* Honour Date" id="award_date">
+                            <span class="error" id ="awddate"><?php if(!empty($err[44])) echo $err[44];?></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Issuer :</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" id ="award_issuer" class="form-control" name="award_issuer" placeholder="* Issuer">
+                            <span class="error" id ="awdissuer"><?php if(!empty($err[44])) echo $err[44];?></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Description:</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <textarea id ="award_desc" class="form-control" name="award_description" cols="50" rows="6" placeholder="Description"></textarea>
+                            <span class="error" id ="awddesc"></span>
+                        </div>
+                    </div>
+                    <br><br><br><br><br><br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="award_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name="submit_award">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
 </center>
 </body>
