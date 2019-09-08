@@ -552,4 +552,49 @@ if(!isset($_SESSION["Emp_Id"]))
     }
   }
 
+  if($val == 11)
+  {
+    $form = "Awards";
+    $temp = 0;
+    $awd_pdf="";
+    $awd_id=0;
+    $sql = "SELECT * FROM awards WHERE emp_id=$empid";
+    $result=$conn->query($sql);
+    while($row = mysqli_fetch_assoc($result)) {
+      if($temp == $id) {
+        $award_desc = $row["award_desc"];
+        $award_id=$row['award_id'];
+        $awd_id=$award_id;
+        $award_issuer = $row["award_issuer"];
+        $award_name = $row["award_title"];
+        $award_date = $row["award_date"];
+        $awd_certificate=$row["certificate"];
+        break;
+      }
+      else {
+        $temp++;
+      }
+    }
+
+    $myData1 = array('awd'=>'1','cid'=>$id);
+    $arg_awd = base64_encode( json_encode($myData1) );
+    $awd_pdf = "<a href='showpdf.php?parameter=".$arg_awd."'>View PDF</a>";
+
+    if(isset($_POST["return"]))
+    {
+      header('Location:profile.php#awards');
+    }
+
+    if(isset($_POST["delete"]))
+    {
+      $sql="DELETE FROM awards
+        WHERE emp_id = '$empid' and  award_id = '$awd_id'";
+      $result = $conn->query($sql);
+      if($result)
+        header('Location:profile.php#awards');
+      else {
+        echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+      }
+    }
+  }
 ?>

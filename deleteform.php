@@ -926,6 +926,50 @@
 			<br>
 		</div>
 
+        <!--AWARDS AND ACHIEVEMENTS-->
+        <div id ="awards" class="well">
+            <form method="POST" action="" name="awards_form" onsubmit="return awards()"  enctype="multipart/form-data">
+                <center>
+                    <legend><h2>Awards and Achievements</h2></legend>
+                </center>
+                <div style="font-size:17px;">
+                    <div class="form-group">
+                        <b>Award Title :</b> <?php echo $award_name; ?>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <b>Description :</b> <?php echo $award_desc; ?>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <b>Issuer :</b> <?php echo $award_issuer; ?>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <b>Honour Date :</b> <?php echo $award_date; ?>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <b>Certificate :</b>
+                        <?php
+                        if(!empty($awd_certificate))
+                            echo $awd_pdf;
+                        else
+                            echo "<b>Not inserted</b>";
+                        ?>
+                    </div>
+                    <br>
+                </div>
+                <div class="form-group">
+                    <div class="right">
+                        <input type="submit" class="btn" value="Cancel" name = "return"> &nbsp
+                        <input type="submit"  style="color:white;" class="btn btn-primary btn-md" value="Delete" name = "delete">
+                    </div>
+                </div>
+            </form>
+            <br>
+        </div>
+
 	</div>
 
 </body>

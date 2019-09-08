@@ -929,10 +929,6 @@ function coursesvalidation()
 
 }
 
-
-
-
-
 // 4. PUBLICATIONS //
 
 function validateBook()
@@ -1074,9 +1070,6 @@ if(journal_pub_name.trim() == "" && journal_title.trim() == "" && journal_impact
 		alert("* Please Enter all Compulsory Fields for Journals");
 		return false;
 	}
-
-
-
 
 if (journal_cite.trim() == "" || journal_cite == null)
 {

@@ -1742,7 +1742,7 @@ include 'homepage_php.php';
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="awards">
-            <form method="POST" onsubmit="return awards()" name="awards_form">
+            <form method="POST" action="" onsubmit="return awards()" name="awards_form" enctype="multipart/form-data">
                 <fieldset>
                     <legend><h2>Awards and Achievements</h2></legend>
                     <br>
@@ -1781,7 +1781,7 @@ include 'homepage_php.php';
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="award_certificate_image" accept="application/pdf" />
+                            <input type="file" name="award_certificate_image" id="award_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>

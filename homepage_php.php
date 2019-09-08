@@ -3,7 +3,7 @@ include 'dbconnect.php';
 if(!isset($_SESSION["Emp_Id"]))
 	header('Location:logout.php');
 
-$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 $empid=$_SESSION["Emp_Id"];
 $err=array("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","");
 
@@ -900,9 +900,7 @@ if(isset($_POST["submitconference"]))
 
 	if($flagconf==0)
 	{
-
-
-		if($image[9] == 1 && $image[8]==1 && $image[11]==1)
+	    if($image[9] == 1 && $image[8]==1 && $image[11]==1)
 		{
 			$sql="INSERT INTO publication_conferences(Emp5_Id, Type, Name, Place, Date, Author, Certificate, Paper_Pdf, COA1, COA2, COA3, COA4, COA5, COA6, COA7, COA8, COA9, COA10, COA1_AFF, COA2_AFF, COA3_AFF, COA4_AFF, COA5_AFF, COA6_AFF, COA7_AFF, COA8_AFF, COA9_AFF, COA10_AFF, H_Index ,DOI, Pub_Name, Proc_Name, Peer, Theme, Paid, PageNo, ISSN, Organizer, Presented, Web, Poster, Citation_Index,count,presentation_pdf) VALUES ($empid,'$confType','$confName','$confPlace','$confDate','$confAuthName','$certificateImage','$paperImage','$confCoa1','$confCoa2','$confCoa3','$confCoa4','$confCoa5','$confCoa6','$confCoa7','$confCoa8','$confCoa9','$confCoa10','$confCoa1_Aff','$confCoa2_Aff','$confCoa3_Aff','$confCoa4_Aff','$confCoa5_Aff','$confCoa6_Aff','$confCoa7_Aff','$confCoa8_Aff','$confCoa9_Aff','$confCoa10_Aff','$confHindex','$confDoi','$confPubname','$confProname','$confPeer','$confThemename','$confPaid','$confPageno','$confIssn','$confOrgname','$confPresented','$confWeb','$confPoster','$confCite',$count,'$confPosterpdf')";
 		}
@@ -1149,5 +1147,40 @@ if(isset($_POST["submitextra"]))
 			echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
 		}
 	}
+}
+
+$flagawd=0;
+if(isset($_POST["submit_award"])) {
+    $award_name = $_POST['award_name'];
+    $award_date = $_POST['award_date'];
+    $award_issuer = $_POST['award_issuer'];
+    $award_description = $_POST['award_description'];
+
+    $ba = date_create($award_date);
+    $ab = date_create($dob);
+    $diff = date_diff($ab, $ba);
+    if ($diff->format("%R") == '-') {
+        $err[41] = "* Please Enter A Valid Start Date";
+        $flagawd = 1;
+    }
+
+    if (!empty($_FILES["award_certificate_image"]["tmp_name"])) {
+        $award_certificate_image = addslashes(file_get_contents($_FILES["award_certificate_image"]["tmp_name"]));
+        $image[13] = 1;
+    } else
+        $image[13] = 0;
+
+    if ($flagawd == 0) {
+        if ($image[13] == 1) {
+            $award_query = "INSERT INTO awards(emp_id,award_title,award_date,award_issuer,award_desc,certificate) VALUES ($empid,'$award_name','$award_date','$award_issuer','$award_description','$award_certificate_image')";
+        } else {
+            $award_query = "INSERT INTO awards(emp_id,award_title,award_date,award_issuer,award_desc,certificate) VALUES ($empid,'$award_name','$award_date','$award_issuer','$award_description',NULL)";
+        }
+        if ($conn->query($award_query) == true) {
+            header('Location:profile.php#awards');
+        } else {
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
+        }
+    }
 }
 ?>

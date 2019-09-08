@@ -1194,6 +1194,8 @@ if($val == 10) {
         }
     }
 }
+
+$flagawd=0;
 if($val===11){
     $form = "Awards";
     $temp = 0;
@@ -1223,28 +1225,37 @@ if($val===11){
         $award_desc=$_POST["award_desc"];
         $award_date=$_POST["award_date"];
         $award_issuer=$_POST["award_issuer"];
-        if(!empty($_FILES["certificate"]["tmp_name"]))
-            $awd_certificate = addslashes(file_get_contents($_FILES["certificate"]["tmp_name"]));
-        $myData1 = array('awd'=>'1','cid'=>$id);
-        $arg_awd = base64_encode( json_encode($myData1) );
-        $awd_pdf = "<a href='showpdf.php?parameter=".$arg_awd."'>View PDF</a>";
 
         $ba=date_create($award_date);
         $ab=date_create($dob);
         $diff=date_diff($ab,$ba);
         if($diff->format("%R")=='-'){
             $err[11]="* Please Enter A Valid Date";
+            $flagawd=1;
         }
-        else{
-            $sql="UPDATE awards SET award_desc='$award_desc',award_issuer='$award_issuer',award_date='$award_date',
-                  award_title='$award_name',certificate='$awd_certificate' WHERE emp_id='$empid'
-                  and award_id=$awd_id";
-            if($conn->query($sql)==true)
-            {
+
+        if(!empty($_FILES["award_certificate_image"]["tmp_name"])){
+            $award_certificate_image1 = addslashes(file_get_contents($_FILES["award_certificate_image"]["tmp_name"]));
+            $image[13]=1;
+        }else{
+            $image[13]=0;
+        }
+        $myData1 = array('awd'=>'1','cid'=>$id);
+        $arg_awd = base64_encode( json_encode($myData1) );
+        $awd_pdf = "<a href='showpdf.php?parameter=".$arg_awd."'>View PDF</a>";
+
+        if($flagawd==0) {
+            if ($image[13] == 1) {
+                $sql = "UPDATE awards SET award_desc='$award_desc',award_issuer='$award_issuer',award_date='$award_date',
+                  award_title='$award_name',certificate='$award_certificate_image1' WHERE emp_id='$empid' and award_id=$awd_id";
+            } else {
+                $sql = "UPDATE awards SET award_desc='$award_desc',award_issuer='$award_issuer',award_date='$award_date',
+                  award_title='$award_name' WHERE emp_id='$empid' and award_id=$awd_id";
+            }
+            if ($conn->query($sql) == true) {
                 header('Location:profile.php#awards');
-            }else
-            {
-                echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
             }
         }
     }

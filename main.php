@@ -546,12 +546,12 @@ if(isset($_POST["ReportSubmit"]))
                 document.getElementById("fdtype").innerHTML = "* Please Enter Field Data type";
                 document.add_field.field_data_type.style = "border:2px solid red";
             }
-            if (flen === "" || flen== null )
+           /* if (flen === "" || flen== null )
             {
                 flenflag=1;
                 document.getElementById("flen").innerHTML = "* Please Enter Field Length";
                 document.add_field.field_length.style = "border:2px solid red";
-            }
+            }*/
             if(isNaN(flen)){
                 flenflag=1;
                 document.getElementById("flen").innerHTML = "* Please Enter A Valid Number";
@@ -846,7 +846,7 @@ if(isset($_POST["addcourse_submit"]))
     if($conn->query($course_add_query)===TRUE){
         $succaddcourse="Course has been successfully added!";
     }else{
-        $erraddcourse="*Course with ths code already exists.";
+        $erraddcourse="*Course with this code already exists.";
     }
 }
 
@@ -858,6 +858,24 @@ if(isset($_POST["addprogram_submit"]))
         $succaddcoursetype="Course Type has been successfully added!";
     }else{
         $erraddcoursetype="*This Course Type already exists.";
+    }
+}
+
+if(isset($_POST["addfield_submit"]))
+{
+    $field_name=$_POST['field_name'];
+    $field_data_type=$_POST['field_data_type'];
+    $field_length=$_POST['field_length'];
+    $field_table=$_POST['field_table'];
+    if($field_length==NULL || $field_length===""){
+        $add_field_query="ALTER TABLE ".$field_table." ADD COLUMN ".$field_name." ".$field_data_type.";";
+    }else{
+        $add_field_query="ALTER TABLE ".$field_table." ADD COLUMN ".$field_name." ". $field_data_type."(".$field_length.")";
+    }
+    if($conn->query($add_field_query)===TRUE){
+        $succaddfield="New field is added successfully!";
+    }else{
+        $erraddfield="*Field already exists in the table.";
     }
 }
 
@@ -1130,16 +1148,16 @@ if(!isset($_SESSION["firstvisit"]))
                 </form>
             </div>
             <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
-                <legend><h1>Add Program</h1></legend>
+                <legend><h1>Add Course Type</h1></legend>
                 <form  action="main.php" name="add_program" method="POST" onsubmit="return validateAddProgram()">
                     <div class="form-group">
                         <?php
                         if(!empty($erraddcoursetype)){
-                            echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Program Name" autofocus name="program_name">';
+                            echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Course Type Name" autofocus name="program_name">';
                             echo '<span class="error" id ="prid">'.$erraddcoursetype.'</span>';
                         }
                         else {
-                            echo '<input type="text" class="form-control" placeholder="Enter Program Name" name="program_name" >';
+                            echo '<input type="text" class="form-control" placeholder="Enter Course Type Name" name="program_name" >';
                             echo '<span class="error" id ="prid"></span><br>';
                         }
                         ?>
@@ -1186,7 +1204,7 @@ if(!isset($_SESSION["firstvisit"]))
                         ?>
                     </div>
                     <div class="form-group">
-                        <center><input type="submit" class="btn btn-primary" name="addprogram_submit" value="Submit"></center>
+                        <center><input type="submit" class="btn btn-primary" name="addfield_submit" value="Submit"></center>
                     </div>
                 </form>
             </div>
