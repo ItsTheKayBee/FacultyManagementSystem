@@ -341,6 +341,28 @@ include 'profile_php.php'; ?>
                             <tr>
                                 <td>Joining Date: </td><td><?php if(!($join_date == '1950-01-01')) echo "<b>$join_date</b>"; else echo "<b>-<b>";?></td>
                             </tr>
+                            <?php
+                            $new_field_query="select * from new_fields where table_name='personal_details'";
+                            $result=$conn->query($new_field_query);
+                            if($result->num_rows>0){
+                                while($row=$result->fetch_assoc()) {
+                                    $field_name = $row['field_name'];
+                                    $label = $row['label'];
+                                    $display = $row['display'];
+                                    if($display==1) {
+                                        $table_sql = "select $field_name from personal_details where emp3_id=$empid";
+                                        $tab_res = $conn->query($table_sql);
+                                        if ($tab_res->num_rows > 0) {
+                                            $tab_row = $tab_res->fetch_assoc();
+                                            $new_field=$tab_row[$field_name];
+                                            echo "<tr>
+                                            <td>" . $label . ":</td><td><b>".$new_field."</b></td>
+                                        </tr>";
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
                             <tr><td></td><td></td></tr>
                             </tbody>
                         </table>

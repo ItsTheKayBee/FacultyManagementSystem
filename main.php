@@ -47,7 +47,7 @@ if(isset($_POST["ReportSubmit"]))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Priveleges : <?php echo $eid; ?></title>
+    <title>Privileges : <?php echo $eid; ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -76,13 +76,10 @@ if(isset($_POST["ReportSubmit"]))
         });
 
     </script>
-
     <script type="text/javascript" src="main_js.js"></script>
     <script>
 
         document.cookie ="cook = ";
-
-
         var sql = "";
         var select = [0,0,0,0,0,0,0,0,0,0,0];
 
@@ -520,19 +517,23 @@ if(isset($_POST["ReportSubmit"]))
             var ftypeflag=0;
             var flenflag=0;
             var ftabflag=0;
+            var flabflag=0;
             var fname = document.add_field.field_name.value;
             var ftype = document.add_field.field_data_type.value;
             var flen = document.add_field.field_length.value;
             var ftab = document.add_field.field_table.value;
+            var flab = document.add_field.field_label.value;
 
             document.add_field.field_name.style="";
             document.add_field.field_data_type.style="";
             document.add_field.field_length.style="";
             document.add_field.field_table.style="";
+            document.add_field.field_label.style="";
             document.getElementById("fname").innerHTML = "";
             document.getElementById("ftab").innerHTML = "";
             document.getElementById("fdtype").innerHTML = "";
             document.getElementById("flen").innerHTML = "";
+            document.getElementById("flabel").innerHTML = "";
 
             if (fname === "" || fname== null)
             {
@@ -546,12 +547,14 @@ if(isset($_POST["ReportSubmit"]))
                 document.getElementById("fdtype").innerHTML = "* Please Enter Field Data type";
                 document.add_field.field_data_type.style = "border:2px solid red";
             }
-           /* if (flen === "" || flen== null )
-            {
-                flenflag=1;
-                document.getElementById("flen").innerHTML = "* Please Enter Field Length";
-                document.add_field.field_length.style = "border:2px solid red";
-            }*/
+            if(ftype==="VARCHAR") {
+                if (flen === "" || flen== null )
+                {
+                    flenflag=1;
+                    document.getElementById("flen").innerHTML = "* Please Enter Field Length";
+                    document.add_field.field_length.style = "border:2px solid red";
+                }
+            }
             if(isNaN(flen)){
                 flenflag=1;
                 document.getElementById("flen").innerHTML = "* Please Enter A Valid Number";
@@ -563,7 +566,13 @@ if(isset($_POST["ReportSubmit"]))
                 document.getElementById("ftab").innerHTML = "* Please Select A Valid Table";
                 document.add_field.field_table.style = "border:2px solid red";
             }
-            if(fnameflag===1 || ftypeflag===1 || ftabflag===1 || flenflag===1)
+            if (flab === "" || flab== null)
+            {
+                flabflag=1;
+                document.getElementById("flabel").innerHTML = "* Please Enter A Valid Label Name";
+                document.add_field.field_label.style = "border:2px solid red";
+            }
+            if(fnameflag===1 || ftypeflag===1 || ftabflag===1 || flenflag===1 || flabflag===1)
             {
                 return false;
             }
@@ -576,15 +585,15 @@ if(isset($_POST["ReportSubmit"]))
             document.getElementById("category").style = "";
             document.getElementById("subcaterror").innerHTML = "";
             document.getElementById("subcategory").style = "";
-            if(both=="")
+            if(both==="")
             {
-                if(a !="" && y == "")
+                if(a !=="" && y === "")
                 {
                     document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
                     document.getElementById("subcategory").style = "border:2px solid red;";
                     return false;
                 }
-                else if(a=="" && y=="")
+                else if(a==="" && y==="")
                 {
                     document.getElementById("caterror").innerHTML = "* Please Select A Category";
                     document.getElementById("category").style = "border:2px solid red;";
@@ -760,7 +769,7 @@ if(isset($_POST["assprivemp"]))
             $conn->query($sql);
             echo "<script type='text/javascript'>
             $(document).ready(function(){
-            $('#myModal2').modal('show');
+                $('#myModal2').modal('show');
             });
             </script>";
             echo "<script>location.href='main.php#section24';</script>";
@@ -777,7 +786,7 @@ if(isset($_POST["assprivemp"]))
         $_SESSION["revokeid"] = $idset;
         echo "<script type='text/javascript'>
              $(document).ready(function(){
-             $('#myModal3').modal('show');
+                 $('#myModal3').modal('show');
              });
              </script>";
     }
@@ -861,21 +870,28 @@ if(isset($_POST["addprogram_submit"]))
     }
 }
 
-if(isset($_POST["addfield_submit"]))
-{
-    $field_name=$_POST['field_name'];
-    $field_data_type=$_POST['field_data_type'];
-    $field_length=$_POST['field_length'];
-    $field_table=$_POST['field_table'];
-    if($field_length==NULL || $field_length===""){
-        $add_field_query="ALTER TABLE ".$field_table." ADD COLUMN ".$field_name." ".$field_data_type.";";
-    }else{
-        $add_field_query="ALTER TABLE ".$field_table." ADD COLUMN ".$field_name." ". $field_data_type."(".$field_length.")";
+if(isset($_POST["addfield_submit"])) {
+    $field_name = $_POST['field_name'];
+    $field_data_type = $_POST['field_data_type'];
+    $field_length = $_POST['field_length'];
+    $field_table = $_POST['field_table'];
+    $field_label = $_POST['field_label'];
+    $field_display = isset($_POST['field_display']);
+    if($field_display!=1)
+        $field_display=0;
+    if ($field_length == NULL || $field_length === "") {
+        $add_field_query = "ALTER TABLE " . $field_table . " ADD COLUMN " . $field_name . " " . $field_data_type . ";";
+    } else {
+        $add_field_query = "ALTER TABLE " . $field_table . " ADD COLUMN " . $field_name . " " . $field_data_type . "(" . $field_length . ")";
     }
-    if($conn->query($add_field_query)===TRUE){
-        $succaddfield="New field is added successfully!";
-    }else{
-        $erraddfield="*Field already exists in the table.";
+    if ($conn->query($add_field_query) === TRUE) {
+        $succaddfield = "New field is added successfully!";
+        $new_field_query = "insert into new_fields(field_name,label,table_name,display) values('$field_name','$field_label','$field_table',$field_display)";
+        if($conn->query($new_field_query)===true){
+            $succaddfield = "New field is added successfully!";
+        }
+    } else {
+        $erraddField = "*Field already exists in the table.";
     }
 }
 
@@ -1097,11 +1113,11 @@ if(!isset($_SESSION["firstvisit"]))
                     <br>
                     <p id ="assprivs" class="asspriv"><span id ="abc" class="glyphicon glyphicon-collapse-down"></span>&nbsp;Assign Privelege(s)</p>
                     <div class="form-group" id ="privs">
-                        <input type="checkbox" name="p1" id ="p1" value="TRUE" class="checkbox-inline">Profile
-                        <input type="checkbox" name="p2" id ="p2" value="TRUE" class="checkbox-inline">View And Edit Privelages
-                        <input type="checkbox" name="p3" id ="p3" value="TRUE" class="checkbox-inline">Add Faculty
-                        <input type="checkbox" name="p4" id ="p4" value="TRUE" class="checkbox-inline">Report Generation
-                        <input type="checkbox" name="p5" id ="p5" value="TRUE" class="checkbox-inline">Generate Faculty CV's
+                        <input type="checkbox" name="p1" id ="p1" value="TRUE" class="checkbox-inline">&nbsp;Profile
+                        <input type="checkbox" name="p2" id ="p2" value="TRUE" class="checkbox-inline">&nbsp;View And Edit Privileges
+                        <input type="checkbox" name="p3" id ="p3" value="TRUE" class="checkbox-inline">&nbsp;Add Faculty
+                        <input type="checkbox" name="p4" id ="p4" value="TRUE" class="checkbox-inline">&nbsp;Report Generation
+                        <input type="checkbox" name="p5" id ="p5" value="TRUE" class="checkbox-inline">&nbsp;Generate Faculty CV's
                     </div>
                     <span class="error" id ="privelages"></span>
                     <input type="hidden" id ="storepass" name="storepass">
@@ -1174,25 +1190,23 @@ if(!isset($_SESSION["firstvisit"]))
                     <div class="form-group">
                         <?php
                         if(!empty($erraddField)){
-                            echo '<div class="row"><div class="col-sm-3 col-md-3 col-lg-3 col-xs-3">><input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Field Name" autofocus name="field_name">';
+                            echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Field Name" autofocus name="field_name">';
                             echo '<span class="error" id ="fname">'.$erraddField.'</span></div>';
                         }
                         else {
-                            echo '<div class="row"><div class="col-sm-3 col-md-3 col-lg-3 col-xs-3"><input type="text" class="form-control" placeholder="Enter Field Name" name="field_name" >';
+                            echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" placeholder="Enter Field Name" name="field_name" >';
                             echo '<span class="error" id ="fname"></span><br><br></div>';
                         }
-
-                        echo '<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3"><select class="form-control" name="field_data_type" id="field_0_2"><option value="">Select Data Type</option>
-                                <option title="A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295">INT</option><option title="A variable-length (0-65,535) string, the effective maximum length is subject to the maximum row size">VARCHAR</option><option title="A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes">TEXT</option><option title="A date, supported range is 1000-01-01 to 9999-12-31">DATE</option><optgroup label="Numeric"><option title="A 1-byte integer, signed range is -128 to 127, unsigned range is 0 to 255">TINYINT</option><option title="A 2-byte integer, signed range is -32,768 to 32,767, unsigned range is 0 to 65,535">SMALLINT</option><option title="A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned range is 0 to 16,777,215">MEDIUMINT</option><option title="A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295">INT</option><option title="An 8-byte integer, signed range is -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807, unsigned range is 0 to 18,446,744,073,709,551,615">BIGINT</option><option disabled="disabled">-</option><option title="A fixed-point number (M, D) - the maximum number of digits (M) is 65 (default 10), the maximum number of decimals (D) is 30 (default 0)">DECIMAL</option><option title="A small floating-point number, allowable values are -3.402823466E+38 to -1.175494351E-38, 0, and 1.175494351E-38 to 3.402823466E+38">FLOAT</option><option title="A double-precision floating-point number, allowable values are -1.7976931348623157E+308 to -2.2250738585072014E-308, 0, and 2.2250738585072014E-308 to 1.7976931348623157E+308">DOUBLE</option><option title="Synonym for DOUBLE (exception: in REAL_AS_FLOAT SQL mode it is a synonym for FLOAT)">REAL</option><option disabled="disabled">-</option><option title="A bit-field type (M), storing M of bits per value (default is 1, maximum is 64)">BIT</option><option title="A synonym for TINYINT(1), a value of zero is considered false, nonzero values are considered true">BOOLEAN</option><option title="An alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE">SERIAL</option></optgroup><optgroup label="Date and time"><option title="A date, supported range is 1000-01-01 to 9999-12-31">DATE</option><option title="A date and time combination, supported range is 1000-01-01 00:00:00 to 9999-12-31 23:59:59">DATETIME</option><option title="A timestamp, range is 1970-01-01 00:00:01 UTC to 2038-01-09 03:14:07 UTC, stored as the number of seconds since the epoch (1970-01-01 00:00:00 UTC)">TIMESTAMP</option><option title="A time, range is -838:59:59 to 838:59:59">TIME</option><option title="A year in four-digit (4, default) or two-digit (2) format, the allowable values are 70 (1970) to 69 (2069) or 1901 to 2155 and 0000">YEAR</option></optgroup><optgroup label="String"><option title="A fixed-length (0-255, default 1) string that is always right-padded with spaces to the specified length when stored">CHAR</option><option title="A variable-length (0-65,535) string, the effective maximum length is subject to the maximum row size">VARCHAR</option><option disabled="disabled">-</option><option title="A TEXT column with a maximum length of 255 (2^8 - 1) characters, stored with a one-byte prefix indicating the length of the value in bytes">TINYTEXT</option><option title="A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes">TEXT</option><option title="A TEXT column with a maximum length of 16,777,215 (2^24 - 1) characters, stored with a three-byte prefix indicating the length of the value in bytes">MEDIUMTEXT</option><option title="A TEXT column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) characters, stored with a four-byte prefix indicating the length of the value in bytes">LONGTEXT</option><option disabled="disabled">-</option><option title="Similar to the CHAR type, but stores binary byte strings rather than non-binary character strings">BINARY</option><option title="Similar to the VARCHAR type, but stores binary byte strings rather than non-binary character strings">VARBINARY</option><option disabled="disabled">-</option><option title="A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored with a one-byte prefix indicating the length of the value">TINYBLOB</option><option title="A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes, stored with a three-byte prefix indicating the length of the value">MEDIUMBLOB</option><option title="A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, stored with a two-byte prefix indicating the length of the value">BLOB</option><option title="A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) bytes, stored with a four-byte prefix indicating the length of the value">LONGBLOB</option><option disabled="disabled">-</option><option title="An enumeration, chosen from the list of up to 65,535 values or the special \'\' error value">ENUM</option><option title="A single value chosen from a set of up to 64 members">SET</option></optgroup><optgroup label="Spatial"><option title="A type that can store a geometry of any type">GEOMETRY</option><option title="A point in 2-dimensional space">POINT</option><option title="A curve with linear interpolation between points">LINESTRING</option><option title="A polygon">POLYGON</option><option title="A collection of points">MULTIPOINT</option><option title="A collection of curves with linear interpolation between points">MULTILINESTRING</option><option title="A collection of polygons">MULTIPOLYGON</option><option title="A collection of geometry objects of any type">GEOMETRYCOLLECTION</option></optgroup>
-                                </select>';
+                        echo '<div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" placeholder="Enter a Label" name="field_label">';
+                        echo '<span class="error" id ="flabel"></span><br><br></div>';
+                        echo '<div class="col-sm-4 col-md-4 col-lg-4 col-xs-4"><select class="form-control" name="field_data_type" id="field_0_2"><option value="">Select Data Type</option>
+                                <option title="A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295">INT</option><option title="A variable-length (0-65,535) string, the effective maximum length is subject to the maximum row size">VARCHAR</option><option title="A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes">TEXT</option><option title="A date, supported range is 1000-01-01 to 9999-12-31">DATE</option><optgroup label="Numeric"><option title="A 1-byte integer, signed range is -128 to 127, unsigned range is 0 to 255">TINYINT</option><option title="A 2-byte integer, signed range is -32,768 to 32,767, unsigned range is 0 to 65,535">SMALLINT</option><option title="A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned range is 0 to 16,777,215">MEDIUMINT</option><option title="A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295">INT</option><option title="An 8-byte integer, signed range is -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807, unsigned range is 0 to 18,446,744,073,709,551,615">BIGINT</option><option disabled="disabled">-</option><option title="A fixed-point number (M, D) - the maximum number of digits (M) is 65 (default 10), the maximum number of decimals (D) is 30 (default 0)">DECIMAL</option><option title="A small floating-point number, allowable values are -3.402823466E+38 to -1.175494351E-38, 0, and 1.175494351E-38 to 3.402823466E+38">FLOAT</option><option title="A double-precision floating-point number, allowable values are -1.7976931348623157E+308 to -2.2250738585072014E-308, 0, and 2.2250738585072014E-308 to 1.7976931348623157E+308">DOUBLE</option><option title="Synonym for DOUBLE (exception: in REAL_AS_FLOAT SQL mode it is a synonym for FLOAT)">REAL</option><option disabled="disabled">-</option><option title="A bit-field type (M), storing M of bits per value (default is 1, maximum is 64)">BIT</option><option title="A synonym for TINYINT(1), a value of zero is considered false, nonzero values are considered true">BOOLEAN</option><option title="An alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE">SERIAL</option></optgroup><optgroup label="Date and time"><option title="A date, supported range is 1000-01-01 to 9999-12-31">DATE</option><option title="A date and time combination, supported range is 1000-01-01 00:00:00 to 9999-12-31 23:59:59">DATETIME</option><option title="A timestamp, range is 1970-01-01 00:00:01 UTC to 2038-01-09 03:14:07 UTC, stored as the number of seconds since the epoch (1970-01-01 00:00:00 UTC)">TIMESTAMP</option><option title="A time, range is -838:59:59 to 838:59:59">TIME</option><option title="A year in four-digit (4, default) or two-digit (2) format, the allowable values are 70 (1970) to 69 (2069) or 1901 to 2155 and 0000">YEAR</option></optgroup><optgroup label="String"><option title="A fixed-length (0-255, default 1) string that is always right-padded with spaces to the specified length when stored">CHAR</option><option title="A variable-length (0-65,535) string, the effective maximum length is subject to the maximum row size">VARCHAR</option><option disabled="disabled">-</option><option title="A TEXT column with a maximum length of 255 (2^8 - 1) characters, stored with a one-byte prefix indicating the length of the value in bytes">TINYTEXT</option><option title="A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes">TEXT</option><option title="A TEXT column with a maximum length of 16,777,215 (2^24 - 1) characters, stored with a three-byte prefix indicating the length of the value in bytes">MEDIUMTEXT</option><option title="A TEXT column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) characters, stored with a four-byte prefix indicating the length of the value in bytes">LONGTEXT</option><option disabled="disabled">-</option><option title="Similar to the CHAR type, but stores binary byte strings rather than non-binary character strings">BINARY</option><option title="Similar to the VARCHAR type, but stores binary byte strings rather than non-binary character strings">VARBINARY</option><option disabled="disabled">-</option><option title="A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored with a one-byte prefix indicating the length of the value">TINYBLOB</option><option title="A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes, stored with a three-byte prefix indicating the length of the value">MEDIUMBLOB</option><option title="A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, stored with a two-byte prefix indicating the length of the value">BLOB</option><option title="A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) bytes, stored with a four-byte prefix indicating the length of the value">LONGBLOB</option><option disabled="disabled">-</option><option title="An enumeration, chosen from the list of up to 65,535 values or the special \'\' error value">ENUM</option><option title="A single value chosen from a set of up to 64 members">SET</option></optgroup><optgroup label="Spatial"><option title="A type that can store a geometry of any type">GEOMETRY</option><option title="A point in 2-dimensional space">POINT</option><option title="A curve with linear interpolation between points">LINESTRING</option><option title="A polygon">POLYGON</option><option title="A collection of points">MULTIPOINT</option><option title="A collection of curves with linear interpolation between points">MULTILINESTRING</option><option title="A collection of polygons">MULTIPOLYGON</option><option title="A collection of geometry objects of any type">GEOMETRYCOLLECTION</option></select>';
                         echo '<span class="error" id ="fdtype"></span><br><br></div>';
-
-                        echo '<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3"><input type="text" class="form-control" placeholder="Enter Field Length" name="field_length">';
+                        echo '<div class="col-sm-4 col-md-4 col-lg-4 col-xs-4"><input type="text" class="form-control" placeholder="Enter Field Length" name="field_length">';
                         echo '<span class="error" id ="flen"></span><br><br></div>';
-
                         $sql="show tables";
                         $res=$conn->query($sql);
-                        echo "<div class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\"><select name='field_table' class='form-control'><option value=''>Select Table</option>";
+                        echo "<div class=\"col-sm-4 col-md-4 col-lg-4 col-xs-4\"><select name='field_table' class='form-control'><option value=''>Select Table</option>";
                         while($row=$res->fetch_assoc()){
                             if($res->num_rows>0){
                                 $table=$row['Tables_in_faculty'];
@@ -1200,7 +1214,8 @@ if(!isset($_SESSION["firstvisit"]))
                             }
                         }
                         echo "</select>";
-                        echo '<span class="error" id ="ftab"></span><br><br></div></div>';
+                        echo '<span class="error" id ="ftab"></span><br></div>';
+                        echo '<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12"><input type="checkbox" class="checkbox-inline" name="field_display" value="display">&nbsp;Display this field?</div>';
                         ?>
                     </div>
                     <div class="form-group">
