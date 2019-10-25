@@ -355,9 +355,15 @@ include 'profile_php.php'; ?>
                                         if ($tab_res->num_rows > 0) {
                                             $tab_row = $tab_res->fetch_assoc();
                                             $new_field=$tab_row[$field_name];
-                                            echo "<tr>
-                                            <td>" . $label . ":</td><td><b>".$new_field."</b></td>
-                                        </tr>";
+                                            if($new_field!=null) {
+                                                echo "<tr>
+                                                    <td>" . $label . ":</td><td><b>" . $new_field . "</b></td>
+                                                </tr>";
+                                            }else{
+                                                echo "<tr>
+                                                    <td>" . $label . ":</td><td><b>-</b></td>
+                                                </tr>";
+                                            }
                                         }
                                     }
                                 }
