@@ -1210,7 +1210,8 @@ if(!isset($_SESSION["firstvisit"]))
                         while($row=$res->fetch_assoc()){
                             if($res->num_rows>0){
                                 $table=$row['Tables_in_faculty'];
-                                echo "<option value='".$table."'>".$table."</option>";
+                                if($table!='academic_details' && $table!='new_fields' && $table!='course_type' && $table!='courses_list' && $table!='edit' && $table!='login')
+                                    echo "<option value='".$table."'>".$table."</option>";
                             }
                         }
                         echo "</select>";

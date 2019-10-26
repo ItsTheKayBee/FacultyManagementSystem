@@ -648,7 +648,7 @@ include 'editpage_php.php'
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Digital Object Identifier : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="text" id ="journal_doiid" class="form-control" name="journal_doi" value = "<?php echo $doi; ?>" placeholder=" Digital Object Identifier">
+                                <input type="text" id ="journal_doiid" class="form-control" name="journal_doi" value = "<?php echo $doi; ?>" placeholder=" Digital Object Identifier">
                             <span class="error" id ="journal_doi"></span>
                         </div>
                     </div>

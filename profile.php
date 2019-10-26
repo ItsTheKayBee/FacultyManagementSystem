@@ -399,7 +399,6 @@ include 'profile_php.php'; ?>
                             <tr>
                                 <td>Date: </td><td><?php if(!($pro3_date == '1950-01-01')) echo "<b>$pro3_date</b>"; else echo "<b>-<b>";?></td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -441,9 +440,9 @@ include 'profile_php.php'; ?>
                 echo "<th>Year Of Passing</th>";
                 echo "<th>Marksheet</th>";
                 echo "</tr>";
-
+                $count=1;
                 if(!empty($sscInstitute)){
-                    echo "<tr><td>1</td><td><a href='homepage.php#section2'><span class='glyphicon glyphicon-edit'></span></a></td>";
+                    echo "<tr><td>$count</td><td><a href='homepage.php#section2'><span class='glyphicon glyphicon-edit'></span></a></td>";
                     echo "<td>SSC</td><td>";
                     echo "$sscInstitute";
                     echo "</td><td>";
@@ -451,10 +450,11 @@ include 'profile_php.php'; ?>
                     echo "</td><td>";
                     echo "$sscYear";
                     echo "</td><td><center>".$ssc."</center></td></tr>";
+                    $count++;
                 }
 
                 if(!empty($hscInstitute)){
-                    echo "<tr><td>2</td><td><a href='homepage.php#hscnew'><span class='glyphicon glyphicon-edit'></span></a></td>";
+                    echo "<tr><td>$count</td><td><a href='homepage.php#hscnew'><span class='glyphicon glyphicon-edit'></span></a></td>";
                     echo "<td>HSC</td><td>";
                     echo "$hscInstitute";
                     echo "</td><td>";
@@ -462,9 +462,10 @@ include 'profile_php.php'; ?>
                     echo "</td><td>";
                     echo "$hscYear";
                     echo "</td><td><center>".$hsc."</center></td></tr>";
+                    $count++;
                 }
                 if(!empty($bachelorsInstitute)){
-                    echo "<tr><td>3</td><td><a href='homepage.php#degree'><span class='glyphicon glyphicon-edit'></span></a></td>";
+                    echo "<tr><td>$count</td><td><a href='homepage.php#degree'><span class='glyphicon glyphicon-edit'></span></a></td>";
                     echo "<td>Bachelors In $bachelorsIn</td><td>";
                     echo "$bachelorsInstitute";
                     echo "</td><td>";
@@ -472,9 +473,10 @@ include 'profile_php.php'; ?>
                     echo "</td><td>";
                     echo "$bachelorsYear";
                     echo "</td><td><center>".$bach."</center></td></tr>";
+                    $count++;
                 }
                 if(!empty($mastersInstitute)){
-                    echo "<tr><td>4</td><td><a href='homepage.php#masters'><span class='glyphicon glyphicon-edit'></span></a></td>";
+                    echo "<tr><td>$count</td><td><a href='homepage.php#masters'><span class='glyphicon glyphicon-edit'></span></a></td>";
                     echo "<td>Masters In $mastersIn</td><td>";
                     echo "$mastersInstitute";
                     echo "</td><td>";
@@ -482,9 +484,10 @@ include 'profile_php.php'; ?>
                     echo "</td><td>";
                     echo "$mastersYear";
                     echo "</td><td><center>".$mast."</center></td></tr>";
+                    $count++;
                 }
                 if(!empty($phdInstitute)){
-                    echo "<tr><td>5</td><td><a href='homepage.php#phd'><span class='glyphicon glyphicon-edit'></span></a></td>";
+                    echo "<tr><td>$count</td><td><a href='homepage.php#phd'><span class='glyphicon glyphicon-edit'></span></a></td>";
                     echo "<td>Phd In $phdIn</td><td>";
                     echo "$phdInstitute";
                     echo "</td><td>";
@@ -492,6 +495,7 @@ include 'profile_php.php'; ?>
                     echo "</td><td>";
                     echo "$phdYear";
                     echo "</td><td><center>".$phdi."</center></td></tr>";
+                    $ocunt++;
                 }
                 echo "</table>";
                 echo "</div>";
@@ -518,16 +522,49 @@ include 'profile_php.php'; ?>
                 echo "<th>Course Id</th>";
                 echo "<th>Year</th>";
                 echo "<th>Semester</th>";
+                $new_field_query = "select * from new_fields where table_name='courses'";
+                $result = $conn->query($new_field_query);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
-
                 for($i=0;$i<$temp;$i++){
                     $myData = array('val'=>1, 'id'=>$i);
+                    $GLOBALS['course_id']=$courseid[$i];
                     $arg = base64_encode( json_encode($myData) );
                     echo "<tr><td>".($i+1)."</td><td><a href='editpage.php?parameter=".$arg."'><span class='glyphicon glyphicon-edit'>&nbsp</span></a><td><a href='deleteform.php?parameter=".$arg."'><span class='glyphicon glyphicon-trash'></span></a></td></td>";
                     if($coursecategory[$i] != "") echo "<td>".$coursecategory[$i]."</td>"; else echo "-";
                     if($courseid[$i] != "") echo "<td>".$courseid[$i]."</td>"; else echo "-";
                     if($courseyear[$i] != "") echo "<td>".$courseyear[$i]."</td>"; else echo "-";
                     if($coursesem[$i] != "") echo "<td>".$coursesem[$i]."</td>"; else echo "-";
+                    $new_field_query = "select * from new_fields where table_name='courses'";
+                    $result = $conn->query($new_field_query);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from courses where emp8_id=$empid and course_id='".$GLOBALS['course_id']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -558,11 +595,23 @@ include 'profile_php.php'; ?>
                 echo "<th>Type</th>";
                 echo "<th>Year</th>";
                 echo "<th>Student Details</th>";
+                $new_field_query = "select * from new_fields where table_name='projects'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
-
                 while($row=mysqli_fetch_assoc($result))
                 {
                     $j=1;
+                    $GLOBALS['proj_title']=$row['Title'];
                     $myData = array('val'=>2, 'id'=>($projects-1));
                     $arg = base64_encode( json_encode($myData) );
                     echo '<tr><td>'.$projects.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td></td>';
@@ -616,6 +665,27 @@ include 'profile_php.php'; ?>
                     else {
                         echo "<td><center>Details Not Filled</center></td>";
                     }
+                    $new_field_query = "select * from new_fields where table_name='projects'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from projects where emp12_id=$empid and title='".$GLOBALS['proj_title']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     echo "</tr>";
                     $projects++;
                 }
@@ -650,6 +720,18 @@ include 'profile_php.php'; ?>
                 echo "<th>Co Authors</th>";
                 echo "<th>Edition</th>";
                 echo "<th>Cover Picture</th>";
+                $new_field_query = "select * from new_fields where table_name='publication_books'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
 
                 while($row=mysqli_fetch_assoc($result))
@@ -664,6 +746,7 @@ include 'profile_php.php'; ?>
                     }
                     $myData = array('val'=>3,'id'=>($pubbooks-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['isbn']=$row['ISBN'];
                     echo '<tr><td>'.$pubbooks.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Book_Name"] != "") echo '<td>'.$row["Book_Name"].'</td>';else echo "<td>-</td>";
                     if($row["ISBN"] != "") echo '<td>'.$row["ISBN"].'</td>';else echo "<td>-</td>";
@@ -713,7 +796,29 @@ include 'profile_php.php'; ?>
                     echo '</td>';
                     //.$row["COA1"].'</td><td>'.$row["COA1_INST"].'</td><td>'.$row["COA2"].'</td><td>'.$row["COA2_INST"].'</td><td>'.$row["COA3"].'</td><td>'.$row["COA3_INST"].'</td>';
                     if($row["Edition"] != "") echo '<td>'.$row["Edition"].'</td>';else echo "<td>-</td>";
-                    echo '<td><center>'.$coverbook.'</center></td></tr>';
+                    echo '<td><center>'.$coverbook.'</center></td>';
+                    $new_field_query = "select * from new_fields where table_name='publication_books'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from publication_books where emp1_id=$empid and isbn='".$GLOBALS['isbn']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
+                    echo '</tr>';
 
                     $pubbooks++;
                 }
@@ -761,6 +866,18 @@ include 'profile_php.php'; ?>
                 echo "<th>SJR</th>";
                 echo "<th>Paper PDF</th>";
                 echo "<th>Certificate</th>";
+                $new_field_query = "select * from new_fields where table_name='publication_journals'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
@@ -866,6 +983,7 @@ include 'profile_php.php'; ?>
                         echo "</div>";
                     }
                     echo '</td>';
+                    $GLOBALS['issn']=$row['ISSN'];
                     if($row["Book_Chapter"] != "") echo '<td>'.$row["Book_Chapter"].'</td>';else echo "<td>-</td>";
                     if($row["Peer_Reviewed"] != "") echo '<td>'.$row["Peer_Reviewed"].'</td>';else echo "<td>-</td>";
                     if($row["Impact_Factor"] != 0) echo '<td>'.$row["Impact_Factor"].'</td>';else echo "<td>-</td>";
@@ -880,6 +998,27 @@ include 'profile_php.php'; ?>
                     if($row["SJR"] != "") echo '<td>'.$row["SJR"].'</td>';else echo "<td>-</td>";
                     echo '<td><center>'.$jourpdf.'</center></td>';
                     echo '<td><center>'.$jourcert.'</center></td>';
+                    $new_field_query = "select * from new_fields where table_name='publication_journals'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from publication_journals where emp4_id=$empid and issn='".$GLOBALS['issn']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $pubjour++;
                 }
                 echo "</table>";
@@ -927,6 +1066,18 @@ include 'profile_php.php'; ?>
                 echo "<th>Citation</th>";
                 echo "<th>Paper PDF</th>";
                 echo "<th>Certificate</th>";
+                $new_field_query = "select * from new_fields where table_name='publication_conferences'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
@@ -1054,6 +1205,7 @@ include 'profile_php.php'; ?>
                     }
 
                     echo '</td>';
+                    $GLOBALS['issn']=$row['ISSN'];
                     if($row["H_Index"] != 0) echo '<td>'.$row["H_Index"].'</td>';else echo "<td>-</td>";
                     if($row["DOI"] != "") echo '<td>'.$row["DOI"].'</td>';else echo "<td>-</td>";
                     if($row["Pub_Name"] != "") echo '<td>'.$row["Pub_Name"].'</td>';else echo "<td>-</td>";
@@ -1070,6 +1222,27 @@ include 'profile_php.php'; ?>
                     if($row["Web"] != "") echo '<td>'.$row["Web"].'</td>';else echo "<td>-</td>";
                     if($row["Citation_Index"] != "") echo '<td>'.$row["Citation_Index"].'</td>';else echo "<td>-</td>";
                     echo '<td><center>'.$confpdf.'</center></td><td><center>'.$confcert.'</center></td>';
+                    $new_field_query = "select * from new_fields where table_name='publication_conferences'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from publication_conferences where emp5_id=$empid and issn='".$GLOBALS['issn']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $pubconf++;
                 }
                 echo "</table>";
@@ -1106,6 +1279,18 @@ include 'profile_php.php'; ?>
                 echo "<th>Date To</th>";
                 echo "<th>Total Participation</th>";
                 echo "<th>Certificate</th>";
+                $new_field_query = "select * from new_fields where table_name='sttp_event_attended'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
@@ -1119,6 +1304,7 @@ include 'profile_php.php'; ?>
                     }
                     $myData = array('val'=>6, 'id'=>($sttpattended-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['sttp_id']=$row['sttp_id'];
                     echo '<tr><td>'.$sttpattended.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Title"] != "") echo '<td>'.$row["Title"].'</td>';else echo "<td>-</td>";
                     if($row["Speaker"] != "") echo '<td>'.$row["Speaker"].'</td>';else echo "<td>-</td>";
@@ -1129,7 +1315,29 @@ include 'profile_php.php'; ?>
                     if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
                     if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td>';else echo "<td>-</td>";
                     if($row["Total_Participation"] != 0) echo '<td>'.$row["Total_Participation"].'</td>';else echo "<td>-</td>";
-                    echo '<td><center>'.$sttpcert.'</center></td></tr>';
+                    echo '<td><center>'.$sttpcert.'</center></td>';
+                    $new_field_query = "select * from new_fields where table_name='sttp_event_attended'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid and sttp_id='".$GLOBALS['sttp_id']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
+                    echo '</tr>';
                     $sttpattended++;
                 }
                 echo "</table>";
@@ -1163,11 +1371,24 @@ include 'profile_php.php'; ?>
                 echo "<th>Date From</th>";
                 echo "<th>Date To</th>";
                 echo "<th>Total Participation</th>";
+                $new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
                     $myData = array('val'=>7, 'id'=>($sttporganized-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['sttp_id']=$row['sttp_id'];
                     echo '<tr><td>'.$sttporganized.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
@@ -1176,6 +1397,27 @@ include 'profile_php.php'; ?>
                     if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
                     if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td>';else echo "<td>-</td>";
                     if($row["Number_Participants"] != 0) echo '<td>'.$row["Number_Participants"].'</td>';else echo "<td>-</td>";
+                    $new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid and sttp_id='".$GLOBALS['sttp_id']."'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if($new_field!=null)
+                                        echo "<td>".$new_field."</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $sttporganized++;
                 }
                 echo "</table>";
@@ -1207,11 +1449,24 @@ include 'profile_php.php'; ?>
                 echo "<th>Location</th>";
                 echo "<th>Date From</th>";
                 echo "<th>Date To</th>";
+                $new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
                     $myData = array('val'=>8, 'id'=>($sttpdelivered-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['sttp_id']=$row['sttp_id'];
                     echo '<tr><td>'.$sttpdelivered.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
@@ -1220,6 +1475,27 @@ include 'profile_php.php'; ?>
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
                     if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td >';else echo "<td>-</td>";
+                    $new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid and sttp_id='" . $GLOBALS['sttp_id'] . "'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if ($new_field != null)
+                                        echo "<td>" . $new_field . "</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $sttpdelivered++;
                 }
                 echo "</table>";
@@ -1248,17 +1524,51 @@ include 'profile_php.php'; ?>
                 echo "<th>Activity Type</th>";
                 echo "<th>Role</th>";
                 echo "<th>Date</th>";
+                $new_field_query = "select * from new_fields where table_name='co_curricular'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
                     $myData = array('val'=>9, 'id'=>($cocurr-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['curricular_id']=$row['curricular_id'];
                     echo '<tr><td>'.$cocurr.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
                     if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    $new_field_query = "select * from new_fields where table_name='co_curricular'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from co_curricular where emp10_id=$empid and curricular_id='" . $GLOBALS['curricular_id'] . "'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if ($new_field != null)
+                                        echo "<td>" . $new_field . "</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $cocurr++;
                 }
                 echo "</table>";
@@ -1287,17 +1597,51 @@ include 'profile_php.php'; ?>
                 echo "<th>Location</th>";
                 echo "<th>Role</th>";
                 echo "<th>Date</th>";
+                $new_field_query = "select * from new_fields where table_name='extra'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
                     $myData = array('val'=>10, 'id'=>($extra-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['extra_id'] =$row['extra_id'];
                     echo '<tr><td>'.$extra.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
                     if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    $new_field_query = "select * from new_fields where table_name='extra'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from extra where emp11_id=$empid and extra_id='" . $GLOBALS['extra_id'] . "'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if ($new_field != null)
+                                        echo "<td>" . $new_field . "</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
                     $extra++;
                 }
                 echo "</table>";
@@ -1327,6 +1671,18 @@ include 'profile_php.php'; ?>
                 echo "<th>Issuer</th>";
                 echo "<th>Honour Date</th>";
                 echo "<th>Certificate</th>";
+                $new_field_query = "select * from new_fields where table_name='awards'";
+                $new_result = $conn->query($new_field_query);
+                if ($new_result->num_rows > 0) {
+                    while ($row = $new_result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if ($display == 1) {
+                            echo "<th>".$label."</th>";
+                        }
+                    }
+                }
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
@@ -1340,12 +1696,35 @@ include 'profile_php.php'; ?>
                     }
                     $myData = array('val'=>11, 'id'=>($award-1));
                     $arg = base64_encode( json_encode($myData) );
+                    $GLOBALS['award_id']=$row['award_id'];
                     echo '<tr><td>'.$award.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
                     if($row["award_title"] != "") echo '<td>'.$row["award_title"].'</td>';else echo "<td>-</td>";
                     if($row["award_desc"] != "") echo '<td>'.$row["award_desc"].'</td>';else echo "<td>-</td>";
                     if($row["award_issuer"] != "") echo '<td>'.$row["award_issuer"].'</td>';else echo "<td>-</td>";
                     if($row["award_date"] != "") echo '<td>'.$row["award_date"].'</td>';else echo "<td>-</td>";
-                    echo '<td><center>'.$awdcert.'</center></td></tr>';
+                    echo '<td><center>'.$awdcert.'</center></td>';
+                    $new_field_query = "select * from new_fields where table_name='awards'";
+                    $newresult = $conn->query($new_field_query);
+                    if ($newresult->num_rows > 0) {
+                        while ($row = $newresult->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if ($display == 1) {
+                                $table_sql = "select $field_name from awards where emp_id=$empid and award_id='" . $GLOBALS['award_id'] . "'";
+                                $tab_res = $conn->query($table_sql);
+                                if ($tab_res->num_rows > 0) {
+                                    $tab_row = $tab_res->fetch_assoc();
+                                    $new_field = $tab_row[$field_name];
+                                    if ($new_field != null)
+                                        echo "<td>" . $new_field . "</td>";
+                                    else
+                                        echo "<td>-</td>";
+                                }
+                            }
+                        }
+                    }
+                    echo "</td>";
                     $award++;
                 }
                 echo "</table>";
