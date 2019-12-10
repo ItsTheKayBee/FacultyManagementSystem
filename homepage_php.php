@@ -26,11 +26,11 @@ $address=$row["Address"];
 $join_pos=$row["Join_Pos"];
 $join_date=$row["Join_Date"];
 $pro1=$row["Prom_1"];
-$pro2=$row["Prom_2"];
-$pro3=$row["Prom_3"];
+// $pro2=$row["Prom_2"];
+// $pro3=$row["Prom_3"];
 $pro1_date=$row["Prom_1_Date"];
-$pro2_date=$row["Prom_2_Date"];
-$pro3_date=$row["Prom_3_Date"];
+// $pro2_date=$row["Prom_2_Date"];
+// $pro3_date=$row["Prom_3_Date"];
 $dob=$row["DOB"];
 $profilepic=$row["Profile_Pic"];
 
@@ -50,8 +50,8 @@ if(isset($_POST["submitpersonal"]))
 	$address=trim($address);
 	$join_pos=trim($_POST["joining_position"]);
 	$pro1=trim($_POST["pro1"]);
-	$pro2=trim($_POST["pro2"]);
-	$pro3=trim($_POST["pro3"]);
+	// $pro2=trim($_POST["pro2"]);
+	// $pro3=trim($_POST["pro3"]);
 	$dob=$_POST["date"];
 	$dobyear = (int)substr($dob,0,4);
 	if(($dobyear+22) > (int)date("Y"))
@@ -93,62 +93,62 @@ if(isset($_POST["submitpersonal"]))
 
 	}
 
-	if(!empty(($_POST["pro2_date"])))
-	{
-		$pro2_date=$_POST["pro2_date"];
+	// if(!empty(($_POST["pro2_date"])))
+	// {
+	// 	$pro2_date=$_POST["pro2_date"];
 
-		if(empty($_POST["joining_date"])){
-			$err[27]="* Please Enter Joining Date First";
-			$flag=1;
-		}
-		else if(empty($_POST["pro1_date"]))
-		{
-			$err[29]="* Please Enter Promotion 1 Date ";
-			$flag=1;
-		}
-		else {
-			$ab=date_create($pro1_date);
-			$ba=date_create($pro2_date);
+	// 	if(empty($_POST["joining_date"])){
+	// 		$err[27]="* Please Enter Joining Date First";
+	// 		$flag=1;
+	// 	}
+	// 	else if(empty($_POST["pro1_date"]))
+	// 	{
+	// 		$err[29]="* Please Enter Promotion 1 Date ";
+	// 		$flag=1;
+	// 	}
+	// 	else {
+	// 		$ab=date_create($pro1_date);
+	// 		$ba=date_create($pro2_date);
 
-			$diff=date_diff($ab,$ba);
-			if($diff->format("%R")=='-'){
-				$err[30]="* Please Enter A Valid Promotion 2 Date";
-				$flag=1;
-			}
-		}
+	// 		$diff=date_diff($ab,$ba);
+	// 		if($diff->format("%R")=='-'){
+	// 			$err[30]="* Please Enter A Valid Promotion 2 Date";
+	// 			$flag=1;
+	// 		}
+	// 	}
 
-	}
-	if(!empty($_POST["pro3_date"]))
-	{
-		$pro3_date=$_POST["pro3_date"];
+	// }
+	// if(!empty($_POST["pro3_date"]))
+	// {
+	// 	$pro3_date=$_POST["pro3_date"];
 
-		if(empty($_POST["joining_date"])){
-			$err[27]="* Please Enter Joining Date First ";
-			$flag=1;
-		}
-		else if(empty($_POST["pro1_date"]))
-		{
-			$err[29]="* Please Enter Promotion 1 Date";
-			$flag=1;
-		}
-		else if(empty($_POST["pro2_date"]))
-		{
-			$err[30]="* Please Enter Promotion 2 Date";
-			$flag=1;
-		}
-		else
-		{
-			$ab=date_create($pro2_date);
-			$ba=date_create($pro3_date);
+	// 	if(empty($_POST["joining_date"])){
+	// 		$err[27]="* Please Enter Joining Date First ";
+	// 		$flag=1;
+	// 	}
+	// 	else if(empty($_POST["pro1_date"]))
+	// 	{
+	// 		$err[29]="* Please Enter Promotion 1 Date";
+	// 		$flag=1;
+	// 	}
+	// 	else if(empty($_POST["pro2_date"]))
+	// 	{
+	// 		$err[30]="* Please Enter Promotion 2 Date";
+	// 		$flag=1;
+	// 	}
+	// 	else
+	// 	{
+	// 		$ab=date_create($pro2_date);
+	// 		$ba=date_create($pro3_date);
 
-			$diff=date_diff($ab,$ba);
-			if($diff->format("%R")=='-'){
+	// 		$diff=date_diff($ab,$ba);
+	// 		if($diff->format("%R")=='-'){
 
-				$err[31]="* Please Enter A Valid Promotion 3 Date";
-				$flag=1;
-			}
-		}
-	}
+	// 			$err[31]="* Please Enter A Valid Promotion 3 Date";
+	// 			$flag=1;
+	// 		}
+	// 	}
+	// }
 	$temp = (int)substr($join_date,0,4);
 	$temp1 = (int)date("Y");
 	$years_exp = $temp1-$temp;
@@ -161,15 +161,15 @@ if(isset($_POST["submitpersonal"]))
 		$pro2_date="1950-01-01";
 	}
 
-	if(empty($pro2_date))
-	{
-		$pro2_date="1950-01-01";
-	}
+	// if(empty($pro2_date))
+	// {
+	// 	$pro2_date="1950-01-01";
+	// }
 
-	if(empty($pro3_date))
-	{
-		$pro3_date="1950-01-01";
-	}
+	// if(empty($pro3_date))
+	// {
+	// 	$pro3_date="1950-01-01";
+	// }
 
 	$ql="SELECT * from personal_details";
 	$query=mysqli_query($conn,$ql);
@@ -191,7 +191,7 @@ if(isset($_POST["submitpersonal"]))
 	}
 	if($flag!=1)
 	{
-		$sql = "UPDATE personal_details SET Name='$name',Email='$email',Contact='$contact',Address='$address',DOB='$dob',Join_Pos='$join_pos',Join_Date='$join_date',Years_Exp=$years_exp,Prom_1='$pro1',Prom_1_Date='$pro1_date',Prom_2='$pro2',Prom_2_Date='$pro2_date',Prom_3='$pro3',Prom_3_Date='$pro3_date',gender='$gender' WHERE Emp3_Id=$empid";
+		$sql = "UPDATE personal_details SET Name='$name',Email='$email',Contact='$contact',Address='$address',DOB='$dob',Join_Pos='$join_pos',Join_Date='$join_date',Years_Exp=$years_exp,Prom_1='$pro1',Prom_1_Date='$pro1_date',gender='$gender' WHERE Emp3_Id=$empid";
 		if($result=$conn->query($sql))
 		{
 			header('Location:profile.php#section1');

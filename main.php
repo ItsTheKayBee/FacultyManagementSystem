@@ -65,6 +65,7 @@ if(isset($_POST["ReportSubmit"]))
 
         $(document).ready(function()
         {
+        	//Report Generation Date time
             $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
             $('#datetimepicker2').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
             $("#privs").hide();

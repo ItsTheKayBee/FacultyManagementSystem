@@ -249,9 +249,15 @@ include 'homepage_php.php';
                             <br><br><br><br>
                             <legend>Promotions</legend>
                             <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion 1 : </label>
+                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion  : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input id ="pass" type="text" class="form-control"  <?php if(!($pro1 == '')) echo "value='$pro1'";else echo 'placeholder=" Promotion 1"';?><?php if(!empty($err[32])) echo "style='border-color:red;' autofocus"; ?> name = "pro1">
+                                    <select  class="form-control" name="pro1" id="pass">
+                                    	<option value="Head Of Department">Head Of Department</option>
+                                        <option value="Associate Professor">Associate Professor</option>
+                                        <option value="Lab Assistant">Lab Assistant</option>
+                                        <option value="Visiting Faculty">Visiting Faculty</option>
+                                    </select>
+
                                     <span class="error"><?php echo $err[32]; ?> </span>  &nbsp &nbsp
                                 </div>
                             </div>
@@ -264,35 +270,7 @@ include 'homepage_php.php';
                                 </div>
                             </div>
                             <br><br><br>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion 2 : </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input id ="pass" type="text" class="form-control"  <?php if(!($pro2 == '')) echo "value='$pro2'";else echo 'placeholder="Promotion 2"';?> name = "pro2"> &nbsp &nbsp
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion 2: </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if($pro2_date == '1950-01-01') echo "placeholder='Date Of Promotion 2'"; else echo "value = '$pro2_date'";?> <?php if(!empty($err[30])) echo "autofocus style=border:2px solid red;'"; ?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="pro2_date">
-                                    <span class="error"><?php echo $err[30]; ?> </span>
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion 3 : </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input id ="pass" type="text" class="form-control" <?php if(!($pro3 == '')) echo "value='$pro3'";else echo 'placeholder="Promotion 3"';?> name = "pro3"> &nbsp &nbsp
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion 3: </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if($pro3_date == '1950-01-01') echo "placeholder='Date Of Promotion 3'"; else echo "value = '$pro3_date'";?> <?php if(!empty($err[31])) echo "autofocus style='border:2px solid red;'"; ?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="pro3_date">
-                                    <span class="error"><?php echo $err[31]; ?></span>
-                                </div>
-                            </div>
+                            
                             <br><br><br>
                             <div class="form-group">
                                 <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpersonal">

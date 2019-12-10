@@ -40,11 +40,7 @@ else{
 		$join_pos=$row["Join_Pos"];
 		$join_date=$row["Join_Date"];
 		$pro1=$row["Prom_1"];
-		$pro2=$row["Prom_2"];
-		$pro3=$row["Prom_3"];
 		$pro1_date=$row["Prom_1_Date"];
-		$pro2_date=$row["Prom_2_Date"];
-		$pro3_date=$row["Prom_3_Date"];
 		$dob=$row["DOB"];
 		$profilepic=$row["Profile_Pic"];
 

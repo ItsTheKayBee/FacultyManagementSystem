@@ -377,28 +377,14 @@ include 'profile_php.php'; ?>
                         <table class="table">
                             <tbody>
                             <tr>
-                                <td>Promotion 1: </td><td><?php if(!($pro1 == '')) echo "<b>$pro1</b>"; else echo "<b>-<b>";?></td>
+                                <td>Promotion : </td><td><?php if(!($pro1 == '')) echo "<b>$pro1</b>"; else echo "<b>-<b>";?></td>
                             </tr>
 
                             <tr>
-                                <td>Date: </td><td><?php if(!($pro1_date == '1950-01-01')) echo "<b>$pro1_date</b>"; else echo "<b>-<b>";?></td>
+                                <td>With Effective From: </td><td><?php if(!($pro1_date == '1950-01-01')) echo "<b>$pro1_date</b>"; else echo "<b>-<b>";?></td>
                             </tr>
 
-                            <tr>
-                                <td>Promotion 2: </td><td><?php if(!($pro2== '')) echo "<b>$pro2</b>"; else echo "<b>-<b>";?></td>
-                            </tr>
-
-                            <tr>
-                                <td>Date: </td><td><?php if(!($pro2_date == '1950-01-01')) echo "<b>$pro2_date</b>"; else echo "<b>-<b>";?></td>
-                            </tr>
-
-                            <tr>
-                                <td>Promotion 3: </td><td><?php if(!($pro3 == '')) echo "<b>$pro3</b>"; else echo "<b>-<b>";?></td>
-                            </tr>
-
-                            <tr>
-                                <td>Date: </td><td><?php if(!($pro3_date == '1950-01-01')) echo "<b>$pro3_date</b>"; else echo "<b>-<b>";?></td>
-                            </tr>
+                           
                             </tbody>
                         </table>
                     </div>
