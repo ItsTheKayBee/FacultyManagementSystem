@@ -1,5 +1,8 @@
 <?php
 include 'homepage_php.php';
+function dateformatChanger($orgDate){
+	return date("d-m-Y", strtotime($orgDate));
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,7 +222,7 @@ include 'homepage_php.php';
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date Of Birth : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input id ="d" <?php if(!empty($err[28])) echo "style='border-color:red;' autofocus"; ?> min="1950-01-01" max="<?php echo $maxdate; ?>" <?php if($dob == '1950-01-01') echo "placeholder='* Date Of Birth'"; else echo "value = $dob";?> class="form-control" type="text" name="date" onfocus="(this.type='date')" onblur="(this.type='text')" id="DOB">
+                                    <input id ="d" <?php if(!empty($err[28])) echo "style='border-color:red;' autofocus"; ?> min="1950-01-01" max="<?php echo $maxdate; ?>" <?php if($dob == '1950-01-01') echo "placeholder='* Date Of Birth'"; else echo "value =". dateformatChanger($dob);?> class="form-control" type="text" name="date" onfocus="(this.type='date')" onblur="(this.type='date')" id="DOB">
                                     <span class="error" id ="date"><?php echo $err[28]; ?></span>
                                 </div>
                             </div>
@@ -242,7 +245,7 @@ include 'homepage_php.php';
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Joining Date : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if(!empty($err[27])) echo "autofocus style='border:2px solid red;'"; ?><?php if($join_date == '1950-01-01') echo "placeholder='Date Of Joining'"; else echo "value = $join_date";?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="joining_date">
+                                    <input <?php if(!empty($err[27])) echo "autofocus style='border:2px solid red;'"; ?><?php if($join_date == '1950-01-01') echo "placeholder='Date Of Joining'"; else echo "value =". dateformatChanger($join_date)?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='date')" name="joining_date">
                                     <span class="error"><?php echo $err[27]; ?></span>
                                 </div>
                             </div>
@@ -265,7 +268,8 @@ include 'homepage_php.php';
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion 1: </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if(!empty($err[29])) echo "autofocus style='border:2px solid red;'"; ?> <?php if($pro1_date == '1950-01-01') echo "placeholder='Date Of Promotion 1'"; else echo "value = '$pro1_date'";?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='text')" name="pro1_date">
+                                    <input <?php if(!empty($err[29])) echo "autofocus style='border:2px solid red;'"; ?> <?php if($pro1_date == '1950-01-01') echo "placeholder='Date Of Promotion 1'"; 
+                                    else echo "value = ".dateformatChanger($pro1_date);?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='date')" name="pro1_date">
                                     <span class="error"><?php echo $err[29]; ?> </span>
                                 </div>
                             </div>
@@ -866,7 +870,7 @@ include 'homepage_php.php';
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Publication: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input onfocus="(this.type='date')" onblur="(this.type='text')" <?php if(!empty($err[33])) echo "style='border-color:red;' autofocus"; ?> id ="pubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
+                            <input onfocus="(this.type='date')" onblur="(this.type='date')" <?php if(!empty($err[33])) echo "style='border-color:red;' autofocus"; ?> id ="pubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
                             <span class="error" id ="pubdate"><?php echo $err[33]; ?></span>
                         </div>
                         <br><br><br>
@@ -1033,7 +1037,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Publication: </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input onfocus="(this.type='date')" <?php if(!empty($err[34])) echo "style='border-color:red;' autofocus"; ?> onblur="(this.type='text')" id ="jour_dateid" class="form-control" name="jour_date" placeholder="* Date of Publication">
+                        <input onfocus="(this.type='date')" <?php if(!empty($err[34])) echo "style='border-color:red;' autofocus"; ?> onblur="(this.type='date')" id ="jour_dateid" class="form-control" name="jour_date" placeholder="* Date of Publication">
                         <span class="error" id ="jour_date"><?php if(!empty($err[34])) echo $err[34]; ?></span>
                     </div>
                 </div>
@@ -1210,7 +1214,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Publication: </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input onfocus="(this.type='date')" onblur="(this.type='text')" <?php if(!empty($err[35])) echo "style='border-color:red;' autofocus"; ?> id ="confpubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
+                        <input onfocus="(this.type='date')" onblur="(this.type='date')" <?php if(!empty($err[35])) echo "style='border-color:red;' autofocus"; ?> id ="confpubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
                         <span class="error" id ="pubdate"><?php echo $err[35]; ?></span>
                     </div>
                 </div>
@@ -1398,7 +1402,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[37])) || (!empty($err[38]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" id ="datefromattendedid" class="form-control" name="datefromattended">
+                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[37])) || (!empty($err[38]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" id ="datefromattendedid" class="form-control" name="datefromattended">
                         <span class="error" id ="datefromattended"><?php if(!empty($err[37])) echo $err[37];?></span>
                     </div>
                 </div>
@@ -1406,7 +1410,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">To :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[38])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" id ="datetoattendedid" name="datetoattended">
+                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[38])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" id ="datetoattendedid" name="datetoattended">
                         <span class="error" id ="datetoattended"><?php if(!empty($err[38])) echo $err[38];?></span>
                     </div>
                 </div>
@@ -1491,7 +1495,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[39])) || (!empty($err[40]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" id ="datefromorganized_id" name="datefromorganized">
+                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[39])) || (!empty($err[40]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" id ="datefromorganized_id" name="datefromorganized">
                         <span class="error" id ="datefromorganized"><?php if(!empty($err[39])) echo $err[39];?></span><br>
                     </div>
                 </div>
@@ -1499,7 +1503,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">To :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[40])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" id ="datetoorganized_id" name="datetoorganized">
+                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[40])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" id ="datetoorganized_id" name="datetoorganized">
                         <span class="error" id ="datetoorganized"><?php if(!empty($err[40])) echo $err[40];?></span>
                     </div>
                 </div>
@@ -1564,7 +1568,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[41])) || (!empty($err[42]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" id ="datefromdeliveredid" name="datefromdelivered">
+                        <input placeholder="* From"  type="text" onfocus="(this.type='date')" <?php if((!empty($err[41])) || (!empty($err[42]))) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" id ="datefromdeliveredid" name="datefromdelivered">
                         <span class="error" id ="datefromdelivered" ><?php if(!empty($err[41])) echo $err[41];?></span>
                     </div>
                 </div>
@@ -1572,7 +1576,7 @@ include 'homepage_php.php';
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">To :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[42])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')"class="form-control" id ="datetodeliveredid" name="datetodelivered" >
+                        <input placeholder="* To"  type="text" onfocus="(this.type='date')" <?php if(!empty($err[42])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')"class="form-control" id ="datetodeliveredid" name="datetodelivered" >
                         <span class="error" id ="datetodelivered" ><?php if(!empty($err[42])) echo $err[42];?></span>
                     </div>
                     <br><br><br>
@@ -1631,7 +1635,7 @@ include 'homepage_php.php';
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input onfocus="(this.type='date')" <?php if(!empty($err[43])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" name="cocurrdate" id ="cocurrdate_id" placeholder="* Date">
+                            <input onfocus="(this.type='date')" <?php if(!empty($err[43])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" name="cocurrdate" id ="cocurrdate_id" placeholder="* Date">
                             <span class="error" id ="codate"><?php if(!empty($err[43])) echo $err[43];?></span>
                         </div>
                     </div>
@@ -1692,7 +1696,7 @@ include 'homepage_php.php';
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input onfocus="(this.type='date')" <?php if(!empty($err[44])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" name="extradate" placeholder="* Date" id="extradate1">
+                            <input onfocus="(this.type='date')" <?php if(!empty($err[44])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" name="extradate" placeholder="* Date" id="extradate1">
                             <span class="error" id ="extdate"><?php if(!empty($err[44])) echo $err[44];?></span>
                         </div>
                     </div>
@@ -1735,7 +1739,7 @@ include 'homepage_php.php';
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Honour Date :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input onfocus="(this.type='date')" <?php if(!empty($err[44])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='text')" class="form-control" name="award_date" placeholder="* Honour Date" id="award_date">
+                            <input onfocus="(this.type='date')" <?php if(!empty($err[44])) echo "style='border-color:red;' autofocus";?> onblur="(this.type='date')" class="form-control" name="award_date" placeholder="* Honour Date" id="award_date">
                             <span class="error" id ="awddate"><?php if(!empty($err[44])) echo $err[44];?></span>
                         </div>
                     </div>
