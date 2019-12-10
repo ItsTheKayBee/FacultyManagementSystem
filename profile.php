@@ -1,5 +1,10 @@
 <?php
-include 'profile_php.php'; ?>
+include 'profile_php.php';
+function dateformatChanger($orgDate){
+    return date("d-m-Y", strtotime($orgDate));
+}
+
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -327,7 +332,8 @@ include 'profile_php.php'; ?>
                             </tr>
 
                             <tr>
-                                <td>Date of Birth: </td><td><?php if(!($dob == '1950-01-01')) echo "<b>$dob</b>"; else echo "<b>-<b>";?></td>
+                                <td>Date of Birth: </td><td><?php if(!($dob == '1950-01-01')) 
+                                echo "<b>".dateformatChanger($dob)."</b>"; else echo "<b>-<b>";?></td>
                             </tr>
 
                             <tr>
@@ -339,7 +345,7 @@ include 'profile_php.php'; ?>
                             </tr>
 
                             <tr>
-                                <td>Joining Date: </td><td><?php if(!($join_date == '1950-01-01')) echo "<b>$join_date</b>"; else echo "<b>-<b>";?></td>
+                                <td>Joining Date: </td><td><?php if(!($join_date == '1950-01-01')) echo "<b>".dateformatChanger($join_date)."</b>"; else echo "<b>-<b>";?></td>
                             </tr>
                             <?php
                             $new_field_query="select * from new_fields where table_name='personal_details'";
@@ -381,7 +387,7 @@ include 'profile_php.php'; ?>
                             </tr>
 
                             <tr>
-                                <td>With Effective From: </td><td><?php if(!($pro1_date == '1950-01-01')) echo "<b>$pro1_date</b>"; else echo "<b>-<b>";?></td>
+                                <td>With Effective From: </td><td><?php if(!($pro1_date == '1950-01-01')) echo "<b>".dateformatChanger($pro1_date)."</b>"; else echo "<b>-<b>";?></td>
                             </tr>
 
                            
@@ -737,7 +743,7 @@ include 'profile_php.php'; ?>
                     if($row["Book_Name"] != "") echo '<td>'.$row["Book_Name"].'</td>';else echo "<td>-</td>";
                     if($row["ISBN"] != "") echo '<td>'.$row["ISBN"].'</td>';else echo "<td>-</td>";
                     if($row["Publisher_Name"] != "") echo '<td>'.$row["Publisher_Name"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_Published"] != "") echo '<td>'.$row["Date_Published"].'</td>';else echo "<td>-</td>";
+                    if($row["Date_Published"] != "") echo '<td>'.dateformatChanger($row["Date_Published"]).'</td>';else echo "<td>-</td>";
                     if($row["Author"] != "") echo '<td>'.$row["Author"].'</td>';else echo "<td>-</td>";
                     if($row["Author_INST"] != "") echo '<td>'.$row["Author_INST"].'</td>';else echo "<td>-</td>";
                     echo '<td>';
@@ -890,7 +896,7 @@ include 'profile_php.php'; ?>
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Author"] != "") echo '<td>'.$row["Author"].'</td>';else echo "<td>-</td>";
                     if($row["Title"] != "") echo '<td>'.$row["Title"].'</td>';else echo "<td>-</td>";
-                    if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
                     echo '<td>';
                     if($c == 0)
@@ -1100,7 +1106,7 @@ include 'profile_php.php'; ?>
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
-                    if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
                     if($row["Author"] != "") echo '<td>'.$row["Author"].'</td>';else echo "<td>-</td>";
                     echo '<td>';
 
@@ -1298,8 +1304,8 @@ include 'profile_php.php'; ?>
                     if($row["Event_Type"] != "") echo '<td>'.$row["Event_Type"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Duration"] != "") echo '<td>'.$row["Duration"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td>';else echo "<td>-</td>";
+                    if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
+                    if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td>';else echo "<td>-</td>";
                     if($row["Total_Participation"] != 0) echo '<td>'.$row["Total_Participation"].'</td>';else echo "<td>-</td>";
                     echo '<td><center>'.$sttpcert.'</center></td>';
                     $new_field_query = "select * from new_fields where table_name='sttp_event_attended'";
@@ -1380,8 +1386,8 @@ include 'profile_php.php'; ?>
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td>';else echo "<td>-</td>";
+                    if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
+                    if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td>';else echo "<td>-</td>";
                     if($row["Number_Participants"] != 0) echo '<td>'.$row["Number_Participants"].'</td>';else echo "<td>-</td>";
                     $new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
                     $newresult = $conn->query($new_field_query);
@@ -1459,8 +1465,8 @@ include 'profile_php.php'; ?>
                     if($row["Event_Type"] != "") echo '<td>'.$row["Event_Type"].'</td>';else echo "<td>-</td>";
                     if($row["Duration"] != "") echo '<td>'.$row["Duration"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_From"] != "") echo '<td>'.$row["Date_From"].'</td>';else echo "<td>-</td>";
-                    if($row["Date_To"] != "") echo '<td>'.$row["Date_To"].'</td >';else echo "<td>-</td>";
+                    if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
+                    if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td >';else echo "<td>-</td>";
                     $new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
                     $newresult = $conn->query($new_field_query);
                     if ($newresult->num_rows > 0) {
@@ -1533,7 +1539,7 @@ include 'profile_php.php'; ?>
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
                     if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
-                    if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
                     $new_field_query = "select * from new_fields where table_name='co_curricular'";
                     $newresult = $conn->query($new_field_query);
                     if ($newresult->num_rows > 0) {
@@ -1606,7 +1612,7 @@ include 'profile_php.php'; ?>
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
-                    if($row["Date"] != "") echo '<td>'.$row["Date"].'</td>';else echo "<td>-</td>";
+                    if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
                     $new_field_query = "select * from new_fields where table_name='extra'";
                     $newresult = $conn->query($new_field_query);
                     if ($newresult->num_rows > 0) {
@@ -1687,7 +1693,7 @@ include 'profile_php.php'; ?>
                     if($row["award_title"] != "") echo '<td>'.$row["award_title"].'</td>';else echo "<td>-</td>";
                     if($row["award_desc"] != "") echo '<td>'.$row["award_desc"].'</td>';else echo "<td>-</td>";
                     if($row["award_issuer"] != "") echo '<td>'.$row["award_issuer"].'</td>';else echo "<td>-</td>";
-                    if($row["award_date"] != "") echo '<td>'.$row["award_date"].'</td>';else echo "<td>-</td>";
+                    if($row["award_date"] != "") echo '<td>'.dateformatChanger($row["award_date"]).'</td>';else echo "<td>-</td>";
                     echo '<td><center>'.$awdcert.'</center></td>';
                     $new_field_query = "select * from new_fields where table_name='awards'";
                     $newresult = $conn->query($new_field_query);
