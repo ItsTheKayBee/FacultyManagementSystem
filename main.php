@@ -65,8 +65,8 @@ if(isset($_POST["ReportSubmit"]))
 
         $(document).ready(function()
         {
-            $('#datetimepicker1').datetimepicker();
-            $('#datetimepicker2').datetimepicker();
+            $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
+            $('#datetimepicker2').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
             $("#privs").hide();
             $("#assprivs").click(function(e)
             {
