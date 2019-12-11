@@ -121,11 +121,12 @@ if(isset($_POST["submit"]))
 	</style>
 	<title>Login</title>
 </head>
-<body>
+<body >
 	<div class="container">
+		<h1  id="login-h1" class="boxtext" ><strong>FACULTY MANAGEMENT SYSTEM</strong></h1>
 		<form style="background-color:white;" method="post"  class="form-horizontal login-wrap login-html login-form sign-in-htm" action="" name="myForm" onsubmit="return validateForm()">
       <div class="form-group">
-			<div class="boxtext">
+			<div class="boxtext" align="center">
 				<strong><font size="5">Authentication Details</font></strong>
 			</div>
 			</div>
