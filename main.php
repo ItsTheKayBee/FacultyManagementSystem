@@ -913,12 +913,12 @@ if(!isset($_SESSION["firstvisit"]))
 }
 ?>
 <!--NAVBAR-->
-<nav class="navbar navbar-inverse">
+<nav class="navbar " >
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
             <b>Employee ID : <?php echo $empid; ?></b>
         </div>
-        <div class="navbar-header">
+        <div class="navbar-header ">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
