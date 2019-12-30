@@ -250,6 +250,43 @@ function dateformatChanger($orgDate){
                                 </div>
                             </div>
                             <br><br><br><br>
+
+                            <?php
+                            $new_field_query="select * from new_fields where table_name='personal_details'";
+                            $result=$conn->query($new_field_query);
+                            if($result->num_rows>0){
+                                while($row=$result->fetch_assoc()) {
+                                    $field_name = $row['field_name'];
+                                    $label = $row['label'];
+                                    $display = $row['display'];
+                                    if($display==1) {
+                                        $table_sql = "select $field_name from personal_details where emp3_id=$empid";
+                                        $tab_res = $conn->query($table_sql);
+                                        if ($tab_res->num_rows > 0) {
+                                            $tab_row = $tab_res->fetch_assoc();
+                                            $new_field=$tab_row[$field_name];
+                                            echo "<div class=\"form-group\">
+                                <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                                    <input class="form-control"
+                                        <?php
+                                            if($new_field == ''){
+                                                echo 'placeholder="  *Enter field value"';
+                                            }else {
+                                                echo "value = '  $new_field'";
+                                            }
+                                        ?>
+                                    >
+                                    <span class=\"error\"><?php echo $err[27]; ?></span>
+                                </div>
+                            </div> <br><br>;
+                            <?php
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
+
                             <legend>Promotions</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion  : </label>
@@ -718,12 +755,48 @@ function dateformatChanger($orgDate){
                             </div>
                         </div>
                         <br><br><br>
+                        <?php
+                            $new_field_query="select * from new_fields where table_name='courses'";
+                            $result=$conn->query($new_field_query);
+                            if($result->num_rows>0){
+                                while($row=$result->fetch_assoc()) {
+                                    $field_name = $row['field_name'];
+                                    $label = $row['label'];
+                                    $display = $row['display'];
+                                    if($display==1) {
+                                        $table_sql = "select $field_name from courses where emp8_id=$empid";
+                                        $tab_res = $conn->query($table_sql);
+                                        if ($tab_res->num_rows > 0) {
+                                            $tab_row = $tab_res->fetch_assoc();
+                                            $new_field=$tab_row[$field_name];
+                                            echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                                            <input class="form-control"
+                                                <?php
+                                                if($new_field == ''){
+                                                    echo 'placeholder="  *Enter field value"';
+                                                }else {
+                                                    echo "value = '  $new_field'";
+                                                }
+                                                ?>
+                                            >
+                                            <span class=\"error\"><?php echo $err[27]; ?></span>
+                                            </div>
+                                            </div> <br><br>
+                                        <?php
+                                        }
+                                    }
+                                }
+                            }
+                        ?>
                         <div class="form-group">
                             <input type="submit"  type="submit" <?php /*if($gender=='null') echo "disabled title='Please fill Personal details first'"*/?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
                         </div>
                 </form>
             </div>
         </div>
+
 
         <!-- FORM 4 -->
         <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
@@ -834,6 +907,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='projects'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from projects where emp12_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+            </div>
+        </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <!-- SUBMIT -->
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitprojects">
@@ -958,6 +1066,41 @@ function dateformatChanger($orgDate){
                             </div>
                         </div>
                         <br><br>
+                        <?php
+                        $new_field_query="select * from new_fields where table_name='publication_books'";
+                        $result=$conn->query($new_field_query);
+                        if($result->num_rows>0){
+                        while($row=$result->fetch_assoc()) {
+                        $field_name = $row['field_name'];
+                        $label = $row['label'];
+                        $display = $row['display'];
+                        if($display==1) {
+                        $table_sql = "select $field_name from publication_books where emp1_id=$empid";
+                        $tab_res = $conn->query($table_sql);
+                        if ($tab_res->num_rows > 0) {
+                        $tab_row = $tab_res->fetch_assoc();
+                        $new_field=$tab_row[$field_name];
+                        echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                        <input class="form-control"
+                            <?php
+                            if($new_field == ''){
+                                echo 'placeholder="  *Enter field value"';
+                            }else {
+                                echo "value = '  $new_field'";
+                            }
+                            ?>
+                        >
+                        <span class=\"error\"><?php echo $err[27]; ?></span>
+                    </div>
+            </div> <br><br>
+            <?php
+            }
+            }
+            }
+            }
+            ?>
                         <div class="form-group">
                             <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpublicationbooks">
                         </div>
@@ -1151,6 +1294,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_journals'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from publication_journals where emp4_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+                </div>
+        </div> <br><br>
+        <?php
+        }
+        }
+        }
+        }
+        ?>
                     <div class="form-group">
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
                     </div>
@@ -1364,6 +1542,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_conferences'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from publication_conferences where emp5_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+                </div>
+        </div> <br><br>
+        <?php
+        }
+        }
+        }
+        }
+        ?>
                     <div class="form-group">
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
                     </div>
@@ -1371,6 +1584,8 @@ function dateformatChanger($orgDate){
         </div>
     </div>
     </div>
+
+
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section51">
             <form method="POST" action="" name="sttpattended" onsubmit="return validateAttended()"  enctype="multipart/form-data">
@@ -1457,12 +1672,49 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
+                <?php
+                $new_field_query="select * from new_fields where table_name='sttp_event_attended'";
+                $result=$conn->query($new_field_query);
+                if($result->num_rows>0){
+                while($row=$result->fetch_assoc()) {
+                $field_name = $row['field_name'];
+                $label = $row['label'];
+                $display = $row['display'];
+                if($display==1) {
+                $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid";
+                $tab_res = $conn->query($table_sql);
+                if ($tab_res->num_rows > 0) {
+                $tab_row = $tab_res->fetch_assoc();
+                $new_field=$tab_row[$field_name];
+                echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                <input class="form-control"
+                    <?php
+                    if($new_field == ''){
+                        echo 'placeholder="  *Enter field value"';
+                    }else {
+                        echo "value = '  $new_field'";
+                    }
+                    ?>
+                >
+                <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                 <div class="form-group">
                     <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpattended">
                 </div>
             </form>
         </div>
     </div>
+
+
     <!--FORM 5.2-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section52">
@@ -1529,6 +1781,41 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
+                <?php
+                $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
+                $result=$conn->query($new_field_query);
+                if($result->num_rows>0){
+                while($row=$result->fetch_assoc()) {
+                $field_name = $row['field_name'];
+                $label = $row['label'];
+                $display = $row['display'];
+                if($display==1) {
+                $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid";
+                $tab_res = $conn->query($table_sql);
+                if ($tab_res->num_rows > 0) {
+                $tab_row = $tab_res->fetch_assoc();
+                $new_field=$tab_row[$field_name];
+                echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                <input class="form-control"
+                    <?php
+                    if($new_field == ''){
+                        echo 'placeholder="  *Enter field value"';
+                    }else {
+                        echo "value = '  $new_field'";
+                    }
+                    ?>
+                >
+                <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                 <div class="form-group">
                     <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttporganized">
                 </div>
@@ -1601,6 +1888,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+                </div>
+        </div> <br><br>
+        <?php
+        }
+        }
+        }
+        }
+        ?>
                     <div class="form-group">
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpdelivered">
                     </div>
@@ -1662,6 +1984,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='co_curricular'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from co_curricular where emp10_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcocurricular">
                     </div>
@@ -1684,7 +2041,7 @@ function dateformatChanger($orgDate){
                             <span class="error" id ="extname"></span>
                         </div>
                     </div>
-                    <br><br><br><br>
+                    <br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Description:</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
@@ -1692,7 +2049,7 @@ function dateformatChanger($orgDate){
                             <span class="error" id ="extdesc"></span>
                         </div>
                     </div>
-                    <br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
@@ -1700,21 +2057,56 @@ function dateformatChanger($orgDate){
                             <span class="error" id ="extdate"><?php if(!empty($err[44])) echo $err[44];?></span>
                         </div>
                     </div>
-                    <br><br><br><br>
+                    <br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Role :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <input type="text" id ="extrole" class="form-control" name="extrarole" placeholder="Role">
                         </div>
                     </div>
-                    <br><br><br><br>
+                    <br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Location :</label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <input type="text" id ="extplace" class="form-control" name="extraplace" placeholder="Location">
                         </div>
                     </div>
-                    <br><br><br><br>
+                    <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='extra'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from extra where emp11_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?><br>
                     <div class="form-group">
                         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitextra">
                     </div>
@@ -1722,6 +2114,8 @@ function dateformatChanger($orgDate){
             </form>
         </div>
     </div>
+
+
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="awards">
             <form method="POST" action="" onsubmit="return awards()" name="awards_form" enctype="multipart/form-data">
@@ -1767,6 +2161,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='awards'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from awards where emp_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name="submit_award">
                     </div>

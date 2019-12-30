@@ -182,6 +182,41 @@ include 'editpage_php.php'
                         </div>
                     </div>
                     <br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='courses'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from courses where emp8_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitcourses">
                     </div>
@@ -308,6 +343,41 @@ include 'editpage_php.php'
                         </div>
                     </div>
                     <br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='projects'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from projects where emp12_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit"  style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitprojects">
                     </div>
@@ -431,7 +501,42 @@ include 'editpage_php.php'
                             echo $pdf1;
                         ?>
                         <input type="file" name="book_image" id ="book_image" accept="application/pdf"/>
-                    </div>
+                    </div><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_books'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from publication_books where emp1_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitpublicationbooks">
                     </div>
@@ -765,6 +870,41 @@ include 'editpage_php.php'
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_journals'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from publication_journals where emp4_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
                     </div>
@@ -1117,6 +1257,41 @@ include 'editpage_php.php'
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_conferences'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from publication_conferences where emp5_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
                     </div>
@@ -1214,6 +1389,41 @@ include 'editpage_php.php'
                         </div>
                     </div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='sttp_event_attended'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttpattended">
                     </div>
@@ -1286,12 +1496,48 @@ include 'editpage_php.php'
 
                         </div></div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttporganized">
                     </div>
                 </fieldset>
             </form>
         </div>
+
 
         <!--STTP-DELIVERED-->
         <div id ="section53" class="well">
@@ -1358,6 +1604,41 @@ include 'editpage_php.php'
                             <input  name="durationdelivered"  value = "<?php echo $duration; ?>" placeholder="Duration" class="form-control" type="text" onfocus="(this.type='time')" onblur="(this.type='text')">
                         </div>
                     </div><br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttpdelivered">
                     </div>
@@ -1416,6 +1697,41 @@ include 'editpage_php.php'
                             <input class="form-control" id ="name22" name="name22" disabled="true" <?php if($type != "KJ Somaiya(InHouse)") echo 'value="'.$type.'"';?> type="text"/>
                         </div></div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='co_curricular'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from co_curricular where emp10_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitcocurricular">
                     </div>
@@ -1471,12 +1787,49 @@ include 'editpage_php.php'
                             <input type="text" id ="extplace" class="form-control" value = "<?php echo $place; ?>" name="extraplace" placeholder="Location">
                         </div></div>
                     <br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='extra'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from extra where emp11_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitextra">
                     </div>
                 </fieldset>
             </form>
         </div>
+
+
         <div id ="awards" class="well">
             <form method="POST" onsubmit="return awards()" name="awards_form" enctype="multipart/form-data">
                 <fieldset>
@@ -1527,7 +1880,42 @@ include 'editpage_php.php'
                             ?>
                             <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
                         </div>
-                    </div><br><br><br>
+                    </div><br><br><br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='awards'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    $table_sql = "select $field_name from awards where emp_id=$empid";
+                    $tab_res = $conn->query($table_sql);
+                    if ($tab_res->num_rows > 0) {
+                    $tab_row = $tab_res->fetch_assoc();
+                    $new_field=$tab_row[$field_name];
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        if($new_field == ''){
+                            echo 'placeholder="  *Enter field value"';
+                        }else {
+                            echo "value = '  $new_field'";
+                        }
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+        </div>
+    </div> <br><br>
+    <?php
+    }
+    }
+    }
+    }
+    ?>
                     <div class="form-group">
                         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submit_award">
                     </div>

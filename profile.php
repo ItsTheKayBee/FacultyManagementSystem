@@ -1644,7 +1644,7 @@ function dateformatChanger($orgDate){
             }
             ?>
         </div>
-        <br><br>
+
         <div id ="awards">
             <legend><h1>Awards and Achievements  <a href="homepage.php#awards"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
