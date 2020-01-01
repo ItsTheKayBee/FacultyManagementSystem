@@ -1,8 +1,10 @@
 <?php
 include 'homepage_php.php';
+
 function dateformatChanger($orgDate){
-	return date("d-m-Y", strtotime($orgDate));
+    return date("d-m-Y", strtotime($orgDate));
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,12 +43,6 @@ function dateformatChanger($orgDate){
             color: #fff !important;
             position : relative;
         }
-
-        #section1 {color: #ff;}
-        #section2 {color: #ff;}
-        #section3 {color: #ff;}
-        #section41 {color: #ff;}
-        #section42 {color: #ff;}
 
         @media screen and (max-width: 810px)
         {
@@ -136,14 +132,9 @@ function dateformatChanger($orgDate){
         </div>
     </div>
 </nav>
-
-
-
-
 <!--SIDE MENU-->
-
 <nav class="col-sm-3 col-lg-3 col-md-4 col-xs-3" id ="myScrollspy">
-    <ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border:0.4px solid light-grey; padding:10px">
+    <ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border: 0.4px solid lightgray;padding:10px">
         <li class="dropdown" id ="section0"><a href="profile.php"><center>PROFILE</center></a></li>
         <hr>
         <li><a href="#section1">Personal Details</a></li>
@@ -234,7 +225,7 @@ function dateformatChanger($orgDate){
                                     <span class="error" id ="address"></span>
                                 </div>
                             </div>
-                            <br><br><br><br><br><br><br><br>
+                            <br><br><br><br><br><br><br>
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Joining Position : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
@@ -245,602 +236,474 @@ function dateformatChanger($orgDate){
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Joining Date : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if(!empty($err[27])) echo "autofocus style='border:2px solid red;'"; ?><?php if($join_date == '1950-01-01') echo "placeholder='Date Of Joining'"; else echo "value =". dateformatChanger($join_date)?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='date')" name="joining_date">
+                                    <input <?php if(!empty($err[27])) echo "autofocus style='border:2px solid red;'"; ?><?php if($join_date == '1950-01-01') echo "placeholder='Date Of Joining'"; else echo "value ='".dateformatChanger($join_date)."'"?> class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='date')" name="joining_date">
                                     <span class="error"><?php echo $err[27]; ?></span>
                                 </div>
                             </div>
-                            <br><br><br><br>
-
+                            <br><br><br>
                             <?php
                             $new_field_query="select * from new_fields where table_name='personal_details'";
                             $result=$conn->query($new_field_query);
                             if($result->num_rows>0){
-                                while($row=$result->fetch_assoc()) {
-                                    $field_name = $row['field_name'];
-                                    $label = $row['label'];
-                                    $display = $row['display'];
-                                    if($display==1) {
-                                        $table_sql = "select $field_name from personal_details where emp3_id=$empid";
-                                        $tab_res = $conn->query($table_sql);
-                                        if ($tab_res->num_rows > 0) {
-                                            $tab_row = $tab_res->fetch_assoc();
-                                            $new_field=$tab_row[$field_name];
-                                            echo "<div class=\"form-group\">
+                            while($row=$result->fetch_assoc()) {
+                            $field_name = $row['field_name'];
+                            $label = $row['label'];
+                            $display = $row['display'];
+                            if($display==1) {
+                            $table_sql = "select $field_name from personal_details where emp3_id=$empid";
+                            $tab_res = $conn->query($table_sql);
+                            if ($tab_res->num_rows > 0) {
+                            $tab_row = $tab_res->fetch_assoc();
+                            $new_field = $tab_row[$field_name];
+                            echo "<div class=\"form-group\">
                                 <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
-                                <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
-                                    <input class="form-control"
-                                        <?php
-                                            if($new_field == ''){
-                                                echo 'placeholder="  *Enter field value"';
-                                            }else {
-                                                echo "value = '  $new_field'";
-                                            }
-                                        ?>
-                                    >
-                                    <span class=\"error\"><?php echo $err[27]; ?></span>
-                                </div>
-                            </div> <br><br>;
-                            <?php
-                                        }
-                                    }
-                                }
-                            }
-                            ?>
-
-                            <legend>Promotions</legend>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion  : </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <select  class="form-control" name="pro1" id="pass">
-                                    	<option value="Head Of Department">Head Of Department</option>
-                                        <option value="Associate Professor">Associate Professor</option>
-                                        <option value="Lab Assistant">Lab Assistant</option>
-                                        <option value="Visiting Faculty">Visiting Faculty</option>
-                                    </select>
-
-                                    <span class="error"><?php echo $err[32]; ?> </span>  &nbsp &nbsp
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <div class="form-group">
-                                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion 1: </label>
-                                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                    <input <?php if(!empty($err[29])) echo "autofocus style='border:2px solid red;'"; ?> <?php if($pro1_date == '1950-01-01') echo "placeholder='Date Of Promotion 1'"; 
-                                    else echo "value = ".dateformatChanger($pro1_date);?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='date')" name="pro1_date">
-                                    <span class="error"><?php echo $err[29]; ?> </span>
-                                </div>
-                            </div>
-                            <br><br><br>
-                            
-                            <br><br><br>
-                            <div class="form-group">
-                                <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpersonal">
-                            </div>
-                        </fieldset>
-                </form>
-            </div>
-        </div>
-
-        <!--FORM 2-->
-        <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
-            <div id ="section2">
-                <!--SSC-->
-                <legend><h2>Academic Details</h2></legend>
-                <form  method="POST"  onsubmit="return ac1()" name="a1"  enctype="multipart/form-data">
-                    <fieldset>
-                        <h3>SSC</h3>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" class="form-control"  name="sscinstitute" id ="sscinstitute_id" <?php if($sscInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$sscInstitute'"; ?>>
-                                <span class="error" id ="ins1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Percentage: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="number" class="form-control" name="sscmarks" id ="sscmarks_id" min="0" max="100" step="0.01" <?php if($sscPercentile==0) echo "placeholder='* Percentile'"; else echo "value=$sscPercentile"; ?> >
-                                <span class="error" id ="sscmarks1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Year of Passing: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="sscyear" class="form-control">
-                                    <?php
-                                    if($gender=='null')
-                                    {
-                                        echo "<option selected value=$curyear>".$curyear."</option>";
-                                    }
-                                    else
-                                    {
-                                        foreach ($yearArray as $year)
-                                        {
-                                            $selected = ($year == $sscYear && $sscYear!=1950) ? 'selected' : '';
-                                            echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-
-                                <span class="error" id ="sscyear"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Marksheet: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                                <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">"; ?>
+                            <input class="form-control"
                                 <?php
-                                if($sscMarksheet==null)
-                                    echo "<input type='file' name='sscimage' id ='sscimage' accept='application/pdf' />";
+                                if ($new_field == '')
+                                    echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
+                                else
+                                    echo 'name="' . $field_name . '" value="' . $new_field . '"';
+                                ?>
+                            >
+                    </div>
+            </div>
+            <br><br><br>
+            <?php
+            }
+            }
+            }
+            }
+            ?>
+            <legend>Promotions</legend>
+            <div class="form-group">
+                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion  : </label>
+                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                    <select class="form-control" name="pro1" id="pass">
+                        <option value="">* Please Select a Position</option>
+                        <option value="Head Of Department" <?php if($pro1=="Head Of Department") echo "selected" ?> >Head Of Department</option>
+                        <option value="Associate Professor" <?php if($pro1=="Associate Professor") echo "selected" ?> >Associate Professor</option>
+                        <option value="Lab Assistant" <?php if($pro1=="Lab Assistant") echo "selected" ?> >Lab Assistant</option>
+                        <option value="Visiting Faculty" <?php if($pro1=="Visiting Faculty") echo "selected" ?> >Visiting Faculty</option>
+                    </select>
+                    <span class="error"><?php echo $err[32]; ?> </span>  &nbsp &nbsp
+                </div>
+            </div>
+            <br><br><br>
+            <div class="form-group">
+                <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion: </label>
+                <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                    <input <?php if(!empty($err[29])) echo "autofocus style='border:2px solid red;'"; ?> <?php if($pro1_date == '1950-01-01') echo "placeholder='Date Of Promotion'";
+                    else echo "value = ".dateformatChanger($pro1_date);?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='date')" name="pro1_date">
+                    <span class="error"><?php echo $err[29]; ?> </span>
+                </div>
+            </div>
+            <br><br><br>
+            <div class="form-group">
+                <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpersonal">
+            </div>
+            </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!--FORM 2-->
+    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+        <div id ="section2">
+            <!--SSC-->
+            <legend><h2>Academic Details</h2></legend>
+            <form  method="POST"  onsubmit="return ac1()" name="a1"  enctype="multipart/form-data">
+                <fieldset>
+                    <h3>SSC</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" class="form-control"  name="sscinstitute" id ="sscinstitute_id" <?php if($sscInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$sscInstitute'"; ?>>
+                            <span class="error" id ="ins1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Percentage: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="number" class="form-control" name="sscmarks" id ="sscmarks_id" min="0" max="100" step="0.01" <?php if($sscPercentile==0) echo "placeholder='* Percentile'"; else echo "value=$sscPercentile"; ?> >
+                            <span class="error" id ="sscmarks1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Year of Passing: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select name="sscyear" class="form-control">
+                                <?php
+                                if($gender=='null')
+                                {
+                                    echo "<option selected value=$curyear>".$curyear."</option>";
+                                }
                                 else
                                 {
-                                    echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410; class='glyphicon glyphicon-ok'></span></h4><br><br>";
-                                    echo "<input type='file' name='sscimage' id='sscimage' accept='application/pdf' />";
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <br><br><br><br><br><br>
-                        <div class="form-group">
-                            <input type="submit" style="color:white;" class="btn btn-primary btn-md" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> value="Submit" name = "submitacademic1">
-                        </div>
-                </form>
-                <hr style="height:0.4px;background-color:lightgray">
-                <div id ="hscnew">
-                    <!--HSC-->
-                    <form  method="POST"  onsubmit="return ac2()" name="a2"  enctype="multipart/form-data">
-                        <h3>HSC</h3>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" name="hscinstitute" id ="hscinstitute_id" class="form-control"  <?php if($hscInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$hscInstitute'"; ?>>
-                                <span class="error" id ="ins2"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Percentage: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="number"   class="form-control" name="hscmarks" id ="hscmarks_id"  min="0" max="100" step="0.01"  <?php if($hscPercentile==0) echo "placeholder='* Percentile'"; else echo "value=$hscPercentile"; ?> >
-                                <span class="error" id ="hscmarks1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Year of Passing: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="hscyear" class="form-control">
-                                    <?php
-                                    if($gender=='null')
-                                    {
-                                        echo "<option selected value=$curyear>".$curyear."</option>";
-                                    }
-                                    else
-                                    {
-                                        foreach ($yearArray as $year)
-                                        {
-                                            $selected = ($year == $hscYear && $hscYear!=1950) ? 'selected' : '';
-                                            echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                                <span class="error" id ="hscyear"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Marksheet: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <?php if($hscMarksheet==null) echo "<input type='file' name='hscimage' id ='hscimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='hscimage' id='hscimage' accept='application/pdf' />";} ?>
-                            </div>
-                        </div>
-                        <br><br><br><br><br><br>
-                        <div class="form-group">
-                            <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  name = "submitacademic2">
-                        </div>
-
-                    </form>
-                </div>
-                <hr style="height:0.5px;background-color:lightgray">
-                <!--BTECH-->
-                <div id ="degree">
-
-                    <form  method="POST"  onsubmit="return ac3()" name="a3"  enctype="multipart/form-data">
-                        <h3>Bachelor's</h3>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" name="btechinstitute" id ="btechinstitute_id" class="form-control"  <?php if($bachelorsInstitute=='') echo "placeholder='* Institute Name'"; else echo"value='$bachelorsInstitute'"; ?>>
-                                <span class="error" id ="ins3"><?php echo $err[36];?></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech CGPI: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="number"  name="btechmarks" id ="btechmarks_id" class="form-control" min="0" max="10" step="0.01" <?php if($bachelorsPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$bachelorsPercentile"; ?>>
-                                <span class="error" id ="btechmarks1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Year of Passing: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="btechyear" class="form-control">
-                                    <?php
-                                    if($gender=='null')
-                                    {
-                                        echo "<option selected value=$curyear>".$curyear."</option>";
-                                    }
-                                    else
-                                    {
-                                        foreach ($yearArray as $year)
-                                        {
-                                            $selected = ($year == $bachelorsYear && $bachelorsYear!=1950) ? 'selected' : '';
-                                            echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label for="sel1" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select id ="sel1" class="form-control" name="btechdegree" >
-                                    <option value='' <?php if($bachelorsIn == '') echo "selected"; ?> >Degree</option>
-                                    <option value='Information Technology' <?php if($bachelorsIn == 'Information Technology') echo"selected"; ?> >Information Technology Engineering</option>
-                                    <option value='Computer Science Engineering' <?php if($bachelorsIn == 'Computer Science Engineering') echo"selected"; ?> > Computer Science Engineering </option>
-                                    <option value='Electronics and Telecommunication Engineering' <?php if($bachelorsIn == 'Electronics and Telecommunication Engineering') echo"selected"; ?> > Electronics and Telecommunication Engineering </option>
-                                    <option value='Electronics' <?php if($bachelorsIn == 'Electronics') echo"selected"; ?> > Electronics </option>
-
-                                </select>
-                            </div>
-                            <br>
-                        </div>
-                        <span class="error" id ="btechdegree"></span>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Marksheet: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <?php if($btechMarksheet==null) echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; }?>
-                            </div>
-                        </div>
-                        <br><br><br><br><br><br>
-                        <div class="form-group">
-                            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic3">
-                        </div>
-                    </form>
-                </div>
-                <hr style="height:0.3px;background-color:lightgray">
-                <!--MTECH-->
-                <div id ="masters">
-                    <form  method="POST"  onsubmit="return ac4()" name="a4"  enctype="multipart/form-data">
-                        <h3>Master's</h3>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" name="mtechinstitute" id ="mtechinstitute_id"  class="form-control" <?php if($mastersInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$mastersInstitute'"; ?>>
-                                <span class="error" id ="ins4"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech CGPI: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="number" name="mtechmarks" id ="mtechmarks_id"  class="form-control" min="0" max="10" step="0.01"  <?php if($mastersPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$mastersPercentile"; ?>>
-                                <span class="error" id ="mtechmarks1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Year of Passing: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="mtechyear" class="form-control">
-                                    <?php
-                                    if($gender=='null')
-                                    {
-                                        echo "<option selected value=$curyear>".$curyear."</option>";
-                                    }
-                                    else
-                                    {
-                                        foreach ($yearArray as $year)
-                                        {
-                                            $selected = ($year == $mastersYear && $mastersYear!=1950) ? 'selected' : '';
-                                            echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label for="sel2" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select id ="sel2" name="mtechdegree" class="form-control" >
-                                    <option value='' <?php if($mastersIn == '') echo "selected"; ?> >Degree</option>
-                                    <option value='Computer Science Engineering' <?php if($mastersIn == 'Computer Science Engineering') echo"selected"; ?> > Computer Science Engineering</option>
-                                    <option value='Computer Engineering' <?php if($mastersIn == 'Computer Engineering') echo"selected"; ?> >Computer Engineering </option>
-                                    <option value= 'Embedded System & Computer Engineering' <?php if($mastersIn == 'Embedded System & Computer Engineering') echo"selected"; ?> > Embedded System & Computing Engineering </option>
-                                    <option value= 'Electronics' <?php if($mastersIn == 'Electronics') echo"selected"; ?> > Electronics </option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <span class="error" id ="mtechdegree"></span>
-                        <br><br>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Marksheet: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <?php if($mtechMarksheet==null) echo "<input type='file' name='mtechimage' id ='mtechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>";  echo "<input type='file' name='mtechimage' id='mtechimage' accept='application/pdf' />";} ?>
-                            </div>
-                        </div>
-                        <br><br><br><br><br><br>
-                        <div class="form-group">
-                            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic4">
-                        </div>
-                    </form>
-                </div>
-                <hr style="height:0.3px;background-color:lightgray">
-                <!--PHD-->
-                <div id ="phd">
-                    <form  method="POST"  onsubmit="return ac5()" name="a5"  enctype="multipart/form-data">
-                        <h3>PHD</h3>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" class="form-control"  name="phdinstitute" id ="phdinstitute_id"  <?php if($phdInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$phdInstitute'"; ?>>
-                                <span class="error" id ="ins5"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD CGPI: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="number" name="phdmarks" id ="phdmarks_id"  class="form-control"   min="0" max="10" step="0.01" <?php if($phdPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$phdPercentile"; ?>>
-                                <span class="error" id ="phdmarks1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Year of Passing: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="phdyear" class="form-control">
-                                    <?php
-                                    if($gender=='null')
-                                    {
-                                        echo "<option selected value=$curyear>".$curyear."</option>";
-                                    }
-                                    else
-                                    {
-                                        foreach ($yearArray as $year)
-                                        {
-                                            $selected = ($year == $phdYear && $phdYear!=1950) ? 'selected' : '';
-                                            echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label for="sel3" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select id ="sel3" name="phddegree" class="form-control" >
-                                    <option value='' <?php if($phdIn =='') echo "selected"; ?>>Degree</option>
-                                    <option value='Electronics' <?php if($phdIn == 'Electronics') echo "selected"; ?> > Electronics </option>
-                                    <option> Some name 2 </option>
-                                    <option> Some name 3 </option>
-                                    <option> Some name 4 </option>
-                                    <option> Some name 5 </option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <span class="error" id ="phddegree"></span>
-
-                        <br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Marksheet: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <?php if($phdMarksheet==null) echo "<input type='file' name='phdimage' id ='phdimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='phdimage' id='phdimage' accept='application/pdf' />"; }?>
-                            </div>
-                        </div>
-                        <br><br><br><br><br><br>
-                        <div class="form-group">
-                            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic5">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!--FORM 3-->
-        <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
-            <div id ="section3">
-                <form method="post" onsubmit="return coursesvalidation()" name="coursestaught">
-                    <fieldset>
-                        <legend><h2>Courses Taught</h2></legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <div class="category_div" id ="category_div">
-                                    <!-- <select name="category" class="required-entry form-control" id ="category_id" onchange="dynamicdropdown(options[this.selectedIndex].value);">
-                                         <option value="">* Select course type</option>
-                                         <option value="UG">UG</option>
-                                         <option value="PG">PG</option>
-                                         <option value="Labcourses">Lab Courses</option>
-                                         <option value="AC">Audit Course</option>
-                                         <option value="IDC">IDC</option>
-                                     </select>-->
-                                    <?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
-                                    $res = $conn->query($sql);
-                                    echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
-                                    while ($row = $res->fetch_assoc()) {
-                                        if ($res->num_rows > 0) {
-                                            $course_type = $row['course_type_name'];
-                                            $course_value=$course_type;
-                                            if($course_value=="Lab Course"){
-                                                $course_value="Labcourses";
-                                            }
-                                            if($course_value=="Audit Course"){
-                                                $course_value="AC";
-                                            }
-                                            echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
-                                        }
-                                    }
-                                    echo "</select>";?>
-                                    <span class="error" id ="coursetype"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Courses: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <div class="sub_category_div" id ="sub_category_div">
-                                    <script type="text/javascript">
-                                        document.write('<select name="subcategory" class="form-control" id="subcategory"><option value="">* Please select course type</option></select>');
-                                    </script>
-                                    <span class="error" id ="course"> </span>
-                                </div>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Year: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select class="form-control" name="courseyear" id ="courseyear_id" >
-                                    <option value="">* Select Year</option>
-                                    <?php
+                                    echo '<option value="">* Please Select Year of Passing</option>';
                                     foreach ($yearArray as $year)
                                     {
-                                        echo '<option value="'.$year.'">'.$year.'</option>';
-                                    }
-                                    ?>
-                                </select>
-                                <span class="error" id ="courseyear1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Semester: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select class="form-control" name="coursesem" id ="coursesem_id">
-                                    <option value="">* Select semester</option>
-                                    <option value="SEM I">SEM I</option>
-                                    <option value="SEM II">SEM II</option>
-                                    <option value="SEM III">SEM III</option>
-                                    <option value="SEM IV">SEM IV</option>
-                                    <option value="SEM V">SEM V</option>
-                                    <option value="SEM VI">SEM VI</option>
-                                    <option value="SEM VII">SEM VII</option>
-                                    <option value="SEM VIII">SEM VIII</option>
-                                </select>
-                                <span class="error" id ="coursesem1"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <?php
-                            $new_field_query="select * from new_fields where table_name='courses'";
-                            $result=$conn->query($new_field_query);
-                            if($result->num_rows>0){
-                                while($row=$result->fetch_assoc()) {
-                                    $field_name = $row['field_name'];
-                                    $label = $row['label'];
-                                    $display = $row['display'];
-                                    if($display==1) {
-                                        $table_sql = "select $field_name from courses where emp8_id=$empid";
-                                        $tab_res = $conn->query($table_sql);
-                                        if ($tab_res->num_rows > 0) {
-                                            $tab_row = $tab_res->fetch_assoc();
-                                            $new_field=$tab_row[$field_name];
-                                            echo "<div class=\"form-group\">
-                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
-                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
-                                            <input class="form-control"
-                                                <?php
-                                                if($new_field == ''){
-                                                    echo 'placeholder="  *Enter field value"';
-                                                }else {
-                                                    echo "value = '  $new_field'";
-                                                }
-                                                ?>
-                                            >
-                                            <span class=\"error\"><?php echo $err[27]; ?></span>
-                                            </div>
-                                            </div> <br><br>
-                                        <?php
-                                        }
+                                        $selected = ($year == $sscYear && $sscYear!=1950) ? 'selected' : '';
+                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
                                     }
                                 }
-                            }
-                        ?>
-                        <div class="form-group">
-                            <input type="submit"  type="submit" <?php /*if($gender=='null') echo "disabled title='Please fill Personal details first'"*/?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
+                                ?>
+                            </select>
+                            <span class="error" id ="sscyear"></span>
                         </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Marksheet: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <?php
+                            if($sscMarksheet==null)
+                                echo "<input type='file' name='sscimage' id ='sscimage' accept='application/pdf' />";
+                            else
+                            {
+                                echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410; class='glyphicon glyphicon-ok'></span></h4><br><br>";
+                                echo "<input type='file' name='sscimage' id='sscimage' accept='application/pdf' />";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <input type="submit" style="color:white;" class="btn btn-primary btn-md" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> value="Submit" name = "submitacademic1">
+                    </div>
+            </form>
+            <hr style="height:0.4px;background-color:lightgray">
+            <div id ="hscnew">
+                <!--HSC-->
+                <form  method="POST"  onsubmit="return ac2()" name="a2"  enctype="multipart/form-data">
+                    <h3>HSC</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" name="hscinstitute" id ="hscinstitute_id" class="form-control"  <?php if($hscInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$hscInstitute'"; ?>>
+                            <span class="error" id ="ins2"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Percentage: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="number"   class="form-control" name="hscmarks" id ="hscmarks_id"  min="0" max="100" step="0.01"  <?php if($hscPercentile==0) echo "placeholder='* Percentile'"; else echo "value=$hscPercentile"; ?> >
+                            <span class="error" id ="hscmarks1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Year of Passing: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select name="hscyear" class="form-control">
+                                <?php
+                                if($gender=='null')
+                                {
+                                    echo "<option selected value=$curyear>".$curyear."</option>";
+                                }
+                                else
+                                {
+                                    echo '<option value="">* Please Select Year of Passing</option>';
+                                    foreach ($yearArray as $year)
+                                    {
+                                        $selected = ($year == $hscYear && $hscYear!=1950) ? 'selected' : '';
+                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <span class="error" id ="hscyear"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Marksheet: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <?php if($hscMarksheet==null) echo "<input type='file' name='hscimage' id ='hscimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='hscimage' id='hscimage' accept='application/pdf' />";} ?>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  name = "submitacademic2">
+                    </div><br>
+                </form>
+            </div>
+            <hr style="height:0.5px;background-color:lightgray">
+            <!--BTECH-->
+            <div id ="degree">
+
+                <form  method="POST"  onsubmit="return ac3()" name="a3"  enctype="multipart/form-data">
+                    <h3>Bachelor's</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" name="btechinstitute" id ="btechinstitute_id" class="form-control"  <?php if($bachelorsInstitute=='') echo "placeholder='* Institute Name'"; else echo"value='$bachelorsInstitute'"; ?>>
+                            <span class="error" id ="ins3"><?php echo $err[36];?></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech CGPI: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="number"  name="btechmarks" id ="btechmarks_id" class="form-control" min="0" max="10" step="0.01" <?php if($bachelorsPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$bachelorsPercentile"; ?>>
+                            <span class="error" id ="btechmarks1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Year of Passing: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select name="btechyear" class="form-control">
+                                <?php
+                                if($gender=='null')
+                                {
+                                    echo "<option selected value=$curyear>".$curyear."</option>";
+                                }
+                                else
+                                {
+                                    echo '<option value="">* Please Select Year of Passing</option>';
+                                    foreach ($yearArray as $year)
+                                    {
+                                        $selected = ($year == $bachelorsYear && $bachelorsYear!=1950) ? 'selected' : '';
+                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label for="sel1" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select id ="sel1" class="form-control" name="btechdegree" >
+                                <option value='' <?php if($bachelorsIn == '') echo "selected"; ?> >Degree</option>
+                                <option value='Information Technology' <?php if($bachelorsIn == 'Information Technology') echo"selected"; ?> >Information Technology Engineering</option>
+                                <option value='Computer Science Engineering' <?php if($bachelorsIn == 'Computer Science Engineering') echo"selected"; ?> > Computer Science Engineering </option>
+                                <option value='Electronics and Telecommunication Engineering' <?php if($bachelorsIn == 'Electronics and Telecommunication Engineering') echo"selected"; ?> > Electronics and Telecommunication Engineering </option>
+                                <option value='Electronics' <?php if($bachelorsIn == 'Electronics') echo"selected"; ?> > Electronics </option>
+
+                            </select>
+                        </div>
+                        <br>
+                    </div>
+                    <span class="error" id ="btechdegree"></span>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Marksheet: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <?php if($btechMarksheet==null) echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; }?>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic3">
+                    </div><br>
+                </form>
+            </div>
+            <hr style="height:0.3px;background-color:lightgray">
+            <!--MTECH-->
+            <div id ="masters">
+                <form  method="POST"  onsubmit="return ac4()" name="a4"  enctype="multipart/form-data">
+                    <h3>Master's</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" name="mtechinstitute" id ="mtechinstitute_id"  class="form-control" <?php if($mastersInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$mastersInstitute'"; ?>>
+                            <span class="error" id ="ins4"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech CGPI: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="number" name="mtechmarks" id ="mtechmarks_id"  class="form-control" min="0" max="10" step="0.01"  <?php if($mastersPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$mastersPercentile"; ?>>
+                            <span class="error" id ="mtechmarks1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Year of Passing: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select name="mtechyear" class="form-control">
+                                <?php
+                                if($gender=='null')
+                                {
+                                    echo "<option selected value=$curyear>".$curyear."</option>";
+                                }
+                                else
+                                {
+                                    echo '<option value="">* Please Select Year of Passing</option>';
+                                    foreach ($yearArray as $year)
+                                    {
+                                        $selected = ($year == $mastersYear && $mastersYear!=1950) ? 'selected' : '';
+                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label for="sel2" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select id ="sel2" name="mtechdegree" class="form-control" >
+                                <option value='' <?php if($mastersIn == '') echo "selected"; ?> >Degree</option>
+                                <option value='Computer Science Engineering' <?php if($mastersIn == 'Computer Science Engineering') echo"selected"; ?> > Computer Science Engineering</option>
+                                <option value='Computer Engineering' <?php if($mastersIn == 'Computer Engineering') echo"selected"; ?> >Computer Engineering </option>
+                                <option value= 'Embedded System & Computer Engineering' <?php if($mastersIn == 'Embedded System & Computer Engineering') echo"selected"; ?> > Embedded System & Computing Engineering </option>
+                                <option value= 'Electronics' <?php if($mastersIn == 'Electronics') echo"selected"; ?> > Electronics </option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <span class="error" id ="mtechdegree"></span>
+                    <br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Marksheet: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <?php if($mtechMarksheet==null) echo "<input type='file' name='mtechimage' id ='mtechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>";  echo "<input type='file' name='mtechimage' id='mtechimage' accept='application/pdf' />";} ?>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic4">
+                    </div><br>
+                </form>
+            </div>
+            <hr style="height:0.3px;background-color:lightgray">
+            <!--PHD-->
+            <div id ="phd">
+                <form  method="POST"  onsubmit="return ac5()" name="a5"  enctype="multipart/form-data">
+                    <h3>PHD</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" class="form-control"  name="phdinstitute" id ="phdinstitute_id"  <?php if($phdInstitute=='') echo "placeholder='* Institute Name'"; else echo "value='$phdInstitute'"; ?>>
+                            <span class="error" id ="ins5"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD CGPI: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="number" name="phdmarks" id ="phdmarks_id"  class="form-control"   min="0" max="10" step="0.01" <?php if($phdPercentile==0) echo "placeholder='* CGPA'"; else echo "value=$phdPercentile"; ?>>
+                            <span class="error" id ="phdmarks1"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Year of Passing: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select name="phdyear" class="form-control">
+                                <?php
+                                if($gender=='null')
+                                {
+                                    echo "<option selected value=$curyear>".$curyear."</option>";
+                                }
+                                else
+                                {
+                                    echo '<option value="">* Please Select Year of Passing</option>';
+                                    foreach ($yearArray as $year)
+                                    {
+                                        $selected = ($year == $phdYear && $phdYear!=1950) ? 'selected' : '';
+                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label for="sel3" class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Degree:</label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select id ="sel3" name="phddegree" class="form-control" >
+                                <option value='' <?php if($phdIn =='') echo "selected"; ?>>* Please Select a Degree</option>
+                                <option value='Electronics' <?php if($phdIn == 'Electronics') echo "selected"; ?> > Electronics </option>
+                                <option> Some name 2 </option>
+                                <option> Some name 3 </option>
+                                <option> Some name 4 </option>
+                                <option> Some name 5 </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <span class="error" id ="phddegree"></span>
+                    <br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Marksheet: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <?php if($phdMarksheet==null) echo "<input type='file' name='phdimage' id ='phdimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='phdimage' id='phdimage' accept='application/pdf' />"; }?>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitacademic5">
+                    </div>
                 </form>
             </div>
         </div>
+    </div>
 
-
-        <!-- FORM 4 -->
-        <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
-            <div id ="section4">
-                <form method="POST" name="project" onsubmit="return projguided()" enctype="multipart/form-data">
-                    <legend><h2>Projects Guided</h2></legend>
+    <!--FORM 3-->
+    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+        <div id ="section3">
+            <form method="post" onsubmit="return coursesvalidation()" name="coursestaught">
+                <fieldset>
+                    <legend><h2>Courses Taught</h2></legend>
                     <div class="form-group">
-                        <!-- TITLE OF PROJECT -->
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Title: </label>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="text" class="form-control" name="projtitle" id ="projtitleid" placeholder="* Project's Title">
-                            <span class="error" id ="projname"></span>
-                        </div>
-                    </div>
-                    <br><br><br>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Type: </label>
-                        <div class="col-md-6 col-sm-9 col-lg-8 col-xs-6">
-                            <div class="col-md-7 col-sm-7 col-lg-7 col-xs-8">
-                                <label class="radio-inline"><input type="radio" name="projtype"  checked value = "BEPROJECT" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">B.E Project</label>
-
-                                <label class="radio-inline"><input type="radio" name="projtype" value = "Internship" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">Internship</label>
-
-                                <label class="radio-inline"><input type="radio" name="projtype" for="name2" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Other</label>
+                            <div class="category_div" id ="category_div">
+                                <?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
+                                $res = $conn->query($sql);
+                                echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
+                                while ($row = $res->fetch_assoc()) {
+                                    if ($res->num_rows > 0) {
+                                        $course_type = $row['course_type_name'];
+                                        $course_value=$course_type;
+                                        if($course_value=="Lab Course"){
+                                            $course_value="Labcourses";
+                                        }
+                                        if($course_value=="Audit Course"){
+                                            $course_value="AC";
+                                        }
+                                        echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
+                                    }
+                                }
+                                echo "</select>";?>
+                                <span class="error" id ="coursetype"></span>
                             </div>
-                            <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3">
-                                <input id ="name2" name="name2" disabled="true" type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Courses: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <div class="sub_category_div" id ="sub_category_div">
+                                <script type="text/javascript">
+                                    document.write('<select name="subcategory" class="form-control" id="subcategory"><option value="">* Please select course type</option></select>');
+                                </script>
+                                <span class="error" id ="course"> </span>
                             </div>
-                            <span class="error" id ="projtypeerr"></span>
                         </div>
                     </div>
                     <br><br><br>
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Description: </label>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Year: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="text" class="form-control" name="projdesc" id ="projdescid" placeholder="Project's Description">
-                            <span class="error" id ="projdescerr"></span>
-                        </div>
-                    </div>
-                    <br><br><br>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Year: </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <select class="form-control" name="projyear" id ="projyearid" >
+                            <select class="form-control" name="courseyear" id ="courseyear_id" >
                                 <option value="">* Select Year</option>
                                 <?php
                                 foreach ($yearArray as $year)
@@ -849,66 +712,30 @@ function dateformatChanger($orgDate){
                                 }
                                 ?>
                             </select>
-                            <span class="error" id ="projyearerr"></span>
+                            <span class="error" id ="courseyear1"></span>
                         </div>
                     </div>
                     <br><br><br>
                     <div class="form-group">
-                        <label>ALL STUDENTS DETAILS : <br></label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th><center>Sr. No</center></th>
-                                    <th><center>Name</center></th>
-                                    <th><center>Roll Number</center></th>
-                                    <th><center>E-mail Address</center></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><center>1.</center></td>
-                                    <td><input type="text" class="form-control" name="projstud1name" id ="projstud1nameid">
-                                        <span class="error" id ="projstud1name"></span></td></td>
-                                    <td><input type="number" max="9999999" class="form-control" name="projstud1roll" id ="projstud1rollid">
-                                        <span class="error" id ="projstud1roll"></span></td>
-                                    <td><input type="text" class="form-control" name="projstud1email" id ="projstud1email">
-                                        <span class="error" id ="projstud1emailerr"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><center>2.</center></td>
-                                    <td><input type="text" class="form-control" name="projstud2name" id ="projstud2nameid">
-                                        <span class="error" id ="projstud2name"></span></td></td>
-                                    <td><input type="number" max="9999999" class="form-control" name="projstud2roll" id ="projstud2rollid">
-                                        <span class="error" id ="projstud2roll"></span></td>
-                                    <td><input type="text" class="form-control" name="projstud2email" id ="projstud2email">
-                                        <span class="error" id ="projstud2emailerr"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><center>3.</center></td>
-                                    <td><input type="text" class="form-control" name="projstud3name" id ="projstud3nameid">
-                                        <span class="error" id ="projstud3name"></span></td></td>
-                                    <td><input type="number" max="9999999"class="form-control" name="projstud3roll" id ="projstud3rollid">
-                                        <span class="error" id ="projstud3roll"></span></td>
-                                    <td><input type="text" class="form-control" name="projstud3email" id ="projstud3email">
-                                        <span class="error" id ="projstud3emailerr"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><center>4.</center></td>
-                                    <td><input type="text" class="form-control" name="projstud4name" id ="projstud4nameid">
-                                        <span class="error" id ="projstud4name"></span></td></td>
-                                    <td><input type="number" max="9999999"class="form-control" name="projstud4roll" id ="projstud4rollid">
-                                        <span class="error" id ="projstud4roll"></span></td>
-                                    <td><input type="text" class="form-control" name="projstud4email" id ="projstud4email">
-                                        <span class="error" id ="projstud4emailerr"></span></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Semester: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <select class="form-control" name="coursesem" id ="coursesem_id">
+                                <option value="">* Select semester</option>
+                                <option value="SEM I">SEM I</option>
+                                <option value="SEM II">SEM II</option>
+                                <option value="SEM III">SEM III</option>
+                                <option value="SEM IV">SEM IV</option>
+                                <option value="SEM V">SEM V</option>
+                                <option value="SEM VI">SEM VI</option>
+                                <option value="SEM VII">SEM VII</option>
+                                <option value="SEM VIII">SEM VIII</option>
+                            </select>
+                            <span class="error" id ="coursesem1"></span>
                         </div>
                     </div>
-                    <br>
+                    <br><br><br>
                     <?php
-                    $new_field_query="select * from new_fields where table_name='projects'";
+                    $new_field_query="select * from new_fields where table_name='courses'";
                     $result=$conn->query($new_field_query);
                     if($result->num_rows>0){
                     while($row=$result->fetch_assoc()) {
@@ -916,197 +743,316 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from projects where emp12_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
-            </div>
-        </div> <br><br>
+        </div>
+    </div> <br><br><br>
     <?php
     }
     }
     }
-    }
     ?>
-                    <div class="form-group">
-                        <!-- SUBMIT -->
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitprojects">
+    <div class="form-group">
+        <input type="submit"  type="submit" <?php /*if($gender=='null') echo "disabled title='Please fill Personal details first'"*/?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
+    </div>
+    </form>
+    </div>
+    </div>
+
+
+    <!-- FORM 4 -->
+    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+        <div id ="section4">
+            <form method="POST" name="project" onsubmit="return projguided()" enctype="multipart/form-data">
+                <legend><h2>Projects Guided</h2></legend>
+                <div class="form-group">
+                    <!-- TITLE OF PROJECT -->
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Title: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" class="form-control" name="projtitle" id ="projtitleid" placeholder="* Project's Title">
+                        <span class="error" id ="projname"></span>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Type: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-8 col-xs-6">
+                        <div class="col-md-7 col-sm-7 col-lg-7 col-xs-8">
+                            <label class="radio-inline"><input type="radio" name="projtype"  checked value = "BEPROJECT" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">B.E Project</label>
 
+                            <label class="radio-inline"><input type="radio" name="projtype" value = "Internship" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">Internship</label>
 
-
-        <!--FORM 4.1-->
-        <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
-            <div id ="section41">
-                <form method="POST"  name="publicationbooks" onsubmit="return validateBook()" enctype="multipart/form-data">
-
-                    <legend><h2>Publications</h2></legend>
-                    <h3>Books</h3>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book Name: </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="text" class="form-control" name="bookname" id ="booknameid" placeholder="* Book's Name">
-                            <span class="error" id ="bname"></span>
+                            <label class="radio-inline"><input type="radio" name="projtype" for="name2" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Other</label>
                         </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3">
+                            <input id ="name2" name="name2" disabled="true" type="text" class="form-control"/>
+                        </div>
+                        <span class="error" id ="projtypeerr"></span>
                     </div>
-                    <br><br><br>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book ISBN Number: </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="text"  class="form-control" name="bookisbn" id ="bookisbnid" placeholder="* ISBN Number">
-                            <span class="error" id ="bookisbn"></span>
-                        </div>
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Description: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" class="form-control" name="projdesc" id ="projdescid" placeholder="Project's Description">
+                        <span class="error" id ="projdescerr"></span>
                     </div>
-                    <br><br><br>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Publication: </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input onfocus="(this.type='date')" onblur="(this.type='date')" <?php if(!empty($err[33])) echo "style='border-color:red;' autofocus"; ?> id ="pubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
-                            <span class="error" id ="pubdate"><?php echo $err[33]; ?></span>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Edition: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" class="form-control" name="bookedition"  placeholder="Book Edition">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Publisher's Name: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text"  class="form-control" name="book_pub_name" id ="book_pub_nameid"  placeholder="* Publisher's Name">
-                                <span class="error" id ="book_pub_name"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Author's Name: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text"class="form-control" name="book_auth_name" id ="book_auth_nameid" placeholder="* Author's Name">
-                                <span class="error" id ="book_auth_name"></span>
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Author's Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" id ="bookauthinst" class="form-control" name="book_auth_inst" placeholder="Author's Institute">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <legend>Co-Authors</legend>
-                        <br>
-                        <div class="form-group">
-                            Co-Author 1:<br>
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" id ="bookcoauthname1" class="form-control" name="book_coauth_name1" placeholder="Name">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text"id ="bookcoauthinst1" class="form-control" name="book_coauth_inst1" placeholder="Institute">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            Co-Author 2:<br>
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" id ="bookcoauthname2" class="form-control" name="book_coauth_name2" placeholder="Name">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text"id ="bookcoauthinst2" class="form-control" name="book_coauth_inst2" placeholder="Institute">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            Co-Author 3:<br>
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text" id ="bookcoauthname3" class="form-control" name="book_coauth_name3" placeholder="Name">
-                            </div>
-                        </div>
-                        <br><br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="text"id ="bookcoauthinst3" class="form-control" name="book_coauth_inst3" placeholder="Institute">
-                            </div>
-                        </div>
-                        <br><br>
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book's Cover Page : </label>
-                            <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <input type="file" name="book_image" id ="book_image" accept="application/pdf"/>
-                            </div>
-                        </div>
-                        <br><br>
-                        <?php
-                        $new_field_query="select * from new_fields where table_name='publication_books'";
-                        $result=$conn->query($new_field_query);
-                        if($result->num_rows>0){
-                        while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                        $table_sql = "select $field_name from publication_books where emp1_id=$empid";
-                        $tab_res = $conn->query($table_sql);
-                        if ($tab_res->num_rows > 0) {
-                        $tab_row = $tab_res->fetch_assoc();
-                        $new_field=$tab_row[$field_name];
-                        echo "<div class=\"form-group\">
-                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
-                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
-                        <input class="form-control"
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Project Year: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <select class="form-control" name="projyear" id ="projyearid" >
+                            <option value="">* Select Year</option>
                             <?php
-                            if($new_field == ''){
-                                echo 'placeholder="  *Enter field value"';
-                            }else {
-                                echo "value = '  $new_field'";
+                            foreach ($yearArray as $year)
+                            {
+                                echo '<option value="'.$year.'">'.$year.'</option>';
                             }
                             ?>
-                        >
-                        <span class=\"error\"><?php echo $err[27]; ?></span>
+                        </select>
+                        <span class="error" id ="projyearerr"></span>
                     </div>
-            </div> <br><br>
-            <?php
-            }
-            }
-            }
-            }
-            ?>
-                        <div class="form-group">
-                            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpublicationbooks">
-                        </div>
-                </form>
-            </div>
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label>ALL STUDENTS DETAILS : <br></label>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th><center>Sr. No</center></th>
+                                <th><center>Name</center></th>
+                                <th><center>Roll Number</center></th>
+                                <th><center>E-mail Address</center></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><center>1.</center></td>
+                                <td><input type="text" class="form-control" name="projstud1name" id ="projstud1nameid">
+                                    <span class="error" id ="projstud1name"></span></td></td>
+                                <td><input type="number" max="9999999" class="form-control" name="projstud1roll" id ="projstud1rollid">
+                                    <span class="error" id ="projstud1roll"></span></td>
+                                <td><input type="text" class="form-control" name="projstud1email" id ="projstud1email">
+                                    <span class="error" id ="projstud1emailerr"></span></td>
+                            </tr>
+                            <tr>
+                                <td><center>2.</center></td>
+                                <td><input type="text" class="form-control" name="projstud2name" id ="projstud2nameid">
+                                    <span class="error" id ="projstud2name"></span></td></td>
+                                <td><input type="number" max="9999999" class="form-control" name="projstud2roll" id ="projstud2rollid">
+                                    <span class="error" id ="projstud2roll"></span></td>
+                                <td><input type="text" class="form-control" name="projstud2email" id ="projstud2email">
+                                    <span class="error" id ="projstud2emailerr"></span></td>
+                            </tr>
+                            <tr>
+                                <td><center>3.</center></td>
+                                <td><input type="text" class="form-control" name="projstud3name" id ="projstud3nameid">
+                                    <span class="error" id ="projstud3name"></span></td></td>
+                                <td><input type="number" max="9999999"class="form-control" name="projstud3roll" id ="projstud3rollid">
+                                    <span class="error" id ="projstud3roll"></span></td>
+                                <td><input type="text" class="form-control" name="projstud3email" id ="projstud3email">
+                                    <span class="error" id ="projstud3emailerr"></span></td>
+                            </tr>
+                            <tr>
+                                <td><center>4.</center></td>
+                                <td><input type="text" class="form-control" name="projstud4name" id ="projstud4nameid">
+                                    <span class="error" id ="projstud4name"></span></td></td>
+                                <td><input type="number" max="9999999"class="form-control" name="projstud4roll" id ="projstud4rollid">
+                                    <span class="error" id ="projstud4roll"></span></td>
+                                <td><input type="text" class="form-control" name="projstud4email" id ="projstud4email">
+                                    <span class="error" id ="projstud4emailerr"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                <?php
+                $new_field_query="select * from new_fields where table_name='projects'";
+                $result=$conn->query($new_field_query);
+                if($result->num_rows>0){
+                while($row=$result->fetch_assoc()) {
+                $field_name = $row['field_name'];
+                $label = $row['label'];
+                $display = $row['display'];
+                if($display==1) {
+                echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                <input class="form-control"
+                    <?php
+                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+                    ?>
+                >
+                <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
+    </div> <br><br><br>
+    <?php
+    }
+    }
+    }
+    ?>
+    <div class="form-group">
+        <!-- SUBMIT -->
+        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitprojects">
+    </div>
+    </form>
+    </div>
+    </div>
+    <!--FORM 4.1-->
+    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+        <div id ="section41">
+            <form method="POST"  name="publicationbooks" onsubmit="return validateBook()" enctype="multipart/form-data">
+
+                <legend><h2>Publications</h2></legend>
+                <h3>Books</h3>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book Name: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text" class="form-control" name="bookname" id ="booknameid" placeholder="* Book's Name">
+                        <span class="error" id ="bname"></span>
+                    </div>
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book ISBN Number: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="text"  class="form-control" name="bookisbn" id ="bookisbnid" placeholder="* ISBN Number">
+                        <span class="error" id ="bookisbn"></span>
+                    </div>
+                </div>
+                <br><br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Publication: </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input onfocus="(this.type='date')" onblur="(this.type='date')" <?php if(!empty($err[33])) echo "style='border-color:red;' autofocus"; ?> id ="pubdateid" class="form-control" name="pubdate" placeholder="* Date of Publication">
+                        <span class="error" id ="pubdate"><?php echo $err[33]; ?></span>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Edition: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" class="form-control" name="bookedition"  placeholder="Book Edition">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Publisher's Name: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text"  class="form-control" name="book_pub_name" id ="book_pub_nameid"  placeholder="* Publisher's Name">
+                            <span class="error" id ="book_pub_name"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Author's Name: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text"class="form-control" name="book_auth_name" id ="book_auth_nameid" placeholder="* Author's Name">
+                            <span class="error" id ="book_auth_name"></span>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Author's Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" id ="bookauthinst" class="form-control" name="book_auth_inst" placeholder="Author's Institute">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <legend>Co-Authors</legend>
+                    <br>
+                    <div class="form-group">
+                        Co-Author 1:<br>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" id ="bookcoauthname1" class="form-control" name="book_coauth_name1" placeholder="Name">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text"id ="bookcoauthinst1" class="form-control" name="book_coauth_inst1" placeholder="Institute">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        Co-Author 2:<br>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" id ="bookcoauthname2" class="form-control" name="book_coauth_name2" placeholder="Name">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text"id ="bookcoauthinst2" class="form-control" name="book_coauth_inst2" placeholder="Institute">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        Co-Author 3:<br>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Name: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text" id ="bookcoauthname3" class="form-control" name="book_coauth_name3" placeholder="Name">
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Institute: </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="text"id ="bookcoauthinst3" class="form-control" name="book_coauth_inst3" placeholder="Institute">
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Book's Cover Page : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="book_image" id ="book_image" accept="application/pdf"/>
+                        </div>
+                    </div>
+                    <br><br>
+                    <?php
+                    $new_field_query="select * from new_fields where table_name='publication_books'";
+                    $result=$conn->query($new_field_query);
+                    if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if($display==1) {
+                    echo "<div class=\"form-group\">
+                                                    <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                    <input class="form-control"
+                        <?php
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+                        ?>
+                    >
+                    <span class=\"error\"><?php echo $err[27]; ?></span>
+                </div>
+        </div> <br><br><br>
+        <?php
+        }
+        }
+        }
+        ?>
+        <div class="form-group">
+            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpublicationbooks">
+        </div>
+        </form>
+    </div>
+    </div>
     </div>
 
     <!--FORM 4.2-->
@@ -1119,7 +1065,7 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Paper's Title: </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input type="text" id ="journaltitleid" class="form-control" name="journal_title" placeholder="Paper's Title">
+                        <input type="text" id ="journaltitleid" class="form-control" name="journal_title" placeholder="* Paper's Title">
                         <span class="error" id ="journal_title"></span>
                     </div>
                 </div>
@@ -1153,13 +1099,12 @@ function dateformatChanger($orgDate){
                     <br><br><br>
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Affiliation : </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input type="text" id ="jourcoauthnameaff1" class="form-control" name="jour_coauth_nameaff1" placeholder="Co Author 1 affiliation">
+                        <input type="text" id ="jourcoauthnameaff1" class="form-control" name="jour_coauth_nameaff1" placeholder="* Co Author 1 affiliation">
                         <span class="=error" id ="jour_coauth_nameaff1" style="color:red;"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div id ="inputs">
-
                     </div>
                 </div>
                 <br><br><br>
@@ -1303,37 +1248,27 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from publication_journals where emp4_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
-        </div> <br><br>
+        </div> <br><br><br>
         <?php
         }
         }
         }
-        }
         ?>
-                    <div class="form-group">
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
-                    </div>
-            </form>
+        <div class="form-group">
+            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
         </div>
+        </form>
+    </div>
     </div>
     </div>
 
@@ -1357,7 +1292,7 @@ function dateformatChanger($orgDate){
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                         <label class="radio-inline"><input type="radio" name="conf_fauth" value = "YES" checked onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">YES</label>
                         <label class="radio-inline"><input type="radio" name="conf_fauth" value = "NO" for="conf_fauth" onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">NO</label>
-                        <input id ="conf_fauth" name="conf_fauth_val" disabled="true" type="text"/><br>
+                        <input id ="conf_fauth" name="conf_fauth_val" placeholder="Enter Author's Name" disabled type="text"/><br>
                         <span class="error" id = "conf_fauthor"></span>
                     </div>
                 </div>
@@ -1373,13 +1308,12 @@ function dateformatChanger($orgDate){
                     <br><br><br>
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3"> Co-Author Affiliation : </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input type="text" id ="confcoauthnameaff1" class="form-control" name="name1_affiliation" placeholder="Co Author 1 affiliation">
+                        <input type="text" id ="confcoauthnameaff1" class="form-control" name="name1_affiliation" placeholder="* Co Author 1 affiliation">
                         <span class="=error" id ="name1_affiliation" style="color:red;"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div id ="inputsconf">
-
                     </div>
                 </div>
                 <br><br><br>
@@ -1551,41 +1485,29 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from publication_conferences where emp5_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
-        </div> <br><br>
+        </div> <br><br><br>
         <?php
         }
         }
         }
-        }
         ?>
-                    <div class="form-group">
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
-                    </div>
-            </form>
+        <div class="form-group">
+            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
         </div>
+        </form>
     </div>
     </div>
-
-
+    </div>
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section51">
             <form method="POST" action="" name="sttpattended" onsubmit="return validateAttended()"  enctype="multipart/form-data">
@@ -1603,16 +1525,18 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Event Type</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <select class="form-control" name="eventtype">
-                            <option value="">Event type</option>
+                        <select class="form-control" name="eventtype" id="eventtype" onchange="var input=document.getElementById('eventtype_new');if($('#eventtype :selected').text()=='Other'){input.disabled = false; input.focus();}else{input.disabled=true;}">
+                            <option value="">* Event type</option>
                             <option value="Seminar">Seminar</option>
                             <option value="Training">Training</option>
                             <option value="Workshop">Workshop</option>
                             <option value="Other">Other</option>
-                        </select>
+                        </select><br>
+                        <input id ="eventtype_new" name="eventtype_new" placeholder="Enter Event Type" disabled type="text"/>
+                        <span class="error" id ="eventtype_err"></span><br>
                     </div>
                 </div>
-                <br><br><br>
+                <br><br><br><br>
                 Date :
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
@@ -1681,40 +1605,28 @@ function dateformatChanger($orgDate){
                 $label = $row['label'];
                 $display = $row['display'];
                 if($display==1) {
-                $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
                 echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
                     <?php
-                    if($new_field == ''){
-                        echo 'placeholder="  *Enter field value"';
-                    }else {
-                        echo "value = '  $new_field'";
-                    }
+                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                     ?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
-    </div> <br><br>
+    </div><br><br><br>
     <?php
     }
     }
     }
-    }
     ?>
-                <div class="form-group">
-                    <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpattended">
-                </div>
-            </form>
-        </div>
+    <div class="form-group">
+        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpattended">
     </div>
-
-
+    </form>
+    </div>
+    </div>
     <!--FORM 5.2-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section52">
@@ -1733,16 +1645,18 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Event Type :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <select class="form-control" name="organizedeventtype">
-                            <option value="">Event type</option>
+                        <select class="form-control" name="organizedeventtype" id="orgeventtype" onchange="var input=document.getElementById('orgeventtype_new');if($('#orgeventtype :selected').text()=='Other'){input.disabled = false; input.focus();}else{input.disabled=true;}">
+                            <option value="">* Event type</option>
                             <option value="Seminar">Seminar</option>
                             <option value="Training">Training</option>
                             <option value="Workshop">Workshop</option>
                             <option value="Other">Other</option>
-                        </select>
+                        </select><br>
+                        <input id ="orgeventtype_new" name="orgeventtype_new" placeholder="Enter Event Type" disabled type="text"/>
+                        <span class="error" id ="orgeventtype_err"></span><br>
                     </div>
                 </div>
-                <br><br><br>
+                <br><br><br><br>
                 Date :
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
@@ -1790,37 +1704,27 @@ function dateformatChanger($orgDate){
                 $label = $row['label'];
                 $display = $row['display'];
                 if($display==1) {
-                $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
                 echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
                     <?php
-                    if($new_field == ''){
-                        echo 'placeholder="  *Enter field value"';
-                    }else {
-                        echo "value = '  $new_field'";
-                    }
+                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                     ?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
-    </div> <br><br>
+    </div> <br><br><br>
     <?php
     }
     }
     }
-    }
     ?>
-                <div class="form-group">
-                    <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttporganized">
-                </div>
-            </form>
-        </div>
+    <div class="form-group">
+        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttporganized">
+    </div>
+    </form>
+    </div>
     </div>
 
     <!--FORM 5.3-->
@@ -1841,16 +1745,18 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Event Type :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <select class="form-control" name="deliveredeventtype">
-                            <option value="">Event type</option>
+                        <select class="form-control" name="deliveredeventtype" id="deliveredeventtype" onchange="var input=document.getElementById('deleventtype_new');if($('#deliveredeventtype :selected').text()==='Other'){input.disabled = false; input.focus();}else{input.disabled=true;}">
+                            <option value="">* Event type</option>
                             <option value="Seminar">Seminar</option>
                             <option value="Training">Training</option>
                             <option value="Workshop">Workshop</option>
                             <option value="Other">Other</option>
-                        </select>
+                        </select><br>
+                        <input id ="deleventtype_new" name="deleventtype_new" placeholder="Enter Event Type" disabled type="text"/>
+                        <span class="error" id ="deleventtype_err"></span><br>
                     </div>
                 </div>
-                <br><br><br>
+                <br><br><br><br>
                 Date :
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">From :</label>
@@ -1897,37 +1803,27 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
-        </div> <br><br>
+        </div> <br><br><br>
         <?php
         }
         }
         }
-        }
         ?>
-                    <div class="form-group">
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpdelivered">
-                    </div>
-            </form>
+        <div class="form-group">
+            <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpdelivered">
         </div>
+        </form>
+    </div>
     </div>
     </div>
 
@@ -1993,38 +1889,29 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from co_curricular where emp10_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
-    </div> <br><br>
+    </div> <br><br><br>
     <?php
     }
     }
-    }
+//    }
     }
     ?>
-                    <div class="form-group">
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcocurricular">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+    <div class="form-group">
+        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcocurricular">
+    </div>
+    </fieldset>
+    </form>
+    </div>
     </div>
 
     <!--FORM 7-->
@@ -2081,41 +1968,29 @@ function dateformatChanger($orgDate){
                     $label = $row['label'];
                     $display = $row['display'];
                     if($display==1) {
-                    $table_sql = "select $field_name from extra where emp11_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
-    </div> <br><br>
+    </div> <br><br><br>
     <?php
     }
     }
     }
-    }
     ?><br>
-                    <div class="form-group">
-                        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitextra">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+    <div class="form-group">
+        <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitextra">
     </div>
-
-
+    </fieldset>
+    </form>
+    </div>
+    </div>
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="awards">
             <form method="POST" action="" onsubmit="return awards()" name="awards_form" enctype="multipart/form-data">
@@ -2165,43 +2040,34 @@ function dateformatChanger($orgDate){
                     $new_field_query="select * from new_fields where table_name='awards'";
                     $result=$conn->query($new_field_query);
                     if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
+                    while ($row = $result->fetch_assoc()) {
                     $field_name = $row['field_name'];
                     $label = $row['label'];
                     $display = $row['display'];
-                    if($display==1) {
-                    $table_sql = "select $field_name from awards where emp_id=$empid";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
+                    if ($display == 1) {
                     echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
-                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
+                                                    <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">"; ?>
                     <input class="form-control"
                         <?php
-                        if($new_field == ''){
-                            echo 'placeholder="  *Enter field value"';
-                        }else {
-                            echo "value = '  $new_field'";
-                        }
+                        echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
                         ?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
-    </div> <br><br>
+    </div>
+    <br><br><br>
     <?php
     }
     }
     }
-    }
     ?>
-                    <div class="form-group">
-                        <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name="submit_award">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+    <div class="form-group">
+        <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name="submit_award">
+    </div>
+    </fieldset>
+    </form>
+    </div>
     </div>
 </center>
 </body>

@@ -3,7 +3,9 @@ include 'dbconnect.php';
 include 'Decision2.php';
 if(!isset($_SESSION["Emp_Id"]))
     header('Location:logout.php');
-
+function dateformatReverser($orgDate){
+    return date("Y-m-d", strtotime($orgDate));
+}
 $empid=$_SESSION["Emp_Id"];
 
 $sql = "SELECT * FROM login WHERE Emp_Id=$empid";
@@ -25,11 +27,10 @@ $result = $conn->query($sql);
 $row = mysqli_fetch_assoc($result);
 $dob = $row["DOB"];
 $idname = $row["Name"];
+$dob=dateformatReverser($dob);
 $dobyear = (int)substr($dob,0,4);
 $curyear=date("Y");
 $yearArray = range($dobyear+12, $curyear);
-
-
 
 if($val == 1)
 {
@@ -40,6 +41,7 @@ if($val == 1)
     while($row = mysqli_fetch_assoc($result))
     {
         if($temp == $id){
+            $course_taught_id=$row['course_taught_id'];
             $courseid=$row["Course_Id"];
             $coursecategory=$row["Category"];
             $coursesem=$row["Semester"];
@@ -67,15 +69,30 @@ if($val == 1)
                 $err[2]="Fields cannot be Empty";
                 $flag2=1;
             }
-            else if(($row['Course_Id']==$subcategory1) && ($row['Category']==$coursecategory1) && ($row['Semester']==$coursesem1) && ($row['Year']==$courseyear1) && ($row['Emp8_Id']==$empid))
+           /* else if(($row['Course_Id']==$subcategory1) && ($row['Category']==$coursecategory1) && ($row['Semester']==$coursesem1) && ($row['Year']==$courseyear1) && ($row['Emp8_Id']==$empid))
             {
                 $err[1]="Course Already Entered";
                 $flag2=1;
-            }
+            }*/
         }
         if($flag2==0)
         {
-            $sql="UPDATE courses SET Category='$coursecategory1',Course_Id='$subcategory1',Semester='$coursesem1',Year='$courseyear1' WHERE Emp8_Id=$empid AND Category='$coursecategory' AND Course_Id='$courseid' AND Semester='$coursesem' AND Year='$courseyear'";
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='courses'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
+            $sql="UPDATE courses SET Category='$coursecategory1',Course_Id='$subcategory1',Semester='$coursesem1',Year='$courseyear1'$newfields WHERE Emp8_Id=$empid AND Category='$coursecategory' AND Course_Id='$courseid' AND Semester='$coursesem' AND Year='$courseyear' and course_taught_id=$course_taught_id";
             if($result=$conn->query($sql))
             {
                 header('Location:profile.php#section3');
@@ -105,6 +122,7 @@ if($val==2)
     while($row = mysqli_fetch_assoc($result))
     {
         if($temp == $id){
+            $proj_id=$row['project_id'];
             $title=$row['Title'];
             $type=$row['Type'];
             $description=$row['Description'];
@@ -154,6 +172,7 @@ if($val==2)
         {
             $flagproject=0;
             $date=$_POST["projectYear"];
+            $date=dateformatReverser($date);
             $year = (int)substr($date,0,4);
             if($year > $dobyear)
             {
@@ -171,10 +190,25 @@ if($val==2)
 
         if($flagproject == 0)
         {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='projects'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             $sql = "UPDATE projects SET Title='$projectTitle',Type='$projectType', Description='$projectDescription',Year='$projectYear' ,S1_name = '$studentname1', S1_roll='$studentroll1', S1_email='$studentemail1',S2_name = '$studentname2', S2_roll='$studentroll2', S2_email='$studentemail2',S3_name = '$studentname3', S3_roll='$studentroll3',
-       S3_email='$studentemail3',S4_name = '$studentname4', S4_roll='$studentroll4', S4_email='$studentemail4'
+       S3_email='$studentemail3',S4_name = '$studentname4', S4_roll='$studentroll4', S4_email='$studentemail4'$newfields
       WHERE Emp12_Id=$empid AND Title='$title'AND Type='$type' AND Description='$description' AND Year = '$year' AND S1_name ='$s1name' AND S1_roll='$s1roll' AND S1_email='$s1email' AND S2_name='$s2name' AND S2_roll='$s2roll' AND S2_email='$s2email' AND S3_name='$s3name' AND S3_roll='$s3roll'
-       AND S3_email='$s3email' AND S4_name='$s4name' AND S4_roll='$s4roll' AND S4_email='$s4email'";
+       AND S3_email='$s3email' AND S4_name='$s4name' AND S4_roll='$s4roll' AND S4_email='$s4email' and project_id=$proj_id";
             $result = $conn->query($sql);
             if($result)
                 header('Location:profile.php#section4');
@@ -239,7 +273,9 @@ if($val == 3)
         if(!empty($_POST["pubdate"]))
         {
             $pubdate1=$_POST["pubdate"];
+            $pubdate1=dateformatReverser($pubdate1);
             $pubyear1 = (int)substr($pubdate1,0,4);
+            echo $pubdate1;
             if($pubyear1 <= $dobyear)
             {
                 $err[3]="* Please Enter A Valid Publication Date ";
@@ -258,18 +294,33 @@ if($val == 3)
 
         if($flagbook==0)
         {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='publication_books'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             if($image[0] == 1)
             {
                 $sql="UPDATE publication_books SET Book_Name='$bookName1',ISBN='$bookisbn1',Date_Published='$pubdate1',Publisher_Name='$bookPubName1',COA1='$bookCoauthName11',COA1_INST='$bookCoauthInst11',COA2='$bookCoauthName21',COA2_INST='$bookCoauthInst21',COA3='$bookCoauthName31',COA3_INST='$bookCoauthInst31',Edition='$bookEdition1',Author='$bookAuthName1',Author_INST='$bookAuthInst1'
-            ,Cover='$bookImage1' WHERE Emp1_Id=$empid and Book_Name='$bookname' and ISBN='$isbn'
+            ,Cover='$bookImage1'$newfields WHERE Emp1_Id='$empid' and Book_Name='$bookname' and ISBN='$isbn'
             and Date_Published='$datepub' and Publisher_Name='$pubname' and COA1='$coa1' and COA1_INST='$coa1inst' and COA2='$coa2' and COA2_INST='$coa2inst' and COA3='$coa3' and COA3_INST='$coa3inst' and Edition='$edition' and Author='$author' and Author_INST='$authorinst'";
             }
             else
             {
-                $sql="UPDATE publication_books SET Book_Name='$bookName1',ISBN='$bookisbn1',Date_Published='$pubdate1',Publisher_Name='$bookPubName1',COA1='$bookCoauthName11',COA1_INST='$bookCoauthInst11',COA2='$bookCoauthName21',COA2_INST='$bookCoauthInst21',COA3='$bookCoauthName31',COA3_INST='$bookCoauthInst31',Edition='$bookEdition1',Author='$bookAuthName1',Author_INST='$bookAuthInst1'
-             WHERE Emp1_Id=$empid and Book_Name='$bookname' and ISBN='$isbn'
-            and Date_Published='$datepub' and Publisher_Name='$pubname' and COA1='$coa1' and COA1_INST='$coa1inst' and COA2='$coa2' and COA2_INST='$coa2inst' and COA3='$coa3' and COA3_INST='$coa3inst' and Edition='$edition' and Author='$author' and Author_INST='$authorinst'";
+                $sql="UPDATE publication_books SET Book_Name='$bookName1',ISBN='$bookisbn1',Date_Published='$pubdate1',Publisher_Name='$bookPubName1',COA1='$bookCoauthName11',COA1_INST='$bookCoauthInst11',COA2='$bookCoauthName21',COA2_INST='$bookCoauthInst21',COA3='$bookCoauthName31',COA3_INST='$bookCoauthInst31',Edition='$bookEdition1',Author='$bookAuthName1',Author_INST='$bookAuthInst1'$newfields
+             WHERE Emp1_Id='$empid' and Book_Name='$bookname' and ISBN='$isbn' and Date_Published='$datepub' and Publisher_Name='$pubname' and COA1='$coa1' and COA1_INST='$coa1inst' and COA2='$coa2' and COA2_INST='$coa2inst' and COA3='$coa3' and COA3_INST='$coa3inst' and Edition='$edition' and Author='$author' and Author_INST='$authorinst'";
             }
+            echo $sql;
             if($result=$conn->query($sql))
             {
                 header('Location:profile.php#section41');
@@ -519,6 +570,7 @@ if($val == 4)
         if(!empty($_POST["jour_date"]))
         {
             $jourDate=$_POST["jour_date"];
+            $jourDate=dateformatReverser($jourDate);
             $jourYear = (int)substr($jourDate,0,4);
             if($jourYear <= $dobyear)
             {
@@ -529,21 +581,36 @@ if($val == 4)
 
         if($flagjour==0)
         {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='publication_journals'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             if($image[7] == 1 && $image[6]==1)
             {
-                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter', Certificate ='$certificateImage', Peer_Reviewed ='$journalPeer', Paper_PDF ='$paperImage', Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi',Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue' WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi'";
+                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter', Certificate ='$certificateImage', Peer_Reviewed ='$journalPeer', Paper_PDF ='$paperImage', Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi',Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue'$newfields WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi'";
             }
             else if($image[7]==1)
             {
-                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter', Certificate ='$certificateImage', Peer_Reviewed ='$journalPeer',Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue' WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi' ";
+                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter', Certificate ='$certificateImage', Peer_Reviewed ='$journalPeer',Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue'$newfields WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi' ";
             }
             else if($image[6]==1)
             {
-                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter',Peer_Reviewed ='$journalPeer', Paper_PDF ='$paperImage', Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue' WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi'";
+                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter',Peer_Reviewed ='$journalPeer', Paper_PDF ='$paperImage', Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue'$newfields WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi'";
             }
             else
             {
-                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter',Peer_Reviewed ='$journalPeer',Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue' WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi' ";
+                $sql="UPDATE publication_journals SET Emp4_Id ='$empid', Type ='$journalType', Name ='$journalName', Title ='$journalTitle', Author ='$journalAuthName', Date ='$jourDate', Book_Chapter ='$journalChapter',Peer_Reviewed ='$journalPeer',Impact_Factor ='$journalImpact', COA_1 ='$journalCoa1', COA_2 ='$journalCoa2', COA_3 ='$journalCoa3', COA_4 ='$journalCoa4', COA_5 ='$journalCoa5', COA_6 ='$journalCoa6', COA_7 ='$journalCoa7', COA_8 ='$journalCoa8', COA_9 ='$journalCoa9', COA_10 ='$journalCoa10', COA1_AFF ='$journalCoa1_Aff', COA2_AFF ='$journalCoa2_Aff', COA3_AFF ='$journalCoa3_Aff', COA4_AFF ='$journalCoa4_Aff', COA5_AFF ='$journalCoa5_Aff', COA6_AFF ='$journalCoa6_Aff', COA7_AFF ='$journalCoa7_Aff', COA8_AFF ='$journalCoa8_Aff', COA9_AFF ='$journalCoa9_Aff', COA10_AFF ='$journalCoa10_Aff', Pub_Name ='$journalPubName',DOI='$journalDoi', Volume ='$journalVolume', PageNo ='$journalPageNumber', Citation ='$journalCitationIndex', ISSN ='$journalISSN', Paid ='$journalPaid', SJR ='$journalSJR', count = $count1, Issue ='$journalIssue'$newfields WHERE Emp4_Id='$empid' AND Type ='$type' AND Name='$name' AND Author='$author' AND Date='$date' AND ISSN='$issn' AND Pub_Name='$pubname' AND DOI='$doi' ";
             }
 
             if($result=$conn->query($sql))
@@ -570,7 +637,7 @@ if($val == 5)
         if($temp == $id)
         {
             $type = $row["Type"];
-            $name = $row["Name"];
+            $confname = $row["Name"];
             $place = $row["Place"];
             $date = $row["Date"];
             $author = $row["Author"];
@@ -780,10 +847,9 @@ if($val == 5)
             $confCoa10_Aff=" ";
 
         if($_POST["conf_fauth"] == "YES")
-            $confAuthName = $name;
+            $confAuthName = $idname;
         else if($_POST["conf_fauth"] == "NO")
             $confAuthName = $_POST["conf_fauth_val"];
-
         if(!empty($_FILES["paper_image"]["tmp_name"]))
         {
             $paperImage = addslashes(file_get_contents($_FILES["paper_image"]["tmp_name"]));
@@ -820,41 +886,56 @@ if($val == 5)
             $err[35]="* Please Enter A Valid Conference Date";
             $flagconf=1;
         }
-
+        $confDate=dateformatReverser($confDate);
         if($flagconf==0)
         {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='publication_conferences'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             if($image[9] == 1 && $image[8]==1 && $image[11]==1)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf' WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf' WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==1 && $image[9]==1 && $image[11]==0)
             {
 
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 $newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[9]==1 && $image[11]==1 && $image[8]==0)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf' WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf'$newfields WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==1 && $image[11]==1 && $image[9]==0)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf' WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf'$newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==0 && $image[11]==0 && $image[9]==1)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Certificate='$certificateImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 $newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==0 && $image[11]==1 && $image[9]==0)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf' WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1,presentation_pdf='$confPosterpdf'$newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==1 && $image[11]==0 && $image[9]==0)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',Paper_Pdf='$paperImage',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 $newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
             else if($image[8]==0 && $image[11]==0 && $image[9]==0)
             {
-                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+                $sql="UPDATE publication_conferences SET Type='$confType',Name='$confName',Place='$confPlace',Date='$confDate',Author='$confAuthName',COA1='$confCoa1',COA2='$confCoa2',COA3='$confCoa3',COA4='$confCoa4',COA5='$confCoa5',COA6='$confCoa6',COA7='$confCoa7',COA8='$confCoa8',COA9='$confCoa9',COA10='$confCoa10',COA1_AFF='$confCoa1_Aff',COA2_AFF='$confCoa2_Aff',COA3_AFF='$confCoa3_Aff',COA4_AFF='$confCoa4_Aff',COA5_AFF='$confCoa5_Aff',COA6_AFF='$confCoa6_Aff',COA7_AFF='$confCoa7_Aff',COA8_AFF='$confCoa8_Aff',COA9_AFF='$confCoa9_Aff',COA10_AFF='$confCoa10_Aff',H_Index='$confHindex',DOI='$confDoi',Pub_Name='$confPubname',Proc_Name='$confProname',Peer='$confPeer',Theme='$confThemename',Paid='$confPaid',PageNo='$confPageno',ISSN='$confIssn',Organizer='$confOrgname',Presented='$confPresented',Web='$confWeb',Poster='$confPoster',Citation_Index='$confCite',count=$count1 $newfields WHERE Name = '$confname' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
             }
 
             if($result=$conn->query($sql))
@@ -877,6 +958,7 @@ if($val == 6)
     {
         if($temp == $id)
         {
+            $sttp_id=$row['sttp_id'];
             $datefrom = $row['Date_From'];
             $dateto = $row['Date_To'];
             $organizedby = $row['Organized_By'];
@@ -903,13 +985,19 @@ if($val == 6)
     {
         $attendedname1 = $_POST["attendedname"];
         $eventtype1=$_POST["eventtype"];
-        $datefromattended1=$_POST["datefromattended"];
-        $datetoattended1=$_POST["datetoattended"];
+        $datefromattended1=dateformatReverser($_POST["datefromattended"]);
+        $datetoattended1=dateformatReverser($_POST["datetoattended"]);
         $organizedbyattended1=$_POST["organizedbyattended"];
         $durationattended1=$_POST["durationattended"];
         $participantsattended1=$_POST["participantsattended"];
         $speakerattended1=$_POST["speakerattended"];
         $locationattended1=$_POST["locationattended"];
+        if(isset($_POST['eventtype_new']))
+            $eventtype_new=$_POST['eventtype_new'];
+
+        if($eventtype1=="Other" && $eventtype_new!=null){
+            $eventtype1=$eventtype_new;
+        }
 
         $ba=date_create($datefromattended1);
         $ab=date_create($dob);
@@ -942,19 +1030,33 @@ if($val == 6)
 
         if($flagatten==0)
         {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='sttp_event_attended'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             if($image[2] == 1)
             {
-                $sql="UPDATE sttp_event_attended SET Date_From='$datefromattended1',Date_To='$datetoattended1',Organized_By='$organizedbyattended1',Place='$locationattended1',Duration='$durationattended1',Total_Participation=$participantsattended1,Speaker='$speakerattended1',Event_Type='$eventtype1',Certificate='$certificateattended1',Title='$attendedname1'
-        WHERE Emp6_Id = '$empid' and Date_From = '$datefrom' and Date_To = '$dateto' and Organized_By = '$organizedby' and Place = '$place' and Duration = '$duration' and Total_Participation = '$totalparticipation' and Speaker = '$speaker' and Event_Type = '$eventtype' and Title = '$title'";
+                $sql="UPDATE sttp_event_attended SET Date_From='$datefromattended1',Date_To='$datetoattended1',Organized_By='$organizedbyattended1',Place='$locationattended1',Duration='$durationattended1',Total_Participation=$participantsattended1,Speaker='$speakerattended1',Event_Type='$eventtype1',Certificate='$certificateattended1',Title='$attendedname1'$newfields
+        WHERE Emp6_Id = '$empid' and sttp_id=$sttp_id and Date_From = '$datefrom' and Date_To = '$dateto' and Organized_By = '$organizedby' and Place = '$place' and Duration = '$duration' and Total_Participation = '$totalparticipation' and Speaker = '$speaker' and Event_Type = '$eventtype' and Title = '$title'";
             }
             else
             {
-                $sql="UPDATE sttp_event_attended SET Date_From='$datefromattended1',Date_To='$datetoattended1',Organized_By='$organizedbyattended1',Place='$locationattended1',Duration='$durationattended1',Total_Participation=$participantsattended1,Speaker='$speakerattended1',Event_Type='$eventtype1',Title='$attendedname1'
-      WHERE Emp6_Id = '$empid' and Date_From = '$datefrom' and Date_To = '$dateto' and Organized_By = '$organizedby' and Place = '$place' and Duration = '$duration' and Total_Participation = '$totalparticipation' and Speaker = '$speaker' and Event_Type = '$eventtype' and Title = '$title'";
+                $sql="UPDATE sttp_event_attended SET Date_From='$datefromattended1',Date_To='$datetoattended1',Organized_By='$organizedbyattended1',Place='$locationattended1',Duration='$durationattended1',Total_Participation=$participantsattended1,Speaker='$speakerattended1',Event_Type='$eventtype1',Title='$attendedname1'$newfields WHERE Emp6_Id = '$empid' and Date_From = '$datefrom' and Date_To = '$dateto' and Organized_By = '$organizedby' and Place = '$place' and Duration = '$duration' and Total_Participation = '$totalparticipation' and Speaker = '$speaker' and sttp_id=$sttp_id and Event_Type = '$eventtype' and Title = '$title'";
             }
             if($result=$conn->query($sql))
             {
-//                header('Location:profile.php#section51');
+                header('Location:profile.php#section51');
             }else
             {
                 echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
@@ -973,6 +1075,7 @@ if($val == 7)
     {
         if($temp == $id)
         {
+            $sttp_id=$row['sttp_id'];
             $type = $row["Type"];
             $role = $row["Role"];
             $noparticipants = $row["Number_Participants"];
@@ -992,11 +1095,17 @@ if($val == 7)
     {
         $organizedname=$_POST["organizedname"];
         $eventtype=$_POST["organizedeventtype"];
-        $datefromorganized=$_POST["datefromorganized"];
-        $datetoorganized=$_POST["datetoorganized"];
+        $datefromorganized=dateformatReverser($_POST["datefromorganized"]);
+        $datetoorganized=dateformatReverser($_POST["datetoorganized"]);
         $role1=$_POST["roleorganized"];
         $participantsorganized=$_POST["participantsorganized"];
         $placeorganized=$_POST["placeorganized"];
+        if(isset($_POST['orgeventtype_new']))
+            $orgeventtype_new=$_POST['orgeventtype_new'];
+
+        if($eventtype=="Other" && $orgeventtype_new!=null){
+            $eventtype=$orgeventtype_new;
+        }
 
         if(empty($participantsorganized))
         {
@@ -1019,8 +1128,22 @@ if($val == 7)
         }
         if($flagorg==0)
         {
-            $sql="UPDATE sttp_event_organized SET Type='$eventtype',Role='$role1',Number_Participants='$participantsorganized',Place='$placeorganized',Date_From='$datefromorganized',Date_To='$datetoorganized',Name='$organizedname' WHERE Emp7_Id='$empid' and Type=
-      '$type' and Role='$role' and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
+            $sql="UPDATE sttp_event_organized SET Type='$eventtype',Role='$role1',Number_Participants='$participantsorganized',Place='$placeorganized',Date_From='$datefromorganized',Date_To='$datetoorganized',Name='$organizedname'$newfields WHERE Emp7_Id='$empid' and sttp_id=$sttp_id and Type='$type' and Role='$role' and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
             if($result=$conn->query($sql))
             {
                 header('Location:profile.php#section52');
@@ -1042,6 +1165,7 @@ if($val == 8)
     {
         if($temp == $id)
         {
+            $sttp_id=$row['sttp_id'];
             $description = $row["Description"];
             $place = $row["Place"];
             $duration = $row["Duration"];
@@ -1060,12 +1184,18 @@ if($val == 8)
     if(isset($_POST["submitsttpdelivered"]))
     {
         $deliveredname=$_POST["deliveredname"];
-        $datefromdelivered=$_POST["datefromdelivered"];
+        $datefromdelivered=dateformatReverser($_POST["datefromdelivered"]);
         $eventtype1=$_POST["deliveredeventtype"];
-        $datetodelivered=$_POST["datetodelivered"];
+        $datetodelivered=dateformatReverser($_POST["datetodelivered"]);
         $activitydescription=$_POST["activitydescription"];
         $placedelivered=$_POST["placedelivered"];
         $durationdelivered=$_POST["durationdelivered"];
+        if(isset($_POST['deleventtype_new']))
+            $deleventtype_new=$_POST['deleventtype_new'];
+
+        if($eventtype1=="Other" && $deleventtype_new!=null){
+            $eventtype1=$deleventtype_new;
+        }
 
         $ba=date_create($datefromdelivered);
         $ab=date_create($dob);
@@ -1085,8 +1215,23 @@ if($val == 8)
 
         if($flagdel==0)
         {
-            $sql="UPDATE sttp_event_delivered SET Description='$activitydescription',Place='$placedelivered',Duration='$durationdelivered',Date_From='$datefromdelivered',Date_To='$datetodelivered',Name='$deliveredname',Event_Type='$eventtype1' WHERE
-        Emp9_Id='$empid' and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and Event_Type='$eventtype'";
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
+            $sql="UPDATE sttp_event_delivered SET Description='$activitydescription',Place='$placedelivered',Duration='$durationdelivered',Date_From='$datefromdelivered',Date_To='$datetodelivered',Name='$deliveredname',Event_Type='$eventtype1'$newfields WHERE
+        Emp9_Id='$empid' and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and sttp_id=$sttp_id and Event_Type='$eventtype'";
             if($result=$conn->query($sql))
             {
                 header('Location:profile.php#section53');
@@ -1108,6 +1253,7 @@ if($val == 9)
     {
         if($temp == $id)
         {
+            $cocurr_id=$row['curricular_id'];
             $description = $row["Description"];
             $date = $row["Date"];
             $role = $row["Role"];
@@ -1124,7 +1270,7 @@ if($val == 9)
     {
         $cocurrname=$_POST["cocurrname"];
         $cocurrdescription=$_POST["cocurrdescription"];
-        $cocurrdate=$_POST["cocurrdate"];
+        $cocurrdate=dateformatReverser($_POST["cocurrdate"]);
         $cocurrrole=$_POST["cocurrrole"];
         if(isset($_POST["name22"]))
             $cocurrtype=$_POST["name22"];
@@ -1139,8 +1285,22 @@ if($val == 9)
             $err[10]="* Please Enter A Valid Date";
         }
         else{
-            $sql="UPDATE co_curricular SET Description='$cocurrdescription',Date='$cocurrdate',Role='$cocurrrole',Name='$cocurrname',Type='$cocurrtype' WHERE
-      Emp10_Id='$empid' and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='co_curricular'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
+            $sql="UPDATE co_curricular SET Description='$cocurrdescription',Date='$cocurrdate',Role='$cocurrrole',Name='$cocurrname',Type='$cocurrtype'$newfields WHERE curricular_id=$cocurr_id and Emp10_Id='$empid' and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
             if($result=$conn->query($sql))
             {
                 header('Location:profile.php#section6');
@@ -1159,6 +1319,7 @@ if($val == 10) {
     $result = $conn->query($sql);
     while ($row = mysqli_fetch_assoc($result)) {
         if ($temp == $id) {
+            $extra_id=$row['extra_id'];
             $description = $row["Description"];
             $role = $row["Role"];
             $name = $row["Name"];
@@ -1173,7 +1334,7 @@ if($val == 10) {
     if (isset($_POST["submitextra"])) {
         $extraname = $_POST["extraname"];
         $extradesc = $_POST["extradescription"];
-        $extradate = $_POST["extradate"];
+        $extradate = dateformatReverser($_POST["extradate"]);
         $extrarole = $_POST["extrarole"];
         $extraplace = $_POST["extraplace"];
         $ba = date_create($extradate);
@@ -1184,8 +1345,22 @@ if($val == 10) {
 
             $err[11] = "* Please Enter A Valid Date";
         } else {
-            $sql = "UPDATE extra SET Description='$extradesc',Role='$extrarole',Place='$extraplace',Date='$extradate',Name='$extraname' WHERE Emp11_Id='$empid'
-      and Description='$description' and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='extra'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
+            $sql = "UPDATE extra SET Description='$extradesc',Role='$extrarole',Place='$extraplace',Date='$extradate',Name='$extraname'$newfields WHERE Emp11_Id='$empid' and extra_id=$extra_id and Description='$description' and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
             if ($result = $conn->query($sql)) {
                 header('Location:profile.php#section7');
             } else {
@@ -1223,7 +1398,7 @@ if($val===11){
     {
         $award_name=$_POST["award_name"];
         $award_desc=$_POST["award_desc"];
-        $award_date=$_POST["award_date"];
+        $award_date=dateformatReverser($_POST["award_date"]);
         $award_issuer=$_POST["award_issuer"];
 
         $ba=date_create($award_date);
@@ -1245,12 +1420,27 @@ if($val===11){
         $awd_pdf = "<a href='showpdf.php?parameter=".$arg_awd."'>View PDF</a>";
 
         if($flagawd==0) {
+            $newfields=null;
+            $newfieldval=null;
+            $new_field_query = "select * from new_fields where table_name='awards'";
+            $new_result = $conn->query($new_field_query);
+            if ($new_result->num_rows > 0) {
+                while ($row = $new_result->fetch_assoc()) {
+                    $field_name = $row['field_name'];
+                    $label = $row['label'];
+                    $display = $row['display'];
+                    if ($display == 1) {
+                        $newfieldval=$_POST[$field_name];
+                        $newfields=$newfields.','.$field_name.'="'.$newfieldval.'"';
+                    }
+                }
+            }
             if ($image[13] == 1) {
                 $sql = "UPDATE awards SET award_desc='$award_desc',award_issuer='$award_issuer',award_date='$award_date',
-                  award_title='$award_name',certificate='$award_certificate_image1' WHERE emp_id='$empid' and award_id=$awd_id";
+                  award_title='$award_name',certificate='$award_certificate_image1'$newfields WHERE emp_id='$empid' and award_id=$awd_id";
             } else {
                 $sql = "UPDATE awards SET award_desc='$award_desc',award_issuer='$award_issuer',award_date='$award_date',
-                  award_title='$award_name' WHERE emp_id='$empid' and award_id=$awd_id";
+                  award_title='$award_name'$newfields WHERE emp_id='$empid' and award_id=$awd_id";
             }
             if ($conn->query($sql) == true) {
                 header('Location:profile.php#awards');

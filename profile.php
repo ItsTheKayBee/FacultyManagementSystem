@@ -257,7 +257,7 @@ function dateformatChanger($orgDate){
         <hr>
         <li id ="sectionW"><a href="main.php#section21">Faculty List</a></li>
         <li id ="sectionX"><a href="main.php#section24">Assign Profile Rights</a></li>
-        <li id ="sectionY"><a href="main.php#section22">Admin Control</a></li>
+        <?php if($_SESSION['admin']==1) echo '<li id ="sectionY"><a href="main.php#section22">Admin Control</a></li>';?>
         <li id ="sectionZ"><a href="main.php#section23">Report Generation</a></li>
     </ul>
 </nav>
@@ -395,7 +395,6 @@ function dateformatChanger($orgDate){
                         </table>
                     </div>
                 </div>
-
                 <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
                     <div class="profile-img" id ="section00" >
                         <a href="#" id ="chngpropic" class="btn btn-sm editimgbtn" style="float:right;" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit"></span></a>
@@ -403,19 +402,13 @@ function dateformatChanger($orgDate){
                             <div class="thumbnail img-responsive" style="height:100%; width:80%;">
                                 <?php echo '<img class="proimg" src="data:image/jpeg;base64,'.base64_encode($profilepic).'"/>';?>
                             </div>
-
                             <br>
                         </center>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
         &nbsp
-
         <div id = "section2">
             <legend><h1>Academic Details<a href="homepage.php#section2"><span class="glyphicon glyphicon-edit"></span></a></h1></legend>
             <?php
@@ -487,7 +480,7 @@ function dateformatChanger($orgDate){
                     echo "</td><td>";
                     echo "$phdYear";
                     echo "</td><td><center>".$phdi."</center></td></tr>";
-                    $ocunt++;
+                    $count++;
                 }
                 echo "</table>";
                 echo "</div>";

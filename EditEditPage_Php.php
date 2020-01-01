@@ -31,13 +31,13 @@ $arg = base64_encode(json_encode($myData));
 
 $image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 $maxdate = (date("Y")-22)."-12-31";
-$err=array("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","");
+$err=array("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""."");
 $sql = "SELECT * FROM personal_details WHERE Emp3_Id=$empid";
 $result = $conn->query($sql);
 $row = mysqli_fetch_assoc($result);
 $dob = $row["DOB"];
 $idname = $row["Name"];
-$dobyear = (int)substr($dob,0,4);
+$dobyear = (int)substr($dob,6,11);
 $curyear=date("Y");
 $yearArray = range($dobyear+12, $curyear);
 

@@ -306,7 +306,7 @@
                 echo "</tr>";
             }
 
-            echo ' </tbody>
+            echo '</tbody>
         </table>
     </div>
     <div class="clear"></div>
@@ -340,9 +340,9 @@
             while($row=mysqli_fetch_assoc($result))
             {
                 if($row["Type"] != "")
-                    echo ($h+1).'. '.$row["Type"].' on " '.$row["Title"].' ". ';
+                    echo ($h+1).'. '.$row["Type"].' on "'.$row["Title"].'", ';
                 else
-                    echo ($h+1).'. " '.$row["Title"].' ". ';
+                    echo ($h+1).'. "'.$row["Title"].'", ';
                 echo $row["Year"].".";
                 $h++;
                 echo "<br><br>";
@@ -396,12 +396,12 @@
                     if($row["COA3"] != "")
                         echo $row["COA3"].", ";
                 }
-                echo '" '.$row["Book_Name"].' "';
-                echo " (ISBN ".$row["ISBN"].") ";
+                echo '"'.$row["Book_Name"].'"';
+                echo " (ISBN ".$row["ISBN"]."), ";
                 if($row["Edition"] != "")
                     echo ", Edition : ".$row["Edition"].", ";
 
-                echo $row["Date_Published"].".";
+                echo dateformatChanger($row["Date_Published"]).".";
                 $i++;
                 echo "<br><br>";
             }
@@ -450,7 +450,7 @@
                     for($j=1 ;$j<=$c; $j++)
                         echo $row["COA_".$j].", ";
                 }
-                echo '" '.$row["Title"].' ", ';
+                echo '"'.$row["Title"].'", ';
                 echo "( ISSN : ".$row["ISSN"].", ";
                 echo $row["Type"];
                 if($row["Peer_Reviewed"] == "YES")
@@ -459,7 +459,7 @@
                     echo " ), ";
                 echo "Volume : ".$row["Volume"].", ";
                 echo "Issue : ".$row["Issue"].", ";
-                echo $row["Date"].".";
+                echo dateformatChanger($row["Date"]).".";
 
                 $k++;
                 echo "<br><br>";
@@ -504,10 +504,10 @@
                     for($j=1 ;$j<=$c; $j++)
                         echo $row["COA".$j].", ";
                 }
-                echo '" '.$row["Name"].' ", ';
+                echo '"'.$row["Name"].'", ';
                 echo "( ISSN : ".$row["ISSN"].", ";
                 echo $row["Type"]." ), ";
-                echo $row["Date"];
+                echo dateformatChanger($row["Date"]);
                 if($row["Organizer"] != "")
                     echo ", Organised By : ".$row["Organizer"].".";
                 else
@@ -551,14 +551,13 @@
             $m = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-                if($row["Event_Type"] != "")
-                    echo ($m+1).'. '.$row["Event_Type"].' on " '.$row["Title"].' " ';
-                else
-                    echo ($m+1).'. " '.$row["Title"].' " ';
-                echo "at ".$row["Place"].", ";
+                echo ($m+1).'. '.$row["Event_Type"].' on "'.$row["Title"].'"';
+                if($row['Place']!='')
+                    echo "at ".$row["Place"].", ";
+                else echo ', ';
                 if($row["Organized_By"] != "")
                     echo "organised by : ".$row["Organized_By"].", ";
-                echo "From : ".$row["Date_From"].", To : ".$row["Date_To"].".";
+                echo "From : ".dateformatChanger($row["Date_From"]).", To : ".dateformatChanger($row["Date_To"]).".";
                 $m++;
                 echo "<br><br>";
             }
@@ -592,15 +591,14 @@
             $n = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-
-                if($row["Type"] != "")
-                    echo ($n+1).'. '.$row["Type"].' on " '.$row["Name"].' " ';
-                else
-                    echo ($n+1).'. " '.$row["Name"].' " ';
-                echo "at ".$row["Place"].", ";
+                echo ($n+1).'. '.$row["Type"].' on "'.$row["Name"].'"';
+                if($row['Place']!='')
+                    echo "at ".$row["Place"].", ";
                 if(!empty($row['Role']))
                     echo "as ".$row["Role"].", ";
-                echo "From : ".$row["Date_From"].", To : ".$row["Date_To"].".";
+                if($row['Place']=='' && empty($row['Role']))
+                    echo ', ';
+                echo "From : ".dateformatChanger($row["Date_From"]).", To : ".dateformatChanger($row["Date_To"]).".";
                 $n++;
                 echo "<br><br>";
             }
@@ -634,12 +632,12 @@
             $o = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-                if($row["Event_Type"] != "")
-                    echo ($o+1).'.  &nbsp'.$row["Event_Type"].' on " '.$row["Name"].' " ';
+                echo ($o+1).'.  &nbsp'.$row["Event_Type"].' on "'.$row["Name"].'"';
+                if($row['Place']!='')
+                    echo "at ".$row["Place"].", ";
                 else
-                    echo ($o+1).'. " '.$row["Name"].' " ';
-                echo "at ".$row["Place"].", ";
-                echo "From : ".$row["Date_From"].", To : ".$row["Date_To"].".";
+                    echo ', ';
+                echo "From : ".dateformatChanger($row["Date_From"]).", To : ".dateformatChanger($row["Date_To"]).".";
                 $o++;
                 echo "<br><br>";
             }
@@ -671,14 +669,14 @@
             $p = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-                echo ($p+1).'. " '.$row["Name"].' "';
+                echo ($p+1).'. "'.$row["Name"].'"';
                 if($row["Type"] == "KJ Somaiya(InHouse)")
                     echo " at KJSCE, ";
                 else
                     echo " at ".$row["Type"].", ";
                 if($row["Role"] != "")
                     echo "as ".$row["Role"].", ";
-                echo "on : ".$row["Date"].".";
+                echo "on : ".dateformatChanger($row["Date"]).".";
                 $p++;
                 echo "<br><br>";
             }
@@ -704,16 +702,16 @@
         {
             echo "<section>
             <div class=\"sectionContent\">";
-            echo "<h1>Extra Activities</h1>";
+            echo "<h1><u>Extra Activities</u></h1><br>";
             $q = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-                echo ($q+1).'. " '.$row["Name"].' "';
+                echo ($q+1).'. "'.$row["Name"].'"';
                 if($row["Place"] != "")
                     echo " at ".$row["Place"].", ";
                 if($row["Role"] != "")
                     echo " as ".$row["Role"].", ";
-                echo " on ".$row["Date"].".";
+                echo " on ".dateformatChanger($row["Date"]).".";
                 $q++;
                 echo "<br><br>";
             }
@@ -744,9 +742,9 @@
             $q = 0;
             while($row=mysqli_fetch_assoc($result))
             {
-                echo ($q+1).'. " '.$row["award_title"].' "';
+                echo ($q+1).'. "'.$row["award_title"].'", ';
                 echo " issued by ".$row["award_issuer"].", ";
-                echo " on ".$row["award_date"].".";
+                echo " on ".dateformatChanger($row["award_date"]).".";
                 $q++;
                 echo "<br><br>";
             }
@@ -780,17 +778,17 @@
 <script src="../content/shared/js/pako.min.js"></script>
 <script>
     function ExportPdf() {
-         kendo.drawing
-             .drawDOM($("#cv"),
-                 {
-                     paperSize: "A3",
-                     margin: { top: "1cm", bottom: "2cm" },
-                     scale: 0.85,
-                     height: 600
-                 })
-             .then(function(group){
-                 kendo.drawing.pdf.saveAs(group, "CV.pdf")
-             });
+        kendo.drawing
+            .drawDOM($("#cv"),
+                {
+                    paperSize: "A3",
+                    margin: { top: "1cm", bottom: "2cm" },
+                    scale: 0.85,
+                    height: 600
+                })
+            .then(function(group){
+                kendo.drawing.pdf.saveAs(group, "CV.pdf")
+            });
     }
     function gotoProfile()
     {

@@ -112,7 +112,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section3' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section3'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -199,7 +199,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section4' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section4'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -327,7 +327,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section41' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section41'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -453,7 +453,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section42' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section42'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -786,7 +786,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section43' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section43'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -1138,7 +1138,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -1235,7 +1235,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -1307,7 +1307,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section51'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -1380,7 +1380,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section6' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section6'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
@@ -1440,7 +1440,7 @@
                 <fieldset>
                     <legend>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section7' title='Obviously not Simon! :P'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+                            <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#section7'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
                             ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
