@@ -187,9 +187,6 @@ function dateformatChanger($orgDate){
             });
         });
     </script>
-
-
-
 </head>
 
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
@@ -258,7 +255,6 @@ function dateformatChanger($orgDate){
         <li id ="sectionW"><a href="main.php#section21">Faculty List</a></li>
         <li id ="sectionX"><a href="main.php#section24">Assign Profile Rights</a></li>
         <?php if($_SESSION['admin']==1) echo '<li id ="sectionY"><a href="main.php#section22">Admin Control</a></li>';?>
-        <li id ="sectionZ"><a href="main.php#section23">Report Generation</a></li>
     </ul>
 </nav>
 

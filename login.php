@@ -105,16 +105,13 @@ if(isset($_POST["submit"]))
         .boxtext{
             float  :center;
         }
-
         .askrole{
             float : right;
         }
-
         .error{
             color : #fa0808;
             font-weight : bold;
         }
-
         a:hover{
             text-decoration : none;
             color : #1F54AB;
@@ -122,7 +119,7 @@ if(isset($_POST["submit"]))
     </style>
     <title>Login</title>
 </head>
-<body >
+<body>
 <div class="container">
     <h1 id="login-h1" class="boxtext"><strong>FACULTY MANAGEMENT SYSTEM</strong></h1>
     <form style="background-color:white;" method="post"  class="form-horizontal login-wrap login-html login-form sign-in-htm" action="" name="myForm" onsubmit="return validateForm()">

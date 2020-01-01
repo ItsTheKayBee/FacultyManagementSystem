@@ -950,7 +950,6 @@ if(!isset($_SESSION["firstvisit"]))
         <li class="section21" id ="sectionW"><a href="#section21">Faculty List</a></li>
         <li class="section24" id ="sectionX"><a href="#section24">Assign Profile Editing Rights</a></li>
         <?php if($_SESSION['admin']) echo '<li class="section22" id ="sectionY"><a href="#section22">Admin Control</a></li>';?>
-        <li class="section23" id ="sectionZ"><a href="#section23">Report Generation</a></li>
     </ul>
 </nav>
 
@@ -1222,10 +1221,7 @@ if(!isset($_SESSION["firstvisit"]))
         </div>
     </form>
 </div>
-</div>';
-        }
-        ?>
-        <div id ="section23" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+</div><div id ="section23" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
             <legend><h1>Report Generation</h1></legend>
             <form method="post" name="report" onsubmit="return validateReport()">
                 <fieldset>
@@ -1233,8 +1229,8 @@ if(!isset($_SESSION["firstvisit"]))
                         <div class="category_div" id ="category_div">
                             <div class="form-group">
                                 <br>
-                                <label class="radio-inline"><input type="radio" checked name="report_emp" onclick="var input = document.getElementById('name3'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">All Employee</label>
-                                <label class="radio-inline"><input type="radio" name="report_emp" for="name3" onclick="var input = document.getElementById('name3'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Give Employee ID</label>
+                                <label class="radio-inline"><input type="radio" checked name="report_emp" onclick="var input = document.getElementById(\'name3\'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">All Employee</label>
+                                <label class="radio-inline"><input type="radio" name="report_emp" for="name3" onclick="var input = document.getElementById(\'name3\'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Give Employee ID</label>
                                 <input id ="name3" name="name3" type="text" disabled="true"/>
                             </div>
                             <div class="form-group">
@@ -1253,16 +1249,14 @@ if(!isset($_SESSION["firstvisit"]))
                                     <option class="catele" value="extra" label="Extras"></option>
                                     <option class="catele" value="projects" label="Projects Guided"></option>
                                 </select>
-
                                 <span class="error" id ="caterror"></span>
                             </div>
                         </div>
-
                         <br>
                         <div class="form-group">
                             <div class="sub_category_div" id ="sub_category_div">Please select attributes:
                                 <script type="text/javascript" language="JavaScript">
-                                    document.write('<select class="form-control"  name="subcategory" id="subcategory"><option  value="" >Please select type of report</option></select>');
+                                    document.write(\'<select class="form-control"  name="subcategory" id="subcategory"><option  value="" >Please select type of report</option></select>\');
                                 </script>
                                 <noscript>
                                     <select  name="subcategory" id ="subcategory">
@@ -1282,8 +1276,8 @@ if(!isset($_SESSION["firstvisit"]))
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row">
                             FROM:
 
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
+                            <div class=\'input-group date\' id=\'datetimepicker1\'>
+                                <input type=\'text\' class="form-control" />
                                 <span class="input-group-addon">
 	                        <span class="glyphicon glyphicon-calendar"></span>
 	                    </span>
@@ -1293,12 +1287,11 @@ if(!isset($_SESSION["firstvisit"]))
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row" style="float: right">
                             TO:
 
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" />
+                            <div class=\'input-group date\' id=\'datetimepicker2\'>
+                                <input type=\'text\' class="form-control" />
                                 <span class="input-group-addon">
 	                        <span class="glyphicon glyphicon-calendar"></span>
 	                    </span>
-
                             </div>
                         </div>
                         <div  class="form-group">
@@ -1338,7 +1331,9 @@ if(!isset($_SESSION["firstvisit"]))
                     </div>
                 </fieldset>
             </form>
-        </div>
+        </div>';
+        }
+        ?>
     </div>
 </div>
 <div class="modal fade" id ="myModal" role="dialog">
