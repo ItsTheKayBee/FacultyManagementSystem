@@ -8,6 +8,15 @@ else{
 	$sql = "SELECT * FROM login WHERE Emp_Id=$empid";
 		$result = $conn->query($sql);
 		$row = mysqli_fetch_assoc($result);
+		$cb = $row['created_by'];
+		if($cb == NULL)
+		{
+			$_SESSION["Emp_Id"]=$empid;
+			$_SESSION["forgotpasswordeid"] = $empid;
+			$_SESSION["Security_Answer"] =1;
+			$_SESSION["new_id"]='yes';
+			header('Location:ChangePassword.php');
+		}
 		if($row["P1"] == "FALSE")
 		{
 			header('Location:main.php#section21');

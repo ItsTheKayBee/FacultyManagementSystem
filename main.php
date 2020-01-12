@@ -12,6 +12,7 @@ setcookie("id", "", time() - 3600);
 $eid = $_SESSION["Emp_Id"];
 
 
+
 $sql2 = "SELECT * FROM personal_details";
 $result2 = $conn->query($sql2);
 $i=0;
@@ -750,6 +751,8 @@ if(isset($_POST["assprivemp"]))
             $errvar = "Please Enter A Valid User Id";
         }
         else {
+            echo $duration;
+            $date = $duration;
             if($duration == "1Day"){
                 $d=strtotime("+1 Days");
                 $date =  date("Y-m-d", $d);
@@ -792,8 +795,10 @@ if(isset($_POST["assprivemp"]))
              </script>";
     }
 }
+
 if(isset($_POST["addmem_submit"]))
 {
+    echo "wort";
     $empid = $_POST["empid"];
     //$pwd = $_POST["storepass"];
     $pwd = md5("Kjsce1234");
@@ -820,13 +825,22 @@ if(isset($_POST["addmem_submit"]))
         $p5 = "FALSE";
 
     $file = addslashes(file_get_contents('user.jpeg'));
-    $sql = "INSERT INTO login VALUES($empid,'$pwd','$p1','$p2','$p3','$p4','$p5','','')";
-    if($conn->query($sql))
+    echo "";
+
+    //$sql = "INSERT INTO login (first_name, last_name, email) VALUES ('Peter', 'Parker', 'peterparker@mail.com')";
+    $sql = "INSERT INTO `login`(`Emp_Id`, `Password`, `P1`, `P2`, `P3`, `P4`, `P5`, `Security_Question`, `Security_Answer`, `admin_rights`)VALUES('$empid','$pwd','$p1','$p2','$p3','$p4','$p5','','',0)";
+    //$results = $conn->query($sql);
+    //echo $results;
+    if($conn->query($sql) === true)
     {
-        $sql1="INSERT INTO academic_details VALUES ($empid,'',0.0,1950,null,'',0.0,1950,null,'','',1950,0.0,null,'',1950,0.0,'',null,'','',1950,0.0,null)";
+        //echo "working";
+        $erradd = "$file";
+        $sql1 = "INSERT INTO `academic_details`(`Emp2_Id`) VALUES ('$empid')";
+        //$sql1="INSERT INTO academic_details VALUES ('$empid','',0.0,1950,null,'',0.0,1950,null,'','',1950,0.0,null,'',1950,0.0,'',null,'','',1950,0.0,'N')";
         $conn->query($sql1);
-        $sql1="INSERT INTO personal_details VALUES($empid,'','','','','1950-01-01','','1950-01-01',0,'$file','','1950-01-01','','1950-01-01','','1950-01-01','null')";
-        $conn->query($sql1);
+       // $sql2="INSERT INTO personal_details VALUES('$empid','','','','','1950-01-01','','1950-01-01',0,'$file','','1950-01-01','','1950-01-01','','1950-01-01','n')";
+       $sql2="INSERT INTO `personal_details`(`Emp3_Id`, `Profile_Pic`) VALUES ('$empid','$file')"; 
+       $conn->query($sql2);
         $_SESSION["newid"] = $empid;
         echo "<script type='text/javascript'>
             $(document).ready(function(){
@@ -839,6 +853,12 @@ if(isset($_POST["addmem_submit"]))
         $erradd = "* Member With This Id Already Exists";
     }
 }
+
+//
+
+
+
+
 
 if(isset($_POST["addcourse_submit"]))
 {
@@ -1055,12 +1075,13 @@ if(!isset($_SESSION["firstvisit"]))
                     echo '<div class="form-group">';
                     echo '<label class="col-sm-3 col-md-3 col-lg-4 col-xs-0">Duration : </label>';
                     echo '<div class="col-md-9 col-sm-9 col-lg-6 col-xs-11">';
-                    echo '<select class="form-control" name="duration">';
+                   /*echo '<select class="form-control" name="duration">';
                     echo '<option value="1Day">1 Day</option>';
                     echo '<option value="2Days">2 Days</option>';
                     echo '<option value="3Days">3 Days</option>';
                     echo '<option value="1Week">1 Week</option>';
-                    echo '</select>';
+                    echo '</select>';*/
+                    echo ' <input type="date"  name="duration">';
                     echo '</div>';
                     echo '</div>';
                     echo '<br><br><br>';
@@ -1100,6 +1121,7 @@ if(!isset($_SESSION["firstvisit"]))
             <div id ="section22" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
                 <legend><h1>Add Member</h1></legend>
                 <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()">
+
                     <div class="form-group">';
             if(!empty($erradd)){
                 echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Employee ID" autofocus name="empid" >';
@@ -1122,10 +1144,14 @@ if(!isset($_SESSION["firstvisit"]))
     </div>
     <span class="error" id ="privelages"></span>
     <input type="hidden" id ="storepass" name="storepass">
+
+
     <div class="form-group">
-        <center><input type="submit" class="btn btn-primary" name="addmem_submit" value="Submit"></center>
+        <center>
+        <input type="submit" class="btn btn-primary" name="addmem_submit" value="Submit">
+        </form></center>
     </div>
-    </form>
+
 </div>
 <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
     <legend><h1>Add Course</h1></legend>

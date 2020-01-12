@@ -14,6 +14,12 @@ if(isset($_POST["submit"]))
 			$sql1 = "SELECT * FROM login WHERE Emp_Id=$empid";
 			$result1 = $conn->query($sql1);
 			$row1 = mysqli_fetch_assoc($result1);
+			if($row1["Password"] == "069ab86b69e20bc514a8eccda1b205bd")
+			{
+				header('Location:ChangePassword.php');
+			}
+			else
+			{
 			if($row1["P1"] == "FALSE")
 			{
 					header('Location:profile.php');
@@ -22,6 +28,7 @@ if(isset($_POST["submit"]))
 
 					header('Location:homepage.php');
 	}
+}
 	else
 		echo mysqli_error($conn);
 }

@@ -1,5 +1,6 @@
 <?php
 include 'profile_php.php';
+
 function dateformatChanger($orgDate){
     return date("d-m-Y", strtotime($orgDate));
 }
@@ -191,14 +192,43 @@ function dateformatChanger($orgDate){
 
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
-<?php include 'Decision1.php'; ?>
+
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
-            <b>Employee ID : <?php echo $empid; ?></b>
-        </div>
-        <div class="navbar-header">
+            
+            <b>Employee ID : <?php echo $empid."<br>" ;include 'Decision1.php';
+
+//include 'dbconnect.php';
+//include 'main.php';
+
+$sql1 = "SELECT * FROM edit WHERE Emp1_Id=$empid";
+$result1 = $conn->query($sql1);
+
+
+if($result1)
+{
+//$row1 = mysqli_fetch_assoc($result1);
+$rows = mysqli_num_rows($result1);
+
+if($rows)
+{
+    while($row1 = mysqli_fetch_assoc($result1))
+    {
+$emp2_id = $row1["Emp2_Id"];
+
+$date = $row1["Date"];
+
+
+}
+ echo $empid.'  has been assigned rights for editing of :'. $emp2_id. 'till' .$date;
+        
+}
+}
+?>
+</div>     
+<div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

@@ -1,4 +1,5 @@
 <?php
+
 $passErr="";
 
 if((isset($_SESSION["forgotpasswordeid"]) || isset($_SESSION["Emp_Id"])) && ($_SESSION["Security_Answer"] == 1))
@@ -9,8 +10,10 @@ if(ISSET($_POST["submit"]))
   {
   $empid=$_SESSION["forgotpasswordeid"];
   $newpwd = $_POST["storepass"];
-  $pass_update = "UPDATE login SET Password='$newpwd' WHERE Emp_id=$empid";
+  $pass_update = "UPDATE login SET Password='$newpwd' WHERE Emp_id=$empid ";
+  $pass_update2 = "UPDATE login SET created_by ='1' WHERE Emp_id=$empid ";
   $pass_result = mysqli_query($conn,$pass_update);
+  $pass_result1 = mysqli_query($conn,$pass_update2);
   header('Location:logout.php');
 
   }
