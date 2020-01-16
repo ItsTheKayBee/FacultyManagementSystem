@@ -1,5 +1,4 @@
 <?php
-
 include 'dbconnect.php';
 function dateformatChanger($orgDate){
     return date("d-m-Y", strtotime($orgDate));
@@ -8,14 +7,9 @@ if(!isset($_SESSION["Emp_Id"]))
     header('Location:logout.php');
 else
 {
-
     $myData = json_decode( base64_decode( $_GET['parameter'] ) );
-    $empid = $myData->id;//
-    //$empid=$_SESSION["Emp_Id"];
-
+    $empid = $myData->id;
     $nocourse = 0;
-
-
     /*PERSONAL DETAILS*/
     $sql = "SELECT * FROM personal_details WHERE Emp3_Id=$empid";
     $result = $conn->query($sql);
@@ -28,15 +22,11 @@ else
     $join_pos=$row["Join_Pos"];
     $join_date=$row["Join_Date"];
     $pro1=$row["Prom_1"];
-    $pro2=$row["Prom_2"];
-    $pro3=$row["Prom_3"];
     $pro1_date=$row["Prom_1_Date"];
-    $pro2_date=$row["Prom_2_Date"];
-    $pro3_date=$row["Prom_3_Date"];
     $dob=$row["DOB"];
     $profilepic=$row["Profile_Pic"];
 
-    // ACADEMIC DETAILS //
+    // ACADEMIC DETAILS
     $sql = "SELECT * FROM academic_details WHERE Emp2_Id=$empid";
     $result = $conn->query($sql);
     $row1 = mysqli_fetch_assoc($result);
@@ -68,7 +58,7 @@ else
     $phdYear=$row1["Phd_Year"];
     $phdMarksheet=$row1["Phd_Marksheet"];
 
-    // COURSES TAUGHT //
+    // COURSES TAUGHT
     $courseid=array();
     $coursecategory=array();
     $coursesem=array();

@@ -1,5 +1,4 @@
 <?php include 'deleteform_php.php'; ?>
-<html>
 <html lang="en">
 <head>
     <title>Delete : <?php echo $form; ?></title>
@@ -54,10 +53,7 @@
         }
     </style>
 </head>
-
 <body>
-
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
@@ -85,6 +81,7 @@
                 </li>
             </ul>
         </div>
+    </div>
 </nav>
 
 <div class="col-lg-3 col-md-2 col-xs-1 col-sm-2"></div>
@@ -110,29 +107,29 @@
                 <div class="form-group">
                     <b>Course Semester : </b><?php echo $coursesem; ?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='courses'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from courses where emp8_id=$empid and course_taught_id=$course_taught_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='courses'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from courses where emp8_id=$empid and course_taught_id=$course_taught_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -170,45 +167,45 @@
                     <b>Student Details :</b>
                 </div>
                 <br>
-                <?php
-                echo "<div class='table-responsive '>";
-                echo "<table class='table table-bordered'>";
-                echo "<tr>";
-                echo "<th class='sabserial'>Sr.No.</th>";
-                echo "<th>Name</th>";
-                echo "<th>Roll Number</th>";
-                echo "<th>Email</th>";
-                echo "</tr>";
-                echo '<tr><td>1</td><td>'.$s1name.'</td><td>'.$s1roll.'</td><td>'.$s1email.'</td></tr>';
-                echo '<tr><td>2</td><td>'.$s2name.'</td><td>'.$s2roll.'</td><td>'.$s2email.'</td></tr>';
-                echo '<tr><td>3</td><td>'.$s3name.'</td><td>'.$s3roll.'</td><td>'.$s3email.'</td></tr>';
-                echo '<tr><td>4</td><td>'.$s4name.'</td><td>'.$s4roll.'</td><td>'.$s4email.'</td></tr>';
-                echo "</table>";
-                echo "</div>";
-                ?>
-                <?php
-                $new_field_query="select * from new_fields where table_name='projects'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from projects where emp12_id=$empid and project_id=$proj_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				echo "<div class='table-responsive '>";
+				echo "<table class='table table-bordered'>";
+				echo "<tr>";
+				echo "<th class='sabserial'>Sr.No.</th>";
+				echo "<th>Name</th>";
+				echo "<th>Roll Number</th>";
+				echo "<th>Email</th>";
+				echo "</tr>";
+				echo '<tr><td>1</td><td>'.$s1name.'</td><td>'.$s1roll.'</td><td>'.$s1email.'</td></tr>';
+				echo '<tr><td>2</td><td>'.$s2name.'</td><td>'.$s2roll.'</td><td>'.$s2email.'</td></tr>';
+				echo '<tr><td>3</td><td>'.$s3name.'</td><td>'.$s3roll.'</td><td>'.$s3email.'</td></tr>';
+				echo '<tr><td>4</td><td>'.$s4name.'</td><td>'.$s4roll.'</td><td>'.$s4email.'</td></tr>';
+				echo "</table>";
+				echo "</div>";
+				?>
+				<?php
+				$new_field_query="select * from new_fields where table_name='projects'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from projects where emp12_id=$empid and project_id=$proj_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -237,7 +234,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Book Date :</b> <?php echo $datepub; ?>
+                    <b>Book Date :</b> <?php echo dateformatChanger($datepub); ?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -273,38 +270,36 @@
                 <br>
                 <div class="form-group">
                     <b>Book's Cover Page :</b>
-
-                    <?php
-                    if(!empty($cover))
-                        echo $pdf1;
-
-                    else
-                        echo "<b>Not Inserted</b>";
-                    ?>
+					<?php
+					if(!empty($cover))
+						echo $pdf1;
+					else
+						echo "<b>Not Inserted</b>";
+					?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_books'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from publication_books where emp1_id=$empid and isbn=$isbn";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
-                                        <b>'.$label.' : </b>'.$new_field.'
-                                    </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_books'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from publication_books where emp1_id=$empid and isbn='$isbn'";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
+                                            <b>'.$label.' : </b>'.$new_field.'
+                                        </div>';
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -316,7 +311,6 @@
         </form>
         <br>
     </div>
-
     <!-- PUBLICATIONS-JOURNAL -->
     <div id ="section42" class="well">
         <form method="POST"  name="publicationjournals" enctype="multipart/form-data">
@@ -331,115 +325,115 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Journal Name :</b> <?php echo $title;?>
+                    <b>Journal Name :</b> <?php echo $name;?>
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>First Author :</b> <?php echo $title;?>
+                    <b>First Author :</b> <?php echo $author;?>
                 </div>
                 <br>
                 <div class="from-group">
                     <b>Co - Authors :</b> <?php if($count == 0) echo "* Not Inserted *";?>
-                    <?php echo $count; ?>
-                    <?php
-                    for($i=1; $i<=$count; $i++)
-                    {
-                        if($i == 1){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 1 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa1";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa1aff";
-                            echo "</div>";
-                        }
-                        if($i == 2){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 2 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa2";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa2aff";
-                            echo "</div>";
-                        }
-                        if($i == 3){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 3 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa3";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa3aff";
-                            echo "</div>";
-                        }
-                        if($i == 4){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 4 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa4";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa4aff";
-                            echo "</div>";
-                        }
-                        if($i == 5){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 5 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa5";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa5aff";
-                            echo "</div>";
-                        }
-                        if($i == 6){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 6 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa6";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa6aff";
-                            echo "</div>";
-                        }
-                        if($i == 7){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 7 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa7";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa7aff";
-                            echo "</div>";
-                        }
-                        if($i == 8){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 8 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa8";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa8aff";
-                            echo "</div>";
-                        }
-                        if($i == 9){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 9 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa9";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa9aff";
-                            echo "</div>";
-                        }
-                        if($i == 10){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 10 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa10";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa10aff";
-                            echo "</div>";
-                        }
-                    }
-                    ?>
+					<?php echo $count; ?>
+	                <?php
+	                for($i=1; $i<=$count; $i++)
+	                {
+		                if($i == 1){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 1 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa1";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa1aff";
+			                echo "</div>";
+		                }
+		                if($i == 2){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 2 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa2";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa2aff";
+			                echo "</div>";
+		                }
+		                if($i == 3){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 3 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa3";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa3aff";
+			                echo "</div>";
+		                }
+		                if($i == 4){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 4 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa4";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa4aff";
+			                echo "</div>";
+		                }
+		                if($i == 5){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 5 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa5";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa5aff";
+			                echo "</div>";
+		                }
+		                if($i == 6){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 6 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa6";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa6aff";
+			                echo "</div>";
+		                }
+		                if($i == 7){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 7 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa7";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa7aff";
+			                echo "</div>";
+		                }
+		                if($i == 8){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 8 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa8";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa8aff";
+			                echo "</div>";
+		                }
+		                if($i == 9){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 9 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa9";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa9aff";
+			                echo "</div>";
+		                }
+		                if($i == 10){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 10 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa10";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa10aff";
+			                echo "</div>";
+		                }
+	                }
+	                ?>
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Publisher's Name :</b> <?php echo $title;?>
+                    <b>Publisher's Name :</b> <?php echo $pubname;?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -447,7 +441,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date of Publication :</b> <?php echo $date;?>
+                    <b>Date of Publication :</b> <?php echo dateformatChanger($date);?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -496,46 +490,46 @@
                 <br>
                 <div class="form-group">
                     <b>Paper :</b>
-                    <?php
-                    if(!empty($paperpdf))
-                        echo $pdf2;
-                    else
-                        echo "<b>Not inserted.</b>";
-                    ?>
+					<?php
+					if(!empty($paperpdf))
+						echo $pdf2;
+					else
+						echo "<b>Not inserted.</b>";
+					?>
                 </div>
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($certificate))
-                        echo $pdf3;
-                    else
-                        echo "<b>Not inserted.</b>";
-                    ?>
+					<?php
+					if(!empty($certificate))
+						echo $pdf3;
+					else
+						echo "<b>Not inserted.</b>";
+					?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_journals'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from publication_journals where emp4_id=$empid and issn=$issn";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_journals'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from publication_journals where emp4_id=$empid and issn='$issn'";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
                 <br>
             </div>
             <div class="form-group">
@@ -567,106 +561,105 @@
                 <br>
                 <div class="from-group">
                     <b>Co - Authors :</b> <?php if($count == 0) echo "* Not Inserted *";?>
-                    <?php
-                    for($i=1; $i<=$count; $i++)
-                    {
-                        if($i == 1){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 1 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa1";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa1aff";
-                            echo "</div>";
-                        }
-                        if($i == 2){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 2 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa2";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa2aff";
-                            echo "</div>";
-                        }
-                        if($i == 3){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 3 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa3";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa3aff";
-                            echo "</div>";
-
-                        }
-                        if($i == 4){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 4 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa4";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa4aff";
-                            echo "</div>";
-                        }
-                        if($i == 5){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 5 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa5";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa5aff";
-                            echo "</div>";
-                        }
-                        if($i == 6){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 6 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa6";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa6aff";
-                            echo "</div>";
-                        }
-                        if($i == 7){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 7 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa7";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa7aff";
-                            echo "</div>";
-                        }
-                        if($i == 8){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 8 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa8";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa8aff";
-                            echo "</div>";
-                        }
-                        if($i == 9){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 9 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa9";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa9aff";
-                            echo "</div>";
-                        }
-                        if($i == 10){
-                            echo "<div class='form-group'><br>";
-                            echo "<b>Co-Author 10 :</b>";
-                            echo "<br><br>";
-                            echo "<b>Name :</b> $coa10";
-                            echo "<br>";
-                            echo "<b>Affiliation :</b> $coa10aff";
-                            echo "</div>";
-                        }
-                    }
-                    ?>
+	                <?php
+	                for($i=1; $i<=$count; $i++)
+	                {
+		                if($i == 1){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 1 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa1";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa1aff";
+			                echo "</div>";
+		                }
+		                if($i == 2){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 2 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa2";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa2aff";
+			                echo "</div>";
+		                }
+		                if($i == 3){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 3 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa3";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa3aff";
+			                echo "</div>";
+		                }
+		                if($i == 4){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 4 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa4";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa4aff";
+			                echo "</div>";
+		                }
+		                if($i == 5){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 5 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa5";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa5aff";
+			                echo "</div>";
+		                }
+		                if($i == 6){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 6 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa6";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa6aff";
+			                echo "</div>";
+		                }
+		                if($i == 7){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 7 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa7";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa7aff";
+			                echo "</div>";
+		                }
+		                if($i == 8){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 8 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa8";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa8aff";
+			                echo "</div>";
+		                }
+		                if($i == 9){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 9 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa9";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa9aff";
+			                echo "</div>";
+		                }
+		                if($i == 10){
+			                echo "<div class='form-group'><br>";
+			                echo "<b><u>Co-Author 10 :</u></b>";
+			                echo "<br>";
+			                echo "<b>Name :</b> $coa10";
+			                echo "<br>";
+			                echo "<b>Affiliation :</b> $coa10aff";
+			                echo "</div>";
+		                }
+	                }
+	                ?>
                 </div>
-                <br><br>
+                <br>
                 <div class="form-group">
-                    <b>Date of Publication :</b> <?php echo $name;?>
+                    <b>Date of Publication :</b> <?php echo dateformatChanger($date);?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -727,12 +720,12 @@
                 <br>
                 <div class="form-group">
                     <b>Presentation Document :</b>
-                    <?php
-                    if(!empty($posterpdf))
-                        echo $pdf7;
-                    else
-                        echo "<b>Not Inserted</b>";
-                    ?>
+					<?php
+					if(!empty($posterpdf))
+						echo $pdf7;
+					else
+						echo "<b>Not Inserted</b>";
+					?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -745,46 +738,46 @@
                 <br>
                 <div class="form-group">
                     <b>Paper :</b>
-                    <?php
-                    if(!empty($paperpdf))
-                        echo $pdf4;
-                    else
-                        echo "<b>Not Inserted</b>";
-                    ?>
+					<?php
+					if(!empty($paperpdf))
+						echo $pdf4;
+					else
+						echo "<b>Not Inserted</b>";
+					?>
                 </div>
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($certificate))
-                        echo $pdf5;
-                    else
-                        echo "<b>Not Inserted</b>";
-                    ?>
+					<?php
+					if(!empty($certificate))
+						echo $pdf5;
+					else
+						echo "<b>Not Inserted</b>";
+					?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_conferences'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from publication_conferences where emp5_id=$empid and issn=$issn";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_conferences'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from publication_conferences where emp5_id=$empid and issn='$issn'";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
                 <br>
             </div>
             <div class="form-group">
@@ -796,8 +789,6 @@
         </form>
         <br>
     </div>
-
-
     <!--STTP-ATTENDED-->
     <div id ="section51" class="well">
         <form method="POST" action="" name="sttpattended" onsubmit="return validateAttended()"  enctype="multipart/form-data">
@@ -815,11 +806,11 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date From :</b> <?php echo $datefrom; ?>
+                    <b>Date From :</b> <?php echo dateformatChanger($datefrom); ?>
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date To :</b> <?php echo $dateto; ?>
+                    <b>Date To :</b> <?php echo dateformatChanger($dateto); ?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -844,36 +835,36 @@
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($certificate))
-                        echo $pdf6;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+					<?php
+					if(!empty($certificate))
+						echo $pdf6;
+					else
+						echo "<b>Not inserted</b>";
+					?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_attended'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid and sttp_id=$sttp_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_attended'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid and sttp_id=$sttp_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
                 <br>
             </div>
             <div class="form-group">
@@ -903,11 +894,11 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date From :</b> <?php echo $datefrom;?>
+                    <b>Date From :</b> <?php echo dateformatChanger($datefrom);?>
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date To :</b> <?php echo $dateto;?>
+                    <b>Date To :</b> <?php echo dateformatChanger($dateto);?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -921,29 +912,29 @@
                 <div class="form-group">
                     <b>Number Of Participants :</b> <?php echo $noparticipants;?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid and sttp_id=$sttp_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid and sttp_id=$sttp_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
                 <br>
             </div>
             <div class="form-group">
@@ -973,11 +964,11 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date From :</b> <?php echo $datefrom;?>
+                    <b>Date From :</b> <?php echo dateformatChanger($datefrom);?>
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date To :</b> <?php echo $dateto;?>
+                    <b>Date To :</b> <?php echo dateformatChanger($dateto);?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -991,29 +982,29 @@
                 <div class="form-group">
                     <b>Duration :</b> <?php echo $duration;?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid and sttp_id=$sttp_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid and sttp_id=$sttp_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -1040,7 +1031,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date :</b> <?php echo $date; ?>
+                    <b>Date :</b> <?php echo dateformatChanger($date); ?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -1050,29 +1041,29 @@
                 <div class="form-group">
                     <b>Type :</b> <?php echo $type; ?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='co_curricular'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from co_curricular where emp10_id=$empid and curricular_id=$curricular_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='co_curricular'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from co_curricular where emp10_id=$empid and curricular_id=$curricular_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -1099,7 +1090,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Date :</b> <?php echo $date; ?>
+                    <b>Date :</b> <?php echo dateformatChanger($date); ?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -1109,29 +1100,29 @@
                 <div class="form-group">
                     <b>Location :</b> <?php echo $place; ?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='extra'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from extra where emp11_id=$empid and extra_id=$extra_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='extra'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from extra where emp11_id=$empid and extra_id=$extra_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
             </div>
             <br>
             <div class="form-group">
@@ -1164,41 +1155,41 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Honour Date :</b> <?php echo $award_date; ?>
+                    <b>Honour Date :</b> <?php echo dateformatChanger($award_date); ?>
                 </div>
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($awd_certificate))
-                        echo $awd_pdf;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+					<?php
+					if(!empty($awd_certificate))
+						echo $awd_pdf;
+					else
+						echo "<b>Not inserted</b>";
+					?>
                 </div>
-                <?php
-                $new_field_query="select * from new_fields where table_name='awards'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                        $field_name = $row['field_name'];
-                        $label = $row['label'];
-                        $display = $row['display'];
-                        if($display==1) {
-                            $table_sql = "select $field_name from awards where emp_id=$empid and award_id=$award_id";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                                $tab_row = $tab_res->fetch_assoc();
-                                $new_field=$tab_row[$field_name];
-                                echo '<br>';
-                                echo '<div class="form-group">
+				<?php
+				$new_field_query="select * from new_fields where table_name='awards'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+						$field_name = $row['field_name'];
+						$label = $row['label'];
+						$display = $row['display'];
+						if($display==1) {
+							$table_sql = "select $field_name from awards where emp_id=$empid and award_id=$award_id";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+								$tab_row = $tab_res->fetch_assoc();
+								$new_field=$tab_row[$field_name];
+								echo '<br>';
+								echo '<div class="form-group">
                                         <b>'.$label.' : </b>'.$new_field.'
                                     </div>';
-                            }
-                        }
-                    }
-                }
-                ?>
+							}
+						}
+					}
+				}
+				?>
                 <br>
             </div>
             <div class="form-group">
@@ -1210,9 +1201,6 @@
         </form>
         <br>
     </div>
-
 </div>
-
 </body>
-
 </html>

@@ -7,7 +7,6 @@ elseif(isset($_SESSION["Emp_Id"]) )
 else {
 	header('Location:logout.php');
 }
-/*echo $empid;*/
 // ACADEMIC DETAILS //
 $myData = json_decode( base64_decode( $_GET['parameter'] ) );
 $academic = $myData->academic;
@@ -32,7 +31,6 @@ if($academic == "ssc")
 		break;
 	}
 }
-
 if($academic == "hsc")
 {
 	$query = "SELECT HSC_Marksheet FROM academic_details WHERE Emp2_Id=$empid" ;
@@ -116,8 +114,6 @@ if($academic == "phd")
 		break;
 	}
 }
-
-
 // PUBLICATIONS //
 $pub = $myData->pub;
 // BOOKS //
@@ -302,7 +298,6 @@ if($sttp == 1)
 	$query = "SELECT Certificate FROM sttp_event_attended WHERE Emp6_Id=$empid" ;
 	$cid = $myData->cid;
 	$checksa = 0;
-
 	$result2 = mysqli_query($conn, $query);
 	while($row = mysqli_fetch_assoc($result2))
 	{
@@ -358,7 +353,6 @@ if($extr == "1")
 }
 
 $awd = $myData->awd;
-
 if($awd == "1")
 {
 	$query = "SELECT certificate FROM awards WHERE emp_id=$empid" ;
@@ -387,4 +381,3 @@ if($awd == "1")
 			$checkpjc++;
 	}
 }
-?>

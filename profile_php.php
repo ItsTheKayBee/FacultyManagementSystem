@@ -115,6 +115,7 @@ else{
 			$arg1 = base64_encode( json_encode($myData1) );
 			$phdi='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
 		}
+		$course_taught_id=array();
 		$courseid=array();
 		$coursecategory=array();
 		$coursesem=array();
@@ -125,6 +126,7 @@ else{
 		$result=$conn->query($sql);
 		while($row = mysqli_fetch_assoc($result))
 		{
+			$course_taught_id[$temp]=$row['course_taught_id'];
 			$courseid[$temp]=$row["Course_Id"];
 			$coursecategory[$temp]=$row["Category"];
 			$coursesem[$temp]=$row["Semester"];
@@ -132,4 +134,3 @@ else{
 			$temp++;
 		}
 	}
-?>

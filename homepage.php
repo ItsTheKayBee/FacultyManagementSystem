@@ -15,7 +15,6 @@ function dateformatChanger($orgDate){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=NTR' rel='stylesheet'>
     <style>
@@ -50,11 +49,6 @@ function dateformatChanger($orgDate){
             {
                 margin-left:120px;
             }
-        }
-
-        .modal-dialog
-        {
-            width : 375px;
         }
         .form-control{
             max-width: 450px;
@@ -97,10 +91,8 @@ function dateformatChanger($orgDate){
             background: #1F54AB;
             border-radius : 30px
         }
-
     </style>
-    <script src="homies2.js"></script>
-
+    <script src="homepage.js"></script>
 </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 <!--NAVBAR-->
@@ -167,7 +159,6 @@ function dateformatChanger($orgDate){
 
 <center>
     <div class="container-fluid">
-
         <!--FORM 1-->
         <div class="col-sm-9 col-lg-9 col-md-8 col-xs-9">
             <div id ="section1" >
@@ -760,13 +751,11 @@ function dateformatChanger($orgDate){
     }
     ?>
     <div class="form-group">
-        <input type="submit"  type="submit" <?php /*if($gender=='null') echo "disabled title='Please fill Personal details first'"*/?>  style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
+        <input type="submit"  type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
     </div>
     </form>
     </div>
     </div>
-
-
     <!-- FORM 4 -->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section4">
@@ -786,9 +775,7 @@ function dateformatChanger($orgDate){
                     <div class="col-md-6 col-sm-9 col-lg-8 col-xs-6">
                         <div class="col-md-7 col-sm-7 col-lg-7 col-xs-8">
                             <label class="radio-inline"><input type="radio" name="projtype"  checked value = "BEPROJECT" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">B.E Project</label>
-
                             <label class="radio-inline"><input type="radio" name="projtype" value = "Internship" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">Internship</label>
-
                             <label class="radio-inline"><input type="radio" name="projtype" for="name2" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Other</label>
                         </div>
                         <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3">
@@ -912,7 +899,6 @@ function dateformatChanger($orgDate){
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section41">
             <form method="POST"  name="publicationbooks" onsubmit="return validateBook()" enctype="multipart/form-data">
-
                 <legend><h2>Publications</h2></legend>
                 <h3>Books</h3>
                 <div class="form-group">
@@ -1903,7 +1889,6 @@ function dateformatChanger($orgDate){
     <?php
     }
     }
-//    }
     }
     ?>
     <div class="form-group">

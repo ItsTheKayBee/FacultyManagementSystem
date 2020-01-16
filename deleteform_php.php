@@ -337,9 +337,7 @@ if($val == 5)
             echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
         }
     }
-
 }
-
 if($val == 6)
 {
     $form = "STTP Attended";
@@ -466,9 +464,9 @@ if($val == 8)
 
     if(isset($_POST["delete"]))
     {
-        $sql="DELETE FROM sttp_event_delivered WHERE
-            Emp9_Id='$empid' and sttp_id=$sttp_id  and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and Event_Type='$eventtype'";
-        $result = $conn->query($sql);
+	        $sql="DELETE FROM sttp_event_delivered WHERE
+	            Emp9_Id='$empid' and sttp_id=$sttp_id  and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and Event_Type='$eventtype'";
+	        $result = $conn->query($sql);
         if($result)
             header('Location:profile.php#section53');
         else {
@@ -591,7 +589,6 @@ if($val == 11)
     {
         header('Location:profile.php#awards');
     }
-
     if(isset($_POST["delete"]))
     {
         $sql="DELETE FROM awards
@@ -604,4 +601,4 @@ if($val == 11)
         }
     }
 }
-?>
+

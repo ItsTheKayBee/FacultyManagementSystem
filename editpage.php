@@ -1,8 +1,7 @@
 <?php
 include 'editpage_php.php';
-
 function dateformatChanger($orgDate){
-    return date("d-m-Y", strtotime($orgDate));
+	return date("d-m-Y", strtotime($orgDate));
 }
 ?>
 <html lang="en">
@@ -63,7 +62,7 @@ function dateformatChanger($orgDate){
             border-radius : 30px
         }
     </style>
-    <script src="hediting4.js"></script>
+    <script src="editpage.js"></script>
     <script >
         var a = "<?php echo $coursecategory;?>";
         let course_id="<?php echo $courseid;?>";
@@ -71,8 +70,6 @@ function dateformatChanger($orgDate){
 </head>
 
 <body onload="edit()">
-
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
@@ -106,7 +103,6 @@ function dateformatChanger($orgDate){
 <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3"></div>
 <center>
     <div class="container-fluid col-lg-6 col-md-6 col-xs-6 col-sm-6">
-
         <!-- COURSES TAUGHT -->
         <div id ="section3" class="well">
             <form method="post" onsubmit="return coursesvalidation()" name="coursestaught">
@@ -123,14 +119,26 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
                         <div class="category_div" id ="category_div">
                             <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                                <select name="category" class="required-entry form-control" id ="category_id" onchange="javascript: dynamicdropdown(options[this.selectedIndex].value);" >
-                                    <option value="">Select course type</option>
-                                    <option value="UG" <?php if($coursecategory == "UG") echo "selected";?> >UG</option>
-                                    <option value="PG" <?php if($coursecategory == "PG") echo "selected";?> >PG</option>
-                                    <option value="Labcourses" <?php if($coursecategory == "Labcourses") echo "selected";?> >Lab Courses</option>
-                                    <option value="AC" <?php if($coursecategory == "AC") echo "selected";?> >Audit Course</option>
-                                    <option value="IDC" <?php if($coursecategory == "IDC") echo "selected";?> >IDC</option>
-                                </select>
+								<?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
+								$res = $conn->query($sql);
+								echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
+								while ($row = $res->fetch_assoc()) {
+									if ($res->num_rows > 0) {
+										$course_type = $row['course_type_name'];
+										$course_value=$course_type;
+										if($course_value=="Lab Course"){
+											$course_value="Labcourses";
+										}
+										if($course_value=="Audit Course"){
+											$course_value="AC";
+										}
+										if($coursecategory==$course_value)
+											echo "<option selected value='" . $course_value . "'>" . $course_type . "</option>";
+										else
+											echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
+									}
+								}
+								echo "</select>";?>
                                 <span class="error" id ="coursetype"></span>
                             </div>
                         </div>
@@ -153,14 +161,14 @@ function dateformatChanger($orgDate){
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select class="form-control" name="courseyear" id ="courseyear_id" >
                                 <option value="">* Select Year</option>
-                                <?php
-                                foreach ($yearArray as $year) {
-                                    if($courseyear == $year)
-                                        echo '<option value="'.$year.'" selected>'.$year.'</option>';
-                                    else
-                                        echo '<option value="'.$year.'" >'.$year.'</option>';
-                                }
-                                ?>
+								<?php
+								foreach ($yearArray as $year) {
+									if($courseyear == $year)
+										echo '<option value="'.$year.'" selected>'.$year.'</option>';
+									else
+										echo '<option value="'.$year.'" >'.$year.'</option>';
+								}
+								?>
                             </select>
                             <span class="error" id ="courseyear1"></span>
                         </div>
@@ -184,41 +192,41 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='courses'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    $table_sql = "select $field_name from courses where emp8_id=$empid and course_taught_id=$course_taught_id";
-                    $tab_res = $conn->query($table_sql);
-                    if ($tab_res->num_rows > 0) {
-                    $tab_row = $tab_res->fetch_assoc();
-                    $new_field=$tab_row[$field_name];
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='courses'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					$table_sql = "select $field_name from courses where emp8_id=$empid and course_taught_id=$course_taught_id";
+					$tab_res = $conn->query($table_sql);
+					if ($tab_res->num_rows > 0) {
+					$tab_row = $tab_res->fetch_assoc();
+					$new_field=$tab_row[$field_name];
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        if($new_field == ''){
-                            echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        }else {
-                            echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                        }
-                        ?>
+						<?php
+						if($new_field == ''){
+							echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						}else {
+							echo 'name="'.$field_name.'" value="'.$new_field.'"';
+						}
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitcourses">
     </div>
@@ -277,14 +285,14 @@ function dateformatChanger($orgDate){
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                         <select class="form-control" name="projyear" id ="projyearid" >
                             <option value="">* Select Year</option>
-                            <?php
-                            foreach ($yearArray as $year1) {
-                                if($year == $year1)
-                                    echo '<option value="'.$year1.'" selected>'.$year1.'</option>';
-                                else
-                                    echo '<option value="'.$year1.'" >'.$year1.'</option>';
-                            }
-                            ?>
+							<?php
+							foreach ($yearArray as $year1) {
+								if($year == $year1)
+									echo '<option value="'.$year1.'" selected>'.$year1.'</option>';
+								else
+									echo '<option value="'.$year1.'" >'.$year1.'</option>';
+							}
+							?>
                         </select>
                         <span class="error" id ="projyearerr"></span>
                     </div>
@@ -345,41 +353,41 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='projects'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from projects where emp12_id=$empid and project_id=$proj_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='projects'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from projects where emp12_id=$empid and project_id=$proj_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit"  style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitprojects">
     </div>
@@ -498,47 +506,47 @@ function dateformatChanger($orgDate){
                 <br><br><br>
                 <div class="form-group">
                     <label>Book's Cover Page : </label>
-                    <?php
-                    if(!empty($cover))
-                        echo $pdf1;
-                    ?>
+					<?php
+					if(!empty($cover))
+						echo $pdf1;
+					?>
                     <input type="file" name="book_image" id ="book_image" accept="application/pdf"/>
                 </div><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_books'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from publication_books where emp1_id=$empid and isbn=$isbn";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_books'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from publication_books where emp1_id=$empid and isbn=$isbn";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitpublicationbooks">
     </div>
@@ -578,160 +586,160 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Are you the first author ?</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <label class="radio-inline"><input type="radio" value="YES" name="journal_fauth" checked onclick="var input = document.getElementById('journal_fauth'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">YES</label>
-                        <label class="radio-inline"><input type="radio" value="NO" name="journal_fauth" for="journal_fauth"  onclick="var input = document.getElementById('journal_fauth'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">NO</label>
-                        <input id ="journal_fauth" name="journal_fauth_val" disabled="true" type="text"/><br>
+                        <label class="radio-inline"><input type="radio" value="YES" name="journal_fauth" <?php if($same_auth) echo 'checked'; ?>  onclick="var input = document.getElementById('journal_fauth'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">YES</label>
+                        <label class="radio-inline"><input type="radio" value="NO" name="journal_fauth" for="journal_fauth" <?php if(!$same_auth) echo 'checked'; ?> onclick="var input = document.getElementById('journal_fauth'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">NO</label>
+                        <input id ="journal_fauth" placeholder="Enter Author's Name" name="journal_fauth_val" <?php if(!$same_auth) echo 'value="'.$author.'"';else echo 'disabled'; ?>  type="text"/><br>
                         <span id ="jour_fauth" class="error"></span>
                     </div>
                 </div>
                 <br><br><br>
                 <legend>Co-Authors</legend>
-                <?php
-                for($i=1;$i<=$count;$i++)
-                {
-                    if($i==1)
-                    {
-                        echo '<div class="form-group">';
-                        echo '<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname1" class="form-control" value = "'.$coa1.'" name="jour_coauth_name1" placeholder="Co Author 1"><span class="=error" id="jour_coauth_name1"></span>';
-                        echo '</div>';
-                        echo '<br><br>';
-                        echo '<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff1" class="form-control" value = "'.$coa1aff.'" name="jour_coauth_nameaff1" placeholder="Co Author 1 affiliation"><span class="=error" id="jour_coauth_nameaff1"></span>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br><br>';
-                    }
-                    if($i==2){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname2" class="form-control" value = "'.$coa2.'" name="name2" placeholder="Co Author 2">';
-                        echo '</div>';
-                        echo '<br class="br2"><br class="br2">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff2" class="form-control" value = "'.$coa2aff.'" name="name2_affiliation" placeholder="Co Author 2 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br2"><br class="br2">';
-                    }
-                    if($i==3){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname3" class="form-control" value = "'.$coa3.'" name="name3" placeholder="Co Author 3">';
-                        echo '</div>';
-                        echo '<br class="br3"><br class="br3">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff3" class="form-control" value = "'.$coa3aff.'" name="name3_affiliation" placeholder="Co Author 3 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br3"><br class="br3">';
-                    }
-                    if($i==4){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname4" class="form-control" value = "'.$coa4.'" name="name4" placeholder="Co Author 4">';
-                        echo '</div>';
-                        echo '<br class="br4"><br class="br4">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff4" class="form-control" value = "'.$coa4aff.'" name="name4_affiliation" placeholder="Co Author 4 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br4"><br class="br4">';
-                    }
-                    if($i==5){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname5" class="form-control" value = "'.$coa5.'" name="name5" placeholder="Co Author 5">';
-                        echo '</div>';
-                        echo '<br class="br5"><br class="br5">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff5" class="form-control" value = "'.$coa5aff.'" name="name5_affiliation" placeholder="Co Author 5 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br5"><br class="br5">';
-                    }
-                    if($i==6){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname6" class="form-control" value = "'.$coa6.'" name="name6" placeholder="Co Author 6">';
-                        echo '</div>';
-                        echo '<br class="br6"><br class="br6">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff6" class="form-control" value = "'.$coa6aff.'" name="name6_affiliation" placeholder="Co Author 6 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br6"><br class="br6">';
-                    }
-                    if($i==7){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname7" class="form-control" value = "'.$coa7.'" name="name7" placeholder="Co Author 7">';
-                        echo '</div>';
-                        echo '<br class="br7"><br class="br7">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff7" class="form-control" value = "'.$coa7aff.'" name="name7_affiliation" placeholder="Co Author 7 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br7"><br class="br7">';
-                    }
-                    if($i==8){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname8" class="form-control" value = "'.$coa8.'" name="name8" placeholder="Co Author 8">';
-                        echo '</div>';
-                        echo '<br class="br8"><br class="br8">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff8" class="form-control" value = "'.$coa8aff.'" name="name8_affiliation" placeholder="Co Author 8 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br8"><br class="br8">';
-                    }
-                    if($i==9){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname9" class="form-control" value = "'.$coa9.'" name="name9" placeholder="Co Author 9">';
-                        echo '</div>';
-                        echo '<br class="br9"><br class="br9">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff9" class="form-control" value = "'.$coa9aff.'" name="name9_affiliation" placeholder="Co Author 9 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br9"><br class="br9">';
-                    }
-                    if($i==10){
-                        echo '<div class="form-group">';
-                        echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthname10" class="form-control" value = "'.$coa10.'" name="name10" placeholder="Co Author 10">';
-                        echo '</div>';
-                        echo '<br class="br10"><br class="br10">';
-                        echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="jourcoauthnameaff10" class="form-control" value = "'.$coa10aff.'" name="name10_affiliation" placeholder="Co Author 10 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br10"><br class="br10">';
-                    }
-                }
-                ?>
+				<?php
+				for($i=1;$i<=$count;$i++)
+				{
+					if($i==1)
+					{
+						echo '<div class="form-group">';
+						echo '<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname1" class="form-control" value = "'.$coa1.'" name="jour_coauth_name1" placeholder="Co Author 1"><span class="=error" id="jour_coauth_name1"></span>';
+						echo '</div>';
+						echo '<br><br>';
+						echo '<label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff1" class="form-control" value = "'.$coa1aff.'" name="jour_coauth_nameaff1" placeholder="Co Author 1 affiliation"><span class="=error" id="jour_coauth_nameaff1"></span>';
+						echo '</div>';
+						echo '</div>';
+						echo '<br><br>';
+					}
+					if($i==2){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname2" class="form-control" value = "'.$coa2.'" name="name2" placeholder="Co Author 2">';
+						echo '</div>';
+						echo '<br class="br2"><br class="br2">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff2" class="form-control" value = "'.$coa2aff.'" name="name2_affiliation" placeholder="Co Author 2 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br2"><br class="br2">';
+					}
+					if($i==3){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname3" class="form-control" value = "'.$coa3.'" name="name3" placeholder="Co Author 3">';
+						echo '</div>';
+						echo '<br class="br3"><br class="br3">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff3" class="form-control" value = "'.$coa3aff.'" name="name3_affiliation" placeholder="Co Author 3 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br3"><br class="br3">';
+					}
+					if($i==4){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname4" class="form-control" value = "'.$coa4.'" name="name4" placeholder="Co Author 4">';
+						echo '</div>';
+						echo '<br class="br4"><br class="br4">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff4" class="form-control" value = "'.$coa4aff.'" name="name4_affiliation" placeholder="Co Author 4 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br4"><br class="br4">';
+					}
+					if($i==5){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname5" class="form-control" value = "'.$coa5.'" name="name5" placeholder="Co Author 5">';
+						echo '</div>';
+						echo '<br class="br5"><br class="br5">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff5" class="form-control" value = "'.$coa5aff.'" name="name5_affiliation" placeholder="Co Author 5 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br5"><br class="br5">';
+					}
+					if($i==6){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname6" class="form-control" value = "'.$coa6.'" name="name6" placeholder="Co Author 6">';
+						echo '</div>';
+						echo '<br class="br6"><br class="br6">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff6" class="form-control" value = "'.$coa6aff.'" name="name6_affiliation" placeholder="Co Author 6 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br6"><br class="br6">';
+					}
+					if($i==7){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname7" class="form-control" value = "'.$coa7.'" name="name7" placeholder="Co Author 7">';
+						echo '</div>';
+						echo '<br class="br7"><br class="br7">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff7" class="form-control" value = "'.$coa7aff.'" name="name7_affiliation" placeholder="Co Author 7 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br7"><br class="br7">';
+					}
+					if($i==8){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname8" class="form-control" value = "'.$coa8.'" name="name8" placeholder="Co Author 8">';
+						echo '</div>';
+						echo '<br class="br8"><br class="br8">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff8" class="form-control" value = "'.$coa8aff.'" name="name8_affiliation" placeholder="Co Author 8 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br8"><br class="br8">';
+					}
+					if($i==9){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname9" class="form-control" value = "'.$coa9.'" name="name9" placeholder="Co Author 9">';
+						echo '</div>';
+						echo '<br class="br9"><br class="br9">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff9" class="form-control" value = "'.$coa9aff.'" name="name9_affiliation" placeholder="Co Author 9 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br9"><br class="br9">';
+					}
+					if($i==10){
+						echo '<div class="form-group">';
+						echo '<label id="cojour'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthname10" class="form-control" value = "'.$coa10.'" name="name10" placeholder="Co Author 10">';
+						echo '</div>';
+						echo '<br class="br10"><br class="br10">';
+						echo '<label id="cojour2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="jourcoauthnameaff10" class="form-control" value = "'.$coa10aff.'" name="name10_affiliation" placeholder="Co Author 10 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br10"><br class="br10">';
+					}
+				}
+				?>
                 <div class="form-group">
                     <p id ="inputs">
                     </p>
@@ -852,10 +860,10 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Paper</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($paperpdf))
-                            echo $pdf2;
-                        ?>
+						<?php
+						if(!empty($paperpdf))
+							echo $pdf2;
+						?>
                         <br>
                         <input type="file" name="paper_image" accept="application/pdf" />
                     </div>
@@ -864,49 +872,49 @@ function dateformatChanger($orgDate){
                 <div>
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate: </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($certificate))
-                            echo $pdf3;
-                        ?>
+						<?php
+						if(!empty($certificate))
+							echo $pdf3;
+						?>
                         <input type="file" name="certificate_image" accept="application/pdf" />
                     </div>
                 </div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_journals'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from publication_journals where emp4_id=$empid and issn=$issn";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_journals'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from publication_journals where emp4_id=$empid and issn=$issn";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
     </div>
@@ -937,157 +945,157 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Are you the first Author ?</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <label class="radio-inline"><input type="radio" name="conf_fauth" value = "YES" checked onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">YES</label>
-                        <label class="radio-inline"><input type="radio" name="conf_fauth" value = "NO" for="conf_fauth" onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">NO</label>
-                        <input id ="conf_fauth" name="conf_fauth_val" placeholder="Enter Author's name" disabled type="text"/><br>
+                        <label class="radio-inline"><input type="radio" name="conf_fauth" value = "YES" <?php if($same_auth) echo 'checked'; ?> onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">YES</label>
+                        <label class="radio-inline"><input type="radio" name="conf_fauth" value = "NO" for="conf_fauth" <?php if(!$same_auth) echo 'checked'; ?>  onclick="var input = document.getElementById('conf_fauth'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">NO</label>
+                        <input id ="conf_fauth" name="conf_fauth_val" placeholder="Enter Author's Name" <?php if(!$same_auth) echo 'value="'.$author.'"';else echo 'disabled'; ?>  type="text"/><br>
                         <span class="error" id= "conf_fauthor"></span>
                     </div>
                 </div>
                 <br><br><br>
-                <?php
-                for($i=1;$i<=$count;$i++){
-                    if($i==1){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname1" class="form-control" value = "'.$coa1.'" name="name1" placeholder="Co Author 1"><span class="error" id="name1"></span>';
-                        echo '</div>';
-                        echo '<br><br>';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff1" class="form-control" value = "'.$coa1aff.'" name="name1_affiliation" placeholder="Co Author 1 affiliation"><span class="error" id="name1_affiliation"></span>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br><br>';
-                    }
-                    if($i==2){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname2" class="form-control" value = "'.$coa2.'" name="name2" placeholder="Co Author 2">';
-                        echo '</div>';
-                        echo '<br class="br12"><br class="br12">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff2" class="form-control" value = "'.$coa2aff.'" name="name2_affiliation" placeholder="Co Author 2 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br12"><br class="br12">';
-                    }
-                    if($i==3){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname3" class="form-control" value = "'.$coa3.'" name="name3" placeholder="Co Author 3">';
-                        echo '</div>';
-                        echo '<br class="br13"><br class="br13">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff3" class="form-control" value = "'.$coa3aff.'" name="name3_affiliation" placeholder="Co Author 3 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br13"><br class="br13">';
-                    }
-                    if($i==4){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname4" class="form-control" value = "'.$coa4.'" name="name4" placeholder="Co Author 4">';
-                        echo '</div>';
-                        echo '<br class="br14"><br class="br14">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff4" class="form-control" value = "'.$coa4aff.'" name="name4_affiliation" placeholder="Co Author 4 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br14"><br class="br14">';
-                    }
-                    if($i==5){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname5" class="form-control" value = "'.$coa5.'" name="name5" placeholder="Co Author 5">';
-                        echo '</div>';
-                        echo '<br class="br15"><br class="br15">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff5" class="form-control" value = "'.$coa5aff.'" name="name5_affiliation" placeholder="Co Author 5 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br15"><br class="br15">';
-                    }
-                    if($i==6){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname6" class="form-control" value = "'.$coa6.'" name="name6" placeholder="Co Author 6">';
-                        echo '</div>';
-                        echo '<br class="br16"><br class="br16">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff6" class="form-control" value = "'.$coa6aff.'" name="name6_affiliation" placeholder="Co Author 6 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br16"><br class="br16">';
-                    }
-                    if($i==7){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname7" class="form-control" value ="'.$coa7.'" name="name7" placeholder="Co Author 7">';
-                        echo '</div>';
-                        echo '<br class="br17"><br class="br17">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff7" class="form-control" value = "'.$coa7aff.'" name="name7_affiliation" placeholder="Co Author 7 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br17"><br class="br17">';
-                    }
-                    if($i==8){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname8" class="form-control" value = "'.$coa8.'" name="name8" placeholder="Co Author 8">';
-                        echo '</div>';
-                        echo '<br class="br18"><br class="br18">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff8" class="form-control" value ="'.$coa8aff.'" name="name8_affiliation" placeholder="Co Author 8 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br18"><br class="br18">';
-                    }
-                    if($i==9){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname9" class="form-control" value = "'.$coa9.'" name="name9" placeholder="Co Author 9">';
-                        echo '</div>';
-                        echo '<br class="br19"><br class="br19">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff9" class="form-control" value = "'.$coa9aff.'" name="name9_affiliation" placeholder="Co Author 9 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br19"><br class="br19">';
-                    }
-                    if($i==10){
-                        echo '<div class="form-group">';
-                        echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthname10" class="form-control" value = "'.$coa10.'" name="name10" placeholder="Co Author 10">';
-                        echo '</div>';
-                        echo '<br class="br110"><br class="br110">';
-                        echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
-                        echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
-                        echo '<input type="text" id ="confcoauthnameaff10" class="form-control" value = "'.$coa10aff.'" name="name10_affiliation" placeholder="Co Author 10 affiliation">';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<br class="br110"><br class="br110">';
-                    }
-                }
-                ?>
+				<?php
+				for($i=1;$i<=$count;$i++){
+					if($i==1){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname1" class="form-control" value = "'.$coa1.'" name="name1" placeholder="Co Author 1"><span class="error" id="name1"></span>';
+						echo '</div>';
+						echo '<br><br>';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff1" class="form-control" value = "'.$coa1aff.'" name="name1_affiliation" placeholder="Co Author 1 affiliation"><span class="error" id="name1_affiliation"></span>';
+						echo '</div>';
+						echo '</div>';
+						echo '<br><br>';
+					}
+					if($i==2){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname2" class="form-control" value = "'.$coa2.'" name="name2" placeholder="Co Author 2">';
+						echo '</div>';
+						echo '<br class="br12"><br class="br12">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff2" class="form-control" value = "'.$coa2aff.'" name="name2_affiliation" placeholder="Co Author 2 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br12"><br class="br12">';
+					}
+					if($i==3){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname3" class="form-control" value = "'.$coa3.'" name="name3" placeholder="Co Author 3">';
+						echo '</div>';
+						echo '<br class="br13"><br class="br13">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff3" class="form-control" value = "'.$coa3aff.'" name="name3_affiliation" placeholder="Co Author 3 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br13"><br class="br13">';
+					}
+					if($i==4){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname4" class="form-control" value = "'.$coa4.'" name="name4" placeholder="Co Author 4">';
+						echo '</div>';
+						echo '<br class="br14"><br class="br14">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff4" class="form-control" value = "'.$coa4aff.'" name="name4_affiliation" placeholder="Co Author 4 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br14"><br class="br14">';
+					}
+					if($i==5){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname5" class="form-control" value = "'.$coa5.'" name="name5" placeholder="Co Author 5">';
+						echo '</div>';
+						echo '<br class="br15"><br class="br15">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff5" class="form-control" value = "'.$coa5aff.'" name="name5_affiliation" placeholder="Co Author 5 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br15"><br class="br15">';
+					}
+					if($i==6){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname6" class="form-control" value = "'.$coa6.'" name="name6" placeholder="Co Author 6">';
+						echo '</div>';
+						echo '<br class="br16"><br class="br16">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff6" class="form-control" value = "'.$coa6aff.'" name="name6_affiliation" placeholder="Co Author 6 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br16"><br class="br16">';
+					}
+					if($i==7){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname7" class="form-control" value ="'.$coa7.'" name="name7" placeholder="Co Author 7">';
+						echo '</div>';
+						echo '<br class="br17"><br class="br17">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff7" class="form-control" value = "'.$coa7aff.'" name="name7_affiliation" placeholder="Co Author 7 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br17"><br class="br17">';
+					}
+					if($i==8){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname8" class="form-control" value = "'.$coa8.'" name="name8" placeholder="Co Author 8">';
+						echo '</div>';
+						echo '<br class="br18"><br class="br18">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff8" class="form-control" value ="'.$coa8aff.'" name="name8_affiliation" placeholder="Co Author 8 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br18"><br class="br18">';
+					}
+					if($i==9){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname9" class="form-control" value = "'.$coa9.'" name="name9" placeholder="Co Author 9">';
+						echo '</div>';
+						echo '<br class="br19"><br class="br19">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff9" class="form-control" value = "'.$coa9aff.'" name="name9_affiliation" placeholder="Co Author 9 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br19"><br class="br19">';
+					}
+					if($i==10){
+						echo '<div class="form-group">';
+						echo '<label id="coconf'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Name:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthname10" class="form-control" value = "'.$coa10.'" name="name10" placeholder="Co Author 10">';
+						echo '</div>';
+						echo '<br class="br110"><br class="br110">';
+						echo '<label id="coconf2'.$i.'"class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Co-Author Affiliation:</label>';
+						echo '<div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">';
+						echo '<input type="text" id ="confcoauthnameaff10" class="form-control" value = "'.$coa10aff.'" name="name10_affiliation" placeholder="Co Author 10 affiliation">';
+						echo '</div>';
+						echo '</div>';
+						echo '<br class="br110"><br class="br110">';
+					}
+				}
+				?>
                 <div class="form-group">
                     <p id ="inputsconf">
 
@@ -1209,12 +1217,12 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Presentation Document:</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($posterpdf))
-                            echo $pdf7;
-                        else
-                            echo "<b>Not Inserted!</b>";
-                        ?>
+						<?php
+						if(!empty($posterpdf))
+							echo $pdf7;
+						else
+							echo "<b>Not Inserted!</b>";
+						?>
                         <input type="file" name="conf_posterpdf" id ="conf_poster" accept="application/pdf" />
                     </div>
                 </div>
@@ -1236,12 +1244,12 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Paper : </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($paperpdf))
-                            echo $pdf4;
-                        else
-                            echo "<b>Not Inserted!</b>";
-                        ?>
+						<?php
+						if(!empty($paperpdf))
+							echo $pdf4;
+						else
+							echo "<b>Not Inserted!</b>";
+						?>
                         <input type="file" name="paper_image" accept="application/pdf" />
                     </div>
                 </div>
@@ -1249,51 +1257,51 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($certificate))
-                            echo $pdf5;
-                        else
-                            echo "<b>Not Inserted!</b>";
-                        ?>
+						<?php
+						if(!empty($certificate))
+							echo $pdf5;
+						else
+							echo "<b>Not Inserted!</b>";
+						?>
                         <input type="file" name="certificate_image" accept="application/pdf" />
                     </div>
                 </div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='publication_conferences'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from publication_conferences where emp5_id=$empid and issn=$issn";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='publication_conferences'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from publication_conferences where emp5_id=$empid and issn=$issn";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
     </div>
@@ -1367,7 +1375,7 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Duration :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input  name="durationattended" placeholder="Duration" value = '<?php echo $duration; ?>' class="form-control" type="text" onfocus="(this.type='time')" onblur="(this.type='text')">
+                        <input  name="durationattended" placeholder="Duration" value = '<?php echo $duration; ?>' class="form-control" type="text" onfocus="(this.type='number')" onblur="(this.type='text')">
                     </div></div>
                 <br><br><br>
                 <div class="form-group">
@@ -1385,49 +1393,49 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($certificate))
-                            echo $pdf6;
-                        ?>
+						<?php
+						if(!empty($certificate))
+							echo $pdf6;
+						?>
                         <input type="file" name="certificateattended" id ="certificateattended" accept="application/pdf" />
                     </div>
                 </div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_attended'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid and sttp_id=$sttp_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_attended'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from sttp_event_attended where emp6_id=$empid and sttp_id=$sttp_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttpattended">
     </div>
@@ -1502,49 +1510,47 @@ function dateformatChanger($orgDate){
 
                     </div></div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid and sttp_id=$sttp_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from sttp_event_organized where emp7_id=$empid and sttp_id=$sttp_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttporganized">
     </div>
     </fieldset>
     </form>
     </div>
-
-
     <!--STTP-DELIVERED-->
     <div id ="section53" class="well">
         <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered">
@@ -1610,44 +1616,44 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Duration :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <input  name="durationdelivered"  value = "<?php echo $duration; ?>" placeholder="Duration" class="form-control" type="text" onfocus="(this.type='time')" onblur="(this.type='text')">
+                        <input  name="durationdelivered"  value = "<?php echo $duration; ?>" placeholder="Duration" class="form-control" type="text" onfocus="(this.type='number')" onblur="(this.type='text')">
                     </div>
                 </div><br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid and sttp_id=$sttp_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from sttp_event_delivered where emp9_id=$empid and sttp_id=$sttp_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitsttpdelivered">
     </div>
@@ -1706,41 +1712,41 @@ function dateformatChanger($orgDate){
                         <input class="form-control" id ="name22" name="name22" disabled="true" <?php if($type != "KJ Somaiya(InHouse)") echo 'value="'.$type.'"';?> type="text"/>
                     </div></div>
                 <br><br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='co_curricular'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from co_curricular where emp10_id=$empid and curricular_id=$cocurr_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='co_curricular'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from co_curricular where emp10_id=$empid and curricular_id=$cocurr_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                       <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                       <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitcocurricular">
     </div>
@@ -1796,48 +1802,47 @@ function dateformatChanger($orgDate){
                         <input type="text" id ="extplace" class="form-control" value = "<?php echo $place; ?>" name="extraplace" placeholder="Location">
                     </div></div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='extra'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from extra where emp11_id=$empid and extra_id=$extra_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='extra'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from extra where emp11_id=$empid and extra_id=$extra_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submitextra">
     </div>
     </fieldset>
     </form>
     </div>
-
 
     <div id ="awards" class="well">
         <form method="POST" onsubmit="return awards()" name="awards_form" enctype="multipart/form-data">
@@ -1883,48 +1888,48 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($awd_certificate))
-                            echo $awd_pdf;
-                        ?>
+						<?php
+						if(!empty($awd_certificate))
+							echo $awd_pdf;
+						?>
                         <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='awards'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                $table_sql = "select $field_name from awards where emp_id=$empid and award_id=$award_id";
-                $tab_res = $conn->query($table_sql);
-                if ($tab_res->num_rows > 0) {
-                $tab_row = $tab_res->fetch_assoc();
-                $new_field=$tab_row[$field_name];
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='awards'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				$table_sql = "select $field_name from awards where emp_id=$empid and award_id=$award_id";
+				$tab_res = $conn->query($table_sql);
+				if ($tab_res->num_rows > 0) {
+				$tab_row = $tab_res->fetch_assoc();
+				$new_field=$tab_row[$field_name];
+				echo "<div class=\"form-group\">
                       <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                        <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    if($new_field == ''){
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    }else {
-                        echo 'name="'.$field_name.'" value="'.$new_field.'"';
-                    }
-                    ?>
+					<?php
+					if($new_field == ''){
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					}else {
+						echo 'name="'.$field_name.'" value="'.$new_field.'"';
+					}
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
     </div>
     </div> <br><br>
-    <?php
-    }
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Update" name = "submit_award">
     </div>

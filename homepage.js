@@ -76,17 +76,12 @@ $(document).ready(function() {
         var id = this.id;
         var split_id = id.split("_");
         var deleteindex = split_id[1];
-        //alert(deleteindex);
-        // var deleteindex = 2;
-        // Remove <div> with id
-        //alert(deleteindex);
+
         $("#cojour"+deleteindex).remove();
         $("#cojour2"+deleteindex).remove();
         $("#jourcoauthname" +deleteindex).remove();
         $("#jourcoauthnameaff" +deleteindex).remove();
         $("#remove_" +deleteindex).remove();
-
-
         numberIncr--;
         if (numberIncr>=2) {
             $("#remove_"+numberIncr).show();
@@ -100,10 +95,6 @@ $(document).ready(function() {
         var id = this.id;
         var split_id = id.split("_");
         var deleteindex = split_id[1];
-        //alert(deleteindex);
-        //var deleteindex = 2;
-        // Remove <div> with id
-        // alert(deleteindex);
         $("#coconf"+deleteindex).remove();
         $("#coconf2"+deleteindex).remove();
         $("#confcoauthname" +deleteindex).remove();
@@ -280,13 +271,6 @@ function projguided()
         if(projstud4name.trim()=="")
             document.getElementById("projstud4nameid").focus();
     }
-
-
-
-    /*if(name.trim()=="" && date==""){
-        alert("* Please Enter all compulsory Fields for Projects Guided");
-        return false;
-    }*/
     if(name.trim()=="" || name==null)
     {
         projflag=1;
@@ -382,14 +366,6 @@ function validatePersonal()
     document.personal.contact.style = "";
     document.personal.date.style = "";
     document.personal.address.style = "";
-
-    /*if( x.trim() == ""  && y.trim() == "" && z.trim() == "" && a == "" && b.trim() == "" && formValid == false)
-    {
-        alert("* Please Fill All The Compulsory Fields For Personal Details!");
-        document.getElementById("n").focus();
-        return false;
-    }*/
-
     if (x == "")
     {
         nameflag=1;
@@ -453,7 +429,6 @@ function validatePersonal()
 
     if (x == "" || (!(/^([a-zA-Z ]{2,30})$/.test(x)))){
         document.getElementById("n").focus();
-        //alert("hi");
     }
     else if (!formValid)
         document.getElementById("g").focus();
@@ -485,14 +460,6 @@ function ac1()
     document.a1.sscinstitute.style = "";
     document.getElementById("sscmarks1").innerHTML = "";
     document.a1.sscmarks.style = "";
-
-    /*if( (sscinst.trim() == "") && (sscmarks== "") )
-    {
-        sscflag = 1;
-        alert("* Please Fill All The Compulsory Details for SSC");
-        return false;
-    }*/
-
     if(sscinst.trim() == "")
     {
         document.getElementById("ins1").innerHTML = "* Enter SSC Institue Name";
@@ -519,24 +486,13 @@ function ac1()
 
 function ac2()
 {
-
     var hscinst = document.a2.hscinstitute.value;
     var hscmarks = document.a2.hscmarks.value;
-
-
     var hscflag = 0;
-
     document.getElementById("ins2").innerHTML = "";
     document.a2.hscinstitute.style = "";
     document.getElementById("hscmarks1").innerHTML = "";
     document.a2.hscmarks.style = "";
-
-    /*if( (hscinst.trim() == "") && (hscmarks== "") )
-    {
-        alert("* Please Fill All The Compulsory Details for HSC");
-        return false;
-    }*/
-
     if(hscinst.trim() == "")
     {
         document.getElementById("ins2").innerHTML = "* Enter HSC Institue Name";
@@ -575,14 +531,6 @@ function ac3()
     document.a3.btechmarks.style = "";
     document.getElementById("btechdegree").innerHTML = "";
     document.a3.btechdegree.style = "";
-    //alert(btechdegree);
-
-    /*if( (btechinst.trim()=="") && (btechmarks.trim()== "") && (btechdegree.trim()=="") )
-    {
-        btechflag = 1;
-        alert("* Please Fill All The Compulsory Details for BTECH");
-        return false;
-    }*/
     if (btechdegree.trim()=="")
     {
         btechflag = 1;
@@ -622,7 +570,6 @@ function ac4()
     var mtechmarks = document.a4.mtechmarks.value;
     var mtechyear = document.a4.mtechyear.value;
     var mtechdegree = document.a4.mtechdegree.value;
-    //alert(mtechdegree);
     var mtechflag = 0;
 
     document.getElementById("ins4").innerHTML = "";
@@ -631,14 +578,6 @@ function ac4()
     document.a4.mtechmarks.style = "";
     document.getElementById("mtechdegree").innerHTML = "";
     document.a4.mtechdegree.style = "";
-
-
-    /*if( (mtechinst.trim()=="") && (mtechmarks== "") && (mtechdegree.trim() == "") )
-    {
-        mtechflag = 1;
-        alert("* Please Fill All The Compulsory Details for MTECH");
-        return false;
-    }*/
     if (mtechdegree.trim()=="")
     {
         mtechflag=1;
@@ -683,14 +622,6 @@ function ac5()
     document.a5.phdmarks.style = "";
     document.getElementById("phddegree").innerHTML = "";
     document.a5.phddegree.style = "";
-
-    /*if( (phdinst.trim()=="") && (phdmarks=="") && (phddegree.trim() == "") )
-    {
-        phdflag = 1;
-        alert("* Please Fill All The Compulsory Details for PhD");
-        return false;
-    }*/
-
     if (phddegree.trim()=="")
     {
         document.getElementById("phddegree").innerHTML = "* Select PhD Degree";
@@ -722,13 +653,10 @@ function ac5()
     if(phdflag == 1)
         return false;
 }
-
-
 // 3. COURSES TAUGHT //
 
 function edit()
 {
-
     var course_type = document.getElementById("category_id").value;
     dynamicdropdown(abc);
 }
@@ -740,154 +668,7 @@ function setter()
 
 function dynamicdropdown(listindex)
 {
-    //	alert(document.getElementById("category_id").value);
     document.getElementById("subcategory").length = 0;
-    /*	switch (listindex)
-        {
-            case "UG" :
-                document.getElementById("subcategory").options[0]=new Option("Please select UG course","");
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        document.getElementById('subcategory').innerHTML=this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", "courses_taught.php?q=UG", true);
-                xmlhttp.send();
-                /!*document.getElementById("subcategory").options[1]=new Option("UITC301-Engineering Mathematics 3","UITC301-Engineering Mathematics 3");
-                document.getElementById("subcategory").options[2]=new Option("UITC302-Database Management Systems","UITC302-Database Management Systems");
-                document.getElementById("subcategory").options[3]=new Option("UITC303-Data Structures","UITC303-Data Structures");
-                document.getElementById("subcategory").options[4]=new Option("UITC304-Design Logic Design and Applications","UITC304-Design Logic Design and Applications");
-                //document.getElementById("subcategory").options[5]=new Option("UITL304-Programming Laboratory 1","Programming Laboratory 1");
-                document.getElementById("subcategory").options[5]=new Option("UITC305-Theory of Computers","UITC305-Theory of Computers");
-                document.getElementById("subcategory").options[6]=new Option("UITC401-Applied Mathematics 4","UITC401-Applied Mathematics 4");
-                document.getElementById("subcategory").options[7]=new Option("UITC402-Data Communication and Networking","UITC402-Data Communication and Networking");
-                document.getElementById("subcategory").options[8]=new Option("UITC403-Analysis Of Algorithm","UITC403-Analysis Of Algorithm");
-                document.getElementById("subcategory").options[9]=new Option("UITC404-Computer Organization and Architecture","UITC404-Computer Organization and Architecture");
-                document.getElementById("subcategory").options[10]=new Option("UITC405-Web Programming 1","UITC405-Web Programming 1");
-                document.getElementById("subcategory").options[11]=new Option("UITC406-Professional Communication Skills","UITC406-Professional Communication Skills");
-                //document.getElementById("subcategory").options[13]=new Option("UITL405-Programming Laboratory 2","Programming Laboratory 2");
-                document.getElementById("subcategory").options[12]=new Option("UITC501-Information Theory and Coding","UITC501-Information Theory and Coding");
-                document.getElementById("subcategory").options[13]=new Option("UITC502-Object Oriented Software Engineering","UITC502-Object Oriented Software Engineering");
-                document.getElementById("subcategory").options[14]=new Option("UITC503-Advanced Databases","UITC503-Advanced Databases");
-                document.getElementById("subcategory").options[15]=new Option("UITC504-Computer Graphics","UITC504-Computer Graphics");
-                document.getElementById("subcategory").options[16]=new Option("UITC505-Operating Systems","UITC505-Operating Systems");
-                //document.getElementById("subcategory").options[19]=new Option("UITL505-Programming Laboratory 2","Programming Laboratory 2");
-                //document.getElementById("subcategory").options[17]=new Option("UITA501-Audit Course","Audit Course");
-                document.getElementById("subcategory").options[17]=new Option("UITC601-Information and Network Security","UITC601-Information and Network Security");
-                document.getElementById("subcategory").options[18]=new Option("UITC602-Microcontroller and Embedded Systems","UITC602-Microcontroller and Embedded Systems");
-                document.getElementById("subcategory").options[19]=new Option("UITC603-Data Mining","UITC603-Data Mining");
-                document.getElementById("subcategory").options[20]=new Option("UITC604-Development Frameworks","UITC604-Development Frameworks");
-                //document.getElementById("subcategory").options[22]=new Option("UITE601-Elective 1","Elective 1");
-                //document.getElementById("subcategory").options[23]=new Option("UITI601-IDC","UITI601-IDC");
-                document.getElementById("subcategory").options[21]=new Option("UITC701-Software Testing and Quality Assurance","UITC701-Software Testing and Quality Assurance");
-                document.getElementById("subcategory").options[22]=new Option("UITC702-Artificial Intelligence","UITC702-Artificial Intelligence");
-                document.getElementById("subcategory").options[23]=new Option("UITC703-Modeling and Simulation","UITC703-Modeling and Simulation");
-                document.getElementById("subcategory").options[24]=new Option("UITC704-Big Data Analytics","UITC704-Big Data Analytics");
-                //document.getElementById("subcategory").options[28]=new Option("UITE701-Digital Image Processing","UITE701-Digital Image Processing");
-                //document.getElementById("subcategory").options[29]=new Option("UITE702-Advanced Image Processing","UITE702-Advanced Image Processing");
-                //document.getElementById("subcategory").options[30]=new Option("UITE703-Search Engine Optimization","UITE703-Search Engine Optimization");
-                //document.getElementById("subcategory").options[31]=new Option("UITE704-Software Architecture","UITE704-Software Architecture");
-                //document.getElementById("subcategory").options[32]=new Option("UITE705-Usability Engineering","UITE705-Usability Engineering");
-                //document.getElementById("subcategory").options[33]=new Option("UITE706-Advanced Computer Network","UITE706-Advanced Computer Engineering");
-                //document.getElementById("subcategory").options[37]=new Option("UITL701-Software Testing and Quality Assurance","UITL701-Software Testing and Quality Assurance");
-                //document.getElementById("subcategory").options[38]=new Option("UITL702-Artificial Intelligence","UITL702-Artificial Intelligence");
-                //document.getElementById("subcategory").options[39]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
-                //document.getElementById("subcategory").options[40]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
-                //document.getElementById("subcategory").options[34]=new Option("UITP701-Project A","UITP704-Project A");
-                document.getElementById("subcategory").options[25]=new Option("UITC801-Software Project Management","UITC801-Software Project Management");
-                document.getElementById("subcategory").options[26]=new Option("UITC802-Cloud Computing","UITC801-Cloud Computing");
-                document.getElementById("subcategory").options[27]=new Option("UITC803-Soft Computing","UITC803-Soft Computing");
-                document.getElementById("subcategory").options[28]=new Option("UITE801-Digital Marketing","UITE801-Digital Marketing");
-                document.getElementById("subcategory").options[29]=new Option("UITE802-Robotics","UITE802-Robotics");
-                document.getElementById("subcategory").options[30]=new Option("UITE803-Digital Forensics","UITC803-Digital Forensics");
-                document.getElementById("subcategory").options[31]=new Option("UITE804-Internet Of Things","UITE804-Internet of Things");
-                document.getElementById("subcategory").options[32]=new Option("UITE805-Geographical Information System","UITE805-Geographical Information System");
-                //document.getElementById("subcategory").options[50]=new Option("UITL801-Software Project Management Laboratory","UITL801-Software Project Management Laboratory");
-                //document.getElementById("subcategory").options[51]=new Option("UITL802-Cloud Computing Laboratory","UITL801-Cloud Computing Laboratory");
-                //document.getElementById("subcategory").options[52]=new Option("UITL803-Soft Computing Laboratory","UITL803-Soft Computing Laboratory");
-    *!/
-                break;
-            case "PG" :
-                document.getElementById("subcategory").options[0]=new Option("Please select PG course","");
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        document.getElementById('subcategory').innerHTML=this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", "courses_taught.php?q=PG", true);
-                xmlhttp.send();
-                /!*document.getElementById("subcategory").options[1]=new Option("1PIS101-Network Design and Network Security","1PIS101-Network Design and Network Security");
-                document.getElementById("subcategory").options[2]=new Option("1PISC102-Digital Forensics and Analysis","1PIS102-Digital Forensics and Analysis");
-                document.getElementById("subcategory").options[3]=new Option("1PISC103-Software Vulnerability and Analysis","1PISC103-Software Vulnerability and Analysis");
-                document.getElementById("subcategory").options[4]=new Option("1PISC104-Modelling and Analysis of Security Protocols","1PISC104-Modelling and Analysis of Security Protocols");
-                document.getElementById("subcategory").options[5]=new Option("1PISC105-Cryptography and Public Key Infrastructure","1PISC105-Cryptography and Public Key Infrastructure");
-                document.getElementById("subcategory").options[6]=new Option("1PISC201-Information Security Compliance","1PISC201-Information Security Compliance");
-                *!/break;
-            case "Labcourses" :
-                document.getElementById("subcategory").options[0]=new Option("Please select lab course","");
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        document.getElementById('subcategory').innerHTML=this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", "courses_taught.php?q=Labcourses", true);
-                xmlhttp.send();
-                /!*document.getElementById("subcategory").options[1]=new Option("UITL301-Database Management Systems","UITL301-Database Management Systems");
-                document.getElementById("subcategory").options[2]=new Option("UITL302-Data Structures","UITL302-Data Structures");
-                document.getElementById("subcategory").options[3]=new Option("UITL303-Design Logic Design and Applications","UITL303-Design Logic Design and Applications");
-                document.getElementById("subcategory").options[4]=new Option("UITL304-Programming Laboratory 1","UITL304-Programming Laboratory 1");
-                document.getElementById("subcategory").options[5]=new Option("UITL401-Data Communication and Networking","UITL401-Data Communication and Networking");
-                document.getElementById("subcategory").options[6]=new Option("UITL402-Web Programming 1","UITL402-Web Programming 1");
-                document.getElementById("subcategory").options[7]=new Option("UITL405-Programming Laboratory 2","Programming Laboratory 2");
-                document.getElementById("subcategory").options[8]=new Option("UITL501-Operating Systems","UITL501-Operating Systems");
-                document.getElementById("subcategory").options[9]=new Option("UITL502-Object Oriented Software Engineering","UITL502-Object Oriented Software Engineering");
-                document.getElementById("subcategory").options[10]=new Option("UITL503-Advanced Databases","UITL503-Advanced Databases");
-                document.getElementById("subcategory").options[11]=new Option("UITL504-Computer Graphics","UITL504-Computer Graphics");
-                document.getElementById("subcategory").options[12]=new Option("UITL505-Web Programming 2","UITL505-Web Programming 2");
-                document.getElementById("subcategory").options[13]=new Option("UITL601-Information and Network Security","UITL601-Information and Network Security");
-                document.getElementById("subcategory").options[14]=new Option("UITL602-Microcontroller and Embedded Systems","UITL602-Microcontroller and Embedded Systems");
-                document.getElementById("subcategory").options[15]=new Option("UITL603-Data Mining","UITL603-Data Mining");
-                document.getElementById("subcategory").options[16]=new Option("UITL604-Development Frameworks","UITL604-Development Frameworks");
-                document.getElementById("subcategory").options[17]=new Option("UITL701-Software Testing and Quality Assurance","UITL701-Software Testing and Quality Assurance");
-                document.getElementById("subcategory").options[18]=new Option("UITL702-Artificial Intelligence","UITL702-Artificial Intelligence");
-                document.getElementById("subcategory").options[19]=new Option("UITL703-Modeling and Simulation","UITL703-Modeling and Simulation");
-                document.getElementById("subcategory").options[20]=new Option("UITL704-Big Data Analytics","UITL704-Big Data Analytics");
-                document.getElementById("subcategory").options[21]=new Option("UITL801-Software Project Management","UITL801-Software Project Management");
-                document.getElementById("subcategory").options[22]=new Option("UITL802-Cloud Computing","UITL801-Cloud Computing");
-                document.getElementById("subcategory").options[23]=new Option("UITL803-Soft Computing","UITL803-Soft Computing");
-    *!/
-                break;
-            case "AC" :
-                document.getElementById("subcategory").options[0]=new Option("Please select audit course","");
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState === 4 && this.status === 200) {
-                        document.getElementById('subcategory').innerHTML=this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", "courses_taught.php?q=AC", true);
-                xmlhttp.send();
-                /!*document.getElementById("subcategory").options[1]=new Option("UITA401-Python Programming-A concise Introduction","UITA401-Python Programming-A concise Introduction");
-                document.getElementById("subcategory").options[2]=new Option("UITA402-Core Java","UITA402-Core Java");
-                document.getElementById("subcategory").options[3]=new Option("UITA403-UI Design","UITA403-UI Design");
-                document.getElementById("subcategory").options[4]=new Option("UITA404-Basics of Web Programming","UITA404-Basics of Web Programming");
-    *!/
-                break;
-            case "IDC" :
-                document.getElementById("subcategory").options[0]=new Option("Please select IDC","");
-
-                /!*document.getElementById("subcategory").options[1]=new Option("UITI601-Management Information Systems ","UITI601-Management Information Systems ");
-                document.getElementById("subcategory").options[2]=new Option("UITI602-Software Engineering","UITI602-Software Engineering");
-                document.getElementById("subcategory").options[3]=new Option("UITI603-Cyber Security Awareness","UITI603 Cyber Security Awareness");
-                document.getElementById("subcategory").options[3]=new Option("UITI604-E-Business","UITI604-E-Business");
-                document.getElementById("subcategory").options[3]=new Option("UITI605-IT as Enabler for Start- up","UITI605-IT as Enabler for Start- up");
-                document.getElementById("subcategory").options[3]=new Option("UITI606-Social Media","UITI606-Social Media");
-                document.getElementById("subcategory").options[3]=new Option("UITI607-Business Analytics","UITI607-Business Analytics");
-                *!/break;
-        }*/
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -917,12 +698,6 @@ function coursesvalidation()
 
     var courseflag = 0;
 
-    /*if( (course == 0) && (subcategory==0) && (year==0) &&  (sem==0) )
-    {
-        alert("* Please Fill All The Compulsory Fields for Courses Taught");
-        courseflag = 1;
-        return false;
-    }*/
     if(course==0)
     {
         document.getElementById("coursetype").innerHTML="* Please select course type";
@@ -992,12 +767,6 @@ function validateBook()
     document.publicationbooks.book_pub_name.style = "";
     document.publicationbooks.book_auth_name.style = "";
 
-    /*if(bookname.trim() == "" && bookisbn.trim() == "" && book_pub_name == "" && book_auth_name == "" && pubdate == "")
-    {
-        alert("* Please Enter all compulsory Fields for Books");
-        return false;
-    }*/
-
     if (pubdate == "" || pubdate == null)
     {
         pbflag=1;
@@ -1052,7 +821,6 @@ function validateBook()
 function validateJour()
 {
     var journal_name = document.publicationjournal.journal_name.value;
-    //var journal_auth = document.publicationjournal.journal_auth.value;
     var jour_date = document.publicationjournal.jour_date.value;
     var journal_pub_name= document.publicationjournal.journal_pub_name.value;
     var journal_title= document.publicationjournal.journal_title.value;
@@ -1095,12 +863,6 @@ function validateJour()
     document.getElementById("jour_coauth_name1").innerHTML = "";
     document.publicationjournal.jour_coauth_nameaff1.style = "";
     document.getElementById("jour_coauth_nameaff1").innerHTML ="";
-
-    /*if(journal_pub_name.trim() == "" && journal_title.trim() == "" && journal_impact.trim() == "" && journal_vol.trim() == "" && journal_issue.trim() == "" && journal_pg.trim() == "" && journal_name.trim() == ""  && jour_date == "" && journal_cite.trim() == ""  && journal_issn.trim() == ""  && jour_coauth_name1 == "" && jour_coauth_nameaff1 == "")
-    {
-        alert("* Please Enter all Compulsory Fields for Journals");
-        return false;
-    }*/
 
     if (journal_cite.trim() == "" || journal_cite == null)
     {
@@ -1226,9 +988,7 @@ function validateJour()
 
 function validateConf()
 {
-    //alert("helllo");
     var conf_name = document.publicationconf.conf_name.value;
-    //var conf_title = document.publicationconf.conf_title.value;
     var pubdate = document.publicationconf.pubdate.value;
     var conf_hindex = document.publicationconf.conf_hindex.value;
     var conf_pubname= document.publicationconf.conf_pubname.value;
@@ -1239,9 +999,6 @@ function validateConf()
     var conf_orgname = document.publicationconf.conf_orgname.value;
     var conf_place = document.publicationconf.conf_place.value;
     var conf_cite = document.publicationconf.conf_cite.value;
-    //var conf_speaker = document.publicationconf.conf_speaker.value;
-    //var conf_date_from = document.publicationconf.conf_date_from.value;
-    //var conf_date_to = document.publicationconf.conf_date_to.value;
     var conf_fauth = document.publicationconf.conf_fauth.value;
     var name1 = document.publicationconf.name1.value;
     var name1_affiliation = document.publicationconf.name1_affiliation.value;
@@ -1277,14 +1034,6 @@ function validateConf()
     document.publicationconf.name1_affiliation.style= "";
     document.getElementById("name1_affiliation").innerHTML = "";
 
-
-
-    /*if(conf_name.trim() == "" && pubdate.trim() == "" && conf_hindex.trim() == "" && conf_pubname == "" && conf_proname == "" && conf_themename == ""
-        && conf_pg == "" && conf_issn == "" && conf_orgname == "" && conf_place == "" && conf_cite == "" && name1 == "" && name1_affiliation == "")
-    {
-        alert("* Please Enter all compulsory Fields for Conferences");
-        return false;
-    }*/
     if (conf_name.trim() == "" || conf_name == null)
     {
         pcflag=1;
@@ -1376,11 +1125,6 @@ function validateConf()
         document.publicationconf.name1_affiliation.style="border:2px solid red";
     }
 
-    /*if(conf_fauth == "" || conf_fauth == null)
-    {
-        document.getElementById("conf_fauthor").focus();
-    }*/
-
     if (conf_name.trim() == "" || conf_name == null)
         document.getElementById("conf_nameid").focus();
 
@@ -1431,7 +1175,6 @@ function validateConf()
 }
 
 // 5. STTP //
-//alert("hello");
 function validateAttended()
 {
     var attendedname = document.sttpattended.attendedname.value;
@@ -1446,14 +1189,7 @@ function validateAttended()
     document.getElementById("datefromattended").innerHTML = "";
     document.sttpattended.datetoattended.style = "";
     document.getElementById("datetoattended").innerHTML = "";
-    /*    document.sttpattended.eventtype_err.style = "";
-        document.getElementById("eventtype_err").innerHTML = "";*/
 
-    /*if(attendedname.trim() == "" && datefromattended == "" && datetoattended == "")
-    {
-        alert("* Please Enter all compulsory Fields for STTP Attended");
-        return false;
-    }*/
     if (attendedname.trim() === "")
     {
         sa=1;
@@ -1500,13 +1236,6 @@ function sttpo()
     document.sttporganised.datefromorganized.style = "";
     document.getElementById("datetoorganized").innerHTML = "";
     document.sttporganised.datetoorganized.style = "";
-
-    /*if( (oname.trim()=="") && (ofrom=="") && (oto=="") )
-    {
-        alert("* Please Enter all compulsory Fields for STTP Organised");
-        so = 1;
-        return false;
-    }*/
 
     if(oname.trim()=="")
     {
@@ -1562,11 +1291,6 @@ function validateDeli()
     document.sttpdelivered.datetodelivered.style = "";
     document.getElementById("datetodelivered").innerHTML = "";
 
-    /*if(deliveredname.trim() == "" && datefromdelivered == "" && datetodelivered == "")
-    {
-        alert("* Please Enter all compulsory Fields for STTP Delivered");
-        return false;
-    }*/
     if (deliveredname.trim() == "" || deliveredname == null)
     {
         sd=1;
@@ -1630,14 +1354,6 @@ function co()
     document.getElementById("codate").innerHTML = "";
     document.co6.cocurrdate.style = "";
 
-
-    /*if( (cocurrname.trim()=="") && (cocurrdesc.trim()=="") && (cocurrrole.trim()=="") && (cocurrdate=="") )
-    {
-        alert("* Please Enter all compulsory Fields for Co-Curricular Activities");
-        cocurrflag = 1;
-        return false;
-    }*/
-
     if(cocurrname.trim()=="")
     {
         document.getElementById("coname").innerHTML = "* Enter the name of Co-curricular Activity's Name";
@@ -1675,12 +1391,6 @@ function extra()
     document.getElementById("extdate").innerHTML = "";
     document.ext7.extradate.style = "";
 
-    /*if( (extraname.trim()=="") && (extradate=="") )
-    {
-        alert("* Please Enter all compulsory Fields for Extra Activities");
-        extraflag = 1;
-        return false;
-    }*/
 
     if(extraname.trim()=="")
     {
@@ -1718,13 +1428,6 @@ function awards()
     document.awards_form.award_date.style = "";
     document.getElementById("awdissuer").innerHTML = "";
     document.awards_form.award_issuer.style = "";
-
-    /*if( (award_name.trim()==="") && (award_date==="") )
-    {
-        alert("* Please Enter all compulsory Fields for Extra Activities");
-        awdflag = 1;
-        return false;
-    }*/
 
     if(award_name.trim()==="")
     {

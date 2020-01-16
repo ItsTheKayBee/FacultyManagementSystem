@@ -3,7 +3,6 @@
 <html>
 <head>
     <base href="https://demos.telerik.com/kendo-ui/pdf-export/page-layout">
-
     <title><?php echo $name; ?>_CV</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -72,12 +71,6 @@
         #mainArea {
             padding: 0 40px;
         }
-
-        #headshot {
-            width: 12.5%;
-            float: left;
-            margin-right: 30px;
-        }
         #name { float: left; }
 
         #contactDetails { float: right; }
@@ -121,12 +114,6 @@
         section:last-child {
             padding: 20px 0 10px;
         }
-
-        .sectionTitle {
-            float: left;
-            width: 25%;
-        }
-
         .sectionContent {
             float: right;
             width: 72.5%;
@@ -144,23 +131,6 @@
             font-size: 1.5em;
             margin-bottom: -2px;
         }
-
-        .subDetails {
-            font-size: 0.8em;
-            font-style: italic;
-            margin-bottom: 3px;
-        }
-
-        .keySkills {
-            list-style-type: none;
-            -moz-column-count:3;
-            -webkit-column-count:3;
-            column-count:3;
-            margin-bottom: 20px;
-            font-size: 1em;
-            color: #444;
-        }
-
         .keySkills ul li {
             margin-bottom: 3px;
         }
@@ -183,19 +153,16 @@
         a{
             position : fixed;
         }
-
     </style>
 </head>
 <body>
 <div class="container" style="margin-top: 15px;">
     <button id="back" class="btn btn-warning btn-lg" onclick="gotoProfile()" >Close</button>
-    <button  id ="pdfbtn" class="btn btn-lg btn-success" onclick="ExportPdf()" style="float: right">Export to PDF<!--  <i class="fa fa-file-pdf-o" style="font-size:35px;color:red"></i> --></button>
+    <button id ="pdfbtn" class="btn btn-lg btn-success" onclick="ExportPdf()" style="float: right;margin-left:20px;">Export to PDF</button>
+    <button id ="docbtn" class="btn btn-lg btn-success" onclick="exportDoc()" style="float: right">Export to DOC</button>
 </div>
-
-
 <!-- MAIN CV CONTENT -->
 <div id ="cv" >
-
     <div class="mainDetails">
         <div id ="name">
             <h1 id ="name"><?php echo $name; ?></h1>
@@ -213,18 +180,6 @@
     </div>
     <?php $nodata=1;?>
     <div id ="mainArea">
-        <!--<section>
-            <b>ACADEMIC DETAILS</b>
-            <div class="sectionContent">
-                <table class="table-hover table">
-                    <thead>
-                    <tr>
-                        <th>Qualifications</th>
-                        <th>Institute</th>
-                        <th>Year</th>
-                    </tr>
-                    </thead>
-                    <tbody>-->
         <?php
         if(!empty($sscInstitute) || !empty($hscInstitute) || !empty($bachelorsInstitute) || !empty($mastersInstitute) || !empty($phdInstitute)) {
             echo '<section>
@@ -261,27 +216,6 @@
             $nodata=0;
         }
         ?>
-        <!--</tbody>
-    </table>
-</div>
-<div class="clear"></div>
-</section>-->
-
-        <!-- <section class ="noborder">
-             <b>COURSES TAUGHT</b>
-         </section>
-         <section>
-             <div class="sectionContent">
-                 <table class="table table-hover">
-                     <thead>
-                     <tr>
-                         <th>Category</th>
-                         <th>Name</th>
-                         <th>Year</th>
-                         <th>Semester</th>
-                     </tr>
-                     </thead>
-                     <tbody>-->
         <?php
         if($nocourse>0){
             echo ' <section id ="noborder">
@@ -314,18 +248,6 @@
             $nodata=0;
         }
         ?>
-        <!-- </tbody>
-     </table>
-    </div>
-    <div class="clear"></div>
-    </section>-->
-
-        <!--<section class ="noborder">
-            <h1>PROJECTS GUIDED</h1>
-        </section>
-
-        <section>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM projects WHERE Emp12_Id=$empid";
         $result=$conn->query($sql);
@@ -354,20 +276,8 @@
             $nodata=0;
         }
         ?>
-        <!--</div>
-        <div class="clear"></div>
-        <br>
-    </section>-->
         <?php $pubecho=0;?>
-        <!-- <section class ="noborder">
-             <h1>PUBLICATIONS</h1>
-             <div class="clear"></div>
-         </section>-->
-        <!-- <section>
-             <h2>Books</h2>
-             <div class="sectionContent">-->
         <?php
-
         $sql="SELECT * FROM publication_books WHERE Emp1_Id=$empid";
         $result=$conn->query($sql);
         $nobooks = mysqli_num_rows($result);
@@ -412,14 +322,6 @@
             $nodata=0;
         }
         ?>
-        <!--</div>
-        <div class="clear"></div>
-        <br>
-    </section>-->
-
-        <!--<section>
-            <h2>Journals</h2>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM publication_journals WHERE Emp4_Id=$empid";
         $result=$conn->query($sql);
@@ -441,10 +343,7 @@
             {
                 $c = $row["count"];
                 echo ($k+1).". &nbsp &nbsp";
-                /*if($name == $row["Author"])*/
                 echo $name.", ";
-                /*else
-                    echo $name.", ".$row["Author"].", ";*/
                 if($c != 0)
                 {
                     for($j=1 ;$j<=$c; $j++)
@@ -471,14 +370,6 @@
             $nodata=0;
         }
         ?>
-        <!-- </div>
-         <div class="clear"></div>
-         <br>
-     </section>-->
-
-        <!--<section>
-            <h2>Conferences</h2>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM publication_conferences WHERE Emp5_Id=$empid";
         $result=$conn->query($sql);
@@ -523,17 +414,6 @@
         }
         ?>
         <?php $sttpecho=0;?>
-        <!--</div>
-        <div class="clear"></div>
-        <br>
-    </section>-->
-
-        <!-- <section class ="noborder">
-             <h1>Short Term Training Programs (STTP)</h1>
-         </section>-->
-        <!--<section>
-            <h2>Attended</h2>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM sttp_event_attended WHERE Emp6_Id=$empid";
         $result=$conn->query($sql);
@@ -567,13 +447,6 @@
             $nodata=0;
         }
         ?>
-        <!-- </div>
-         <div class="clear"></div>
-     </section>-->
-
-        <!--<section>
-            <h2>Organised</h2>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM sttp_event_organized WHERE Emp7_Id=$empid";
         $result=$conn->query($sql);
@@ -608,13 +481,6 @@
             $nodata=0;
         }
         ?>
-        <!--</div>
-        <div class="clear"></div>
-    </section>-->
-
-        <!--<section>
-            <h2>Delivered</h2>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM sttp_event_delivered WHERE Emp9_Id=$empid";
         $result=$conn->query($sql);
@@ -647,15 +513,6 @@
             $nodata=0;
         }
         ?>
-        <!-- </div>
-         <div class="clear"></div>
-     </section>-->
-
-        <!--<section class ="noborder">
-            <h1>Co-Curricular Activities</h1>
-        </section>
-        <section>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM co_curricular WHERE Emp10_Id=$empid";
         $result=$conn->query($sql);
@@ -686,15 +543,6 @@
             $nodata=0;
         }
         ?>
-        <!-- </div>
-         <div class="clear"></div>
-     </section>-->
-
-        <!--<section class ="noborder">
-            <h1>Extra Activities</h1>
-        </section>-->
-        <!--<section>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM extra WHERE Emp11_Id=$empid";
         $result=$conn->query($sql);
@@ -721,14 +569,6 @@
             $nodata=0;
         }
         ?>
-        <!--</div>
-        <div class="clear"></div>
-    </section>-->
-        <!--<section class ="noborder">
-            <h1>Awards and Achievements</h1>
-        </section>
-        <section>
-            <div class="sectionContent">-->
         <?php
         $sql="SELECT * FROM awards WHERE emp_id=$empid";
         $result=$conn->query($sql);
@@ -754,17 +594,10 @@
             $nodata=0;
         }
         ?>
-        <!-- </div>
-         <div class="clear"></div>
-     </section>-->
         <?php if($nodata==1){echo "<center>Please fill the details in the profile section to view data</center>";}?>
     </div>
 </div>
 <script>
-    // Import DejaVu Sans font for embedding
-
-    // NOTE: Only required if the Kendo UI stylesheets are loaded
-    // from a different origin, e.g. cdn.kendostatic.com
     kendo.pdf.defineFont({
         "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
         "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
@@ -774,7 +607,6 @@
     });
 </script>
 
-<!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../content/shared/js/pako.min.js"></script>
 <script>
     function ExportPdf() {
@@ -789,6 +621,21 @@
             .then(function(group){
                 kendo.drawing.pdf.saveAs(group, "CV.pdf")
             });
+    }
+    function exportDoc(){
+        var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+            "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+            "xmlns='http://www.w3.org/TR/REC-html40'><body>";
+        var footer = "</body></html>";
+        var sourceHTML = header+document.getElementById("cv").innerHTML+footer;
+
+        var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        var fileDownload = document.createElement("a");
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = 'CV.doc';
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
     }
     function gotoProfile()
     {

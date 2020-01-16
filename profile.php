@@ -4,9 +4,7 @@ include 'profile_php.php';
 function dateformatChanger($orgDate){
     return date("d-m-Y", strtotime($orgDate));
 }
-
- ?>
-
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,15 +21,12 @@ function dateformatChanger($orgDate){
 
             position: relative;
         }
-
         th, td {
             padding: 25px;
             text-align: : center;
         }
         ul.nav-pills {
             position:fixed;
-
-
         }
         .navbar {
             border : none;
@@ -41,7 +36,7 @@ function dateformatChanger($orgDate){
             width : 100%;
         }
 
-        .navbar li a, .navbar .navbar-brand
+        .navbar li a
         {
             color: #fff !important;
             position : relative;
@@ -51,7 +46,7 @@ function dateformatChanger($orgDate){
             font-size:25px;
         }
 
-        .sabserial,.sabserial2{
+        .sabserial{
             width : 150px;
         }
 
@@ -67,23 +62,15 @@ function dateformatChanger($orgDate){
         .btn btn-primary btn-md{
             float:right;
         }
-
-
         .modal-dialog{
             width : 375px;
         }
-        #edit{
-            float:right;
-        }
-
         h1{
             font-size:45px;
         }
-
         h2{
             font-size:30px;
         }
-
         ::-webkit-scrollbar{
             width : 7px;
             height : 7px;
@@ -103,18 +90,10 @@ function dateformatChanger($orgDate){
             float :  right;
             font-size : 20px;
         }
-
-
-        #newtd{
-            padding-left:13px;
-        }
-
-
         #chngpropic
         {
             outline:0;
         }
-
         #setbtn
         {
             background-color : #1F54AB;
@@ -130,8 +109,6 @@ function dateformatChanger($orgDate){
             margin-top : 1%;
             font-size : 18px;
         }
-
-
     </style>
     <script language="javascript" type="text/javascript">
         function dynamicdropdown(listindex)
@@ -181,7 +158,6 @@ function dateformatChanger($orgDate){
         $(document).Viewy(function () {
             $('img').on('click', function () {
                 var image = $(this).attr('src');
-                //alert(image);
                 $('#myModal2').on('show.bs.modal', function () {
                     $(".showimage").attr("src", image);
                 });
@@ -189,19 +165,13 @@ function dateformatChanger($orgDate){
         });
     </script>
 </head>
-
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
-
-
-
+<?php include 'Decision1.php'; ?>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
-            
-            <b>Employee ID : <?php echo $empid."<br>" ;include 'Decision1.php';
 
-//include 'dbconnect.php';
-//include 'main.php';
+            <b>Employee ID : <?php echo $empid."<br>" ;include 'Decision1.php';
 
 $sql1 = "SELECT * FROM edit WHERE Emp1_Id=$empid";
 $result1 = $conn->query($sql1);
@@ -209,7 +179,6 @@ $result1 = $conn->query($sql1);
 
 if($result1)
 {
-//$row1 = mysqli_fetch_assoc($result1);
 $rows = mysqli_num_rows($result1);
 
 if($rows)
@@ -223,11 +192,11 @@ $date = $row1["Date"];
 
 }
  echo $empid.'  has been assigned rights for editing of :'. $emp2_id. 'till' .$date;
-        
+
 }
 }
 ?>
-</div>     
+</div>
 <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
@@ -235,7 +204,6 @@ $date = $row1["Date"];
                 <span class="icon-bar"></span>
             </button>
         </div>
-
         <div class="collapse navbar-collapse" id ="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a style="color:white" href="CV.php?parameter=<?php echo $arg; ?>">Generate CV</a></li>
@@ -253,7 +221,6 @@ $date = $row1["Date"];
         </div>
     </div>
 </nav>
-
 <nav class="col-sm-3 col-lg-2 col-md-4 col-xs-3" id ="myScrollspy">
     <ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border:0.4px solid light-grey; padding:10px">
         <li><center>PROFILE</center></li>
@@ -269,7 +236,6 @@ $date = $row1["Date"];
                 <li id ="sectionD3"><a href="#section43">Conferences</a></li>
             </ul>
         </li>
-
         <li id ="sectionE" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Short Term Training Program">STTP<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -285,11 +251,9 @@ $date = $row1["Date"];
         <li id ="sectionW"><a href="main.php#section21">Faculty List</a></li>
         <li id ="sectionX"><a href="main.php#section24">Assign Profile Rights</a></li>
         <?php if($_SESSION['admin']==1) echo '<li id ="sectionY"><a href="main.php#section22">Admin Control</a></li>';?>
+        <li class="section23" id ="sectionZ"><a href="main.php#section23">Report Generation</a></li>
     </ul>
 </nav>
-
-
-
 <!-- Modal -->
 <div class="modal fade" id ="myModal" role="dialog">
     <div class="modal-dialog">
@@ -314,7 +278,6 @@ $date = $row1["Date"];
         </div>
     </div>
 </div>
-
 <!-- TABlE PICTURES MODAL -->
 <div id ="myModal2" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -328,12 +291,8 @@ $date = $row1["Date"];
         </div>
     </div>
 </div>
-
-
 <div class="container-fluid">
     <div class="col-sm-9 col-lg-10 col-md-8 col-xs-9">
-
-
         <div  id ="section1">
             <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
@@ -404,19 +363,15 @@ $date = $row1["Date"];
                             <tr><td></td><td></td></tr>
                             </tbody>
                         </table>
-
                         <h2>Promotions</h2>
                         <table class="table">
                             <tbody>
                             <tr>
                                 <td>Promotion : </td><td><?php if(!($pro1 == '')) echo "<b>$pro1</b>"; else echo "<b>-<b>";?></td>
                             </tr>
-
                             <tr>
                                 <td>With Effective From: </td><td><?php if(!($pro1_date == '1950-01-01')) echo "<b>".dateformatChanger($pro1_date)."</b>"; else echo "<b>-<b>";?></td>
                             </tr>
-
-                           
                             </tbody>
                         </table>
                     </div>
@@ -513,13 +468,9 @@ $date = $row1["Date"];
             }
             else
                 echo "<h4>Details Not Filled</h4>";
-
             ?>
-
         </div>
-
         <div id ="section3">
-
             <legend><h1>Courses Taught<a href="homepage.php#section3"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
             if($temp>0)
@@ -548,7 +499,7 @@ $date = $row1["Date"];
                 echo "</tr>";
                 for($i=0;$i<$temp;$i++){
                     $myData = array('val'=>1, 'id'=>$i);
-                    $GLOBALS['course_id']=$courseid[$i];
+                    $GLOBALS['course_id']=$course_taught_id[$i];
                     $arg = base64_encode( json_encode($myData) );
                     echo "<tr><td>".($i+1)."</td><td><a href='editpage.php?parameter=".$arg."'><span class='glyphicon glyphicon-edit'>&nbsp</span></a><td><a href='deleteform.php?parameter=".$arg."'><span class='glyphicon glyphicon-trash'></span></a></td></td>";
                     if($coursecategory[$i] != "") echo "<td>".$coursecategory[$i]."</td>"; else echo "-";
@@ -563,7 +514,7 @@ $date = $row1["Date"];
                             $label = $row['label'];
                             $display = $row['display'];
                             if ($display == 1) {
-                                $table_sql = "select $field_name from courses where emp8_id=$empid and course_id='".$GLOBALS['course_id']."'";
+                                $table_sql = "select $field_name from courses where emp8_id=$empid and course_taught_id='".$GLOBALS['course_id']."'";
                                 $tab_res = $conn->query($table_sql);
                                 if ($tab_res->num_rows > 0) {
                                     $tab_row = $tab_res->fetch_assoc();
@@ -744,7 +695,6 @@ $date = $row1["Date"];
                     }
                 }
                 echo "</tr>";
-
                 while($row=mysqli_fetch_assoc($result))
                 {
                     if($row["Cover"] == null)
@@ -805,7 +755,6 @@ $date = $row1["Date"];
                         echo '</div>';
                     }
                     echo '</td>';
-                    //.$row["COA1"].'</td><td>'.$row["COA1_INST"].'</td><td>'.$row["COA2"].'</td><td>'.$row["COA2_INST"].'</td><td>'.$row["COA3"].'</td><td>'.$row["COA3_INST"].'</td>';
                     if($row["Edition"] != "") echo '<td>'.$row["Edition"].'</td>';else echo "<td>-</td>";
                     echo '<td><center>'.$coverbook.'</center></td>';
                     $new_field_query = "select * from new_fields where table_name='publication_books'";
@@ -1264,9 +1213,7 @@ $date = $row1["Date"];
             }
             ?>
         </div>
-
         <div id ="section51">
-
             <legend><h1>STTP</h1></legend>
             <legend><h2>STTP attended  <a href="homepage.php#section51"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
@@ -1322,7 +1269,7 @@ $date = $row1["Date"];
                     if($row["Organized_By"] != "") echo '<td>'.$row["Organized_By"].'</td>';else echo "<td>-</td>";
                     if($row["Event_Type"] != "") echo '<td>'.$row["Event_Type"].'</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
-                    if($row["Duration"] != "") echo '<td>'.$row["Duration"].'</td>';else echo "<td>-</td>";
+                    if($row["Duration"] != "") echo '<td>'.$row["Duration"].' hrs</td>';else echo "<td>-</td>";
                     if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
                     if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td>';else echo "<td>-</td>";
                     if($row["Total_Participation"] != 0) echo '<td>'.$row["Total_Participation"].'</td>';else echo "<td>-</td>";
@@ -1439,7 +1386,6 @@ $date = $row1["Date"];
             }
             ?>
         </div>
-
         <div id ="section53">
             <legend><h2>STTP delivered  <a href="homepage.php#section53"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
@@ -1482,7 +1428,7 @@ $date = $row1["Date"];
                     if($row["Name"] != "") echo '<td>'.$row["Name"].'</td>';else echo "<td>-</td>";
                     if($row["Description"] != "") echo '<td>'.$row["Description"].'</td>';else echo "<td>-</td>";
                     if($row["Event_Type"] != "") echo '<td>'.$row["Event_Type"].'</td>';else echo "<td>-</td>";
-                    if($row["Duration"] != "") echo '<td>'.$row["Duration"].'</td>';else echo "<td>-</td>";
+                    if($row["Duration"] != "") echo '<td>'.$row["Duration"].' hrs</td>';else echo "<td>-</td>";
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
                     if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td >';else echo "<td>-</td>";
@@ -1679,7 +1625,6 @@ $date = $row1["Date"];
             }
             ?>
         </div>
-
         <div id ="awards">
             <legend><h1>Awards and Achievements  <a href="homepage.php#awards"><span id ="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
@@ -1764,8 +1709,6 @@ $date = $row1["Date"];
         </div><br><br>
     </div>
     <br><br>
-</div>
-
 </div>
 </body>
 </html>

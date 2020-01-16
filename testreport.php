@@ -23,8 +23,6 @@ $tovalue=array();
 $datecol=array();
 $abc = array();
 $abc1 = array();
-
-
 if(isset($_POST["back"]))
 {
     setcookie("comb", "", time() - 3600);
@@ -120,14 +118,6 @@ for($i=0;$i<sizeof($tablename);$i++)
             $col1[8]=1;
         else if($columnname[$i] == 'Prom_1_Date')
             $col1[9]=1;
-        else if($columnname[$i] == 'Prom_2')
-            $col1[10]=1;
-        else if($columnname[$i] == 'Prom_2_Date')
-            $col1[11]=1;
-        else if($columnname[$i] == 'Prom_3')
-            $col1[12]=1;
-        else if($columnname[$i] == 'Prom_3_Date')
-            $col1[13]=1;
         else if($columnname[$i] == 'Years_Exp')
             $col1[14]=1;
 
@@ -561,9 +551,6 @@ for($i=0;$i<sizeof($tablename);$i++)
             }
         }
     }
-
-
-
     if($tablename[$i] == 'extra')
     {
         $col11 = array(0,0,0,0,0);
@@ -640,41 +627,29 @@ for($i=0;$i<sizeof($tablename);$i++)
         }
     }
 }
-
-// for($i=0;$i<sizeof($displayids);$i++)
-// echo $displayids[$i];
-// echo "<br>";
-
 if(sizeof($datecol) > 0){
     for($i=0;$i<sizeof($datecol);$i++)
     {
         if($datecol[$i] == 0)
         {
-            //echo "erher";
             $temp = array();
             for($j = 0 ; $j < sizeof($displayids); $j++){
                 $error = array();
                 $noset = 0;
-                //echo $displayids[$j]." ";
                 $query = "SELECT DOB FROM personal_details WHERE Emp3_Id=".$displayids[$j];
                 $queryresult = $conn->query($query);
                 while($row1 = mysqli_fetch_assoc($queryresult)){
                     $dv = date_create($row1["DOB"]);
-                    //echo $dv." ";
                     $ab=date_create($fromvalue[$i]);
-                    //echo $ab." ";
                     $ba=date_create($tovalue[$i]);
-                    //echo $ba." <br>";
                     $diff=date_diff($ab,$dv);
                     $diff1=date_diff($dv,$ba);
-
                     if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
                         array_push($error,-1);
                     else
                         array_push($error,1);
                 }
                 for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
                     if($error[$k] == 1){
                         $noset = 1;
                         break;
@@ -689,37 +664,29 @@ if(sizeof($datecol) > 0){
 
         else if($datecol[$i] == 1)
         {
-            //echo "jere1";
             $temp = array();
             for($j = 0 ; $j < sizeof($displayids); $j++){
                 $error = array();
                 $noset = 0;
-                //echo $displayids[$j]." ";
                 $query = "SELECT Join_Date FROM personal_details WHERE Emp3_Id=".$displayids[$j];
                 $queryresult = $conn->query($query);
                 while($row1 = mysqli_fetch_assoc($queryresult)){
                     $dv = date_create($row1["Join_Date"]);
-                    //echo $dv." ";
                     $ab=date_create($fromvalue[$i]);
-                    //echo $ab." ";
                     $ba=date_create($tovalue[$i]);
-                    //echo $ba." <br>";
                     $diff=date_diff($ab,$dv);
                     $diff1=date_diff($dv,$ba);
-
                     if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
                         array_push($error,-1);
                     else
                         array_push($error,1);
                 }
                 for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
                     if($error[$k] == 1){
                         $noset = 1;
                         break;
                     }
                 }
-                //echo "<br>";
                 if($noset == 1){
                     array_push($temp,$displayids[$j]);
                 }
@@ -728,13 +695,12 @@ if(sizeof($datecol) > 0){
         }
         else if($datecol[$i] == 2)
         {
-            //echo "jere";
             $temp = array();
             for($j = 0 ; $j < sizeof($displayids); $j++){
                 $error = array();
                 $noset = 0;
                 //echo $displayids[$j]." ";
-                $query = "SELECT Prom_1_Date FROM personal_details WHERE Emp3_Id=".$displayids[$j]."";
+                $query = "SELECT Prom_1_Date FROM personal_details WHERE Emp3_Id=".$displayids[$j];
                 $queryresult = $conn->query($query);
                 while($row1 = mysqli_fetch_assoc($queryresult)){
                     $dv = date_create($row1["Prom_1_Date"]);
@@ -758,95 +724,12 @@ if(sizeof($datecol) > 0){
                         break;
                     }
                 }
-                //echo "<br>";
                 if($noset == 1){
                     array_push($temp,$displayids[$j]);
                 }
             }
             $displayids = array_unique($temp);
         }
-
-        else if($datecol[$i] == 3)
-        {
-            //echo "jere";
-            $temp = array();
-            for($j = 0 ; $j < sizeof($displayids); $j++){
-                $error = array();
-                $noset = 0;
-                //echo $displayids[$j]." ";
-                $query = "SELECT Prom_2_Date FROM personal_details WHERE Emp3_Id=".$displayids[$j]."";
-                $queryresult = $conn->query($query);
-                while($row1 = mysqli_fetch_assoc($queryresult)){
-                    $dv = date_create($row1["Prom_2_Date"]);
-                    //echo $dv." ";
-                    $ab=date_create($fromvalue[$i]);
-                    //echo $ab." ";
-                    $ba=date_create($tovalue[$i]);
-                    //echo $ba." <br>";
-                    $diff=date_diff($ab,$dv);
-                    $diff1=date_diff($dv,$ba);
-
-                    if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
-                        array_push($error,-1);
-                    else
-                        array_push($error,1);
-                }
-                for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
-                    if($error[$k] == 1){
-                        $noset = 1;
-                        break;
-                    }
-                }
-                //echo "<br>";
-                if($noset == 1){
-                    array_push($temp,$displayids[$j]);
-                }
-            }
-            $displayids = array_unique($temp);
-        }
-
-
-        else if($datecol[$i] == 4)
-        {
-            //echo "jere";
-            $temp = array();
-            for($j = 0 ; $j < sizeof($displayids); $j++){
-                $error = array();
-                $noset = 0;
-                //echo $displayids[$j]." ";
-                $query = "SELECT Prom_3_Date FROM personal_details WHERE Emp3_Id=".$displayids[$j]."";
-                $queryresult = $conn->query($query);
-                while($row1 = mysqli_fetch_assoc($queryresult)){
-                    $dv = date_create($row1["Prom_3_Date"]);
-                    //echo $dv." ";
-                    $ab=date_create($fromvalue[$i]);
-                    //echo $ab." ";
-                    $ba=date_create($tovalue[$i]);
-                    //echo $ba." <br>";
-                    $diff=date_diff($ab,$dv);
-                    $diff1=date_diff($dv,$ba);
-
-                    if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
-                        array_push($error,-1);
-                    else
-                        array_push($error,1);
-                }
-                for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
-                    if($error[$k] == 1){
-                        $noset = 1;
-                        break;
-                    }
-                }
-                //echo "<br>";
-                if($noset == 1){
-                    array_push($temp,$displayids[$j]);
-                }
-            }
-            $displayids = array_unique($temp);
-        }
-
         if($datecol[$i] == 5)
         {
             $temp = array();
@@ -1026,11 +909,6 @@ if(sizeof($datecol) > 0){
         }
 
     }
-
-    // for($i=0;$i<sizeof($displayids);$i++)
-    // echo $displayids[$i];
-    // echo "<br>";
-
     for($i=0;$i<sizeof($datecol);$i++)
     {
         if($datecol[$i] == 10)
@@ -1226,8 +1104,6 @@ if(sizeof($datecol) > 0){
             }
             $displayids = array_unique($temp);
         }
-
-
         if($datecol[$i] == 15)
         {
             $temp = array();
@@ -1268,9 +1144,6 @@ if(sizeof($datecol) > 0){
             }
             $displayids = array_unique($temp);
         }
-
-
-
         if($datecol[$i] == 16)
         {
             $temp = array();
@@ -1311,8 +1184,6 @@ if(sizeof($datecol) > 0){
             }
             $displayids = array_unique($temp);
         }
-
-
         if($datecol[$i] == 17)
         {
             $temp = array();
@@ -1344,30 +1215,24 @@ if(sizeof($datecol) > 0){
                         break;
                     }
                 }
-                //echo "<br>";
                 if($noset == 1){
                     array_push($temp,$displayids[$j]);
                 }
             }
             $displayids = array_unique($temp);
         }
-
         if($datecol[$i] == 18)
         {
             $temp = array();
             for($j = 0 ; $j < sizeof($displayids); $j++){
                 $error = array();
                 $noset = 0;
-                //echo $displayids[$j]." ";
                 $query = "SELECT Date FROM extra WHERE Emp11_Id=".$displayids[$j]."";
                 $queryresult = $conn->query($query);
                 while($row1 = mysqli_fetch_assoc($queryresult)){
                     $dv = date_create($row1["Date"]);
-                    //echo $dv." ";
                     $ab=date_create($fromvalue[$i]);
-                    //echo $ab." ";
                     $ba=date_create($tovalue[$i]);
-                    //echo $ba." <br>";
                     $diff=date_diff($ab,$dv);
                     $diff1=date_diff($dv,$ba);
 
@@ -1377,51 +1242,40 @@ if(sizeof($datecol) > 0){
                         array_push($error,1);
                 }
                 for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
                     if($error[$k] == 1){
                         $noset = 1;
                         break;
                     }
                 }
-                //echo "<br>";
                 if($noset == 1){
                     array_push($temp,$displayids[$j]);
                 }
             }
             $displayids = array_unique($temp);
         }
-
-
-
         if($datecol[$i] == 19)
         {
             $temp = array();
             for($j = 0 ; $j < sizeof($displayids); $j++){
                 $error = array();
                 $noset = 0;
-                //echo $displayids[$j]." ";
                 $query = "SELECT Year FROM projects WHERE Emp12_Id=".$displayids[$j]."";
                 $queryresult = $conn->query($query);
                 while($row1 = mysqli_fetch_assoc($queryresult)){
                     $dv = $row1["Year"];
-                    //echo $dv." ";
                     $ab=(date_create($fromvalue[$i]))->format("Y");
-                    //echo $ab." ";
                     $ba=(date_create($tovalue[$i]))->format("Y");
-                    //echo $ba." <br>";
                     if(($ab>$dv)||($ba<$dv))
                         array_push($error,-1);
                     else
                         array_push($error,1);
                 }
                 for($k=0;$k<sizeof($error);$k++){
-                    //echo $error[$k]." ";
                     if($error[$k] == 1){
                         $noset = 1;
                         break;
                     }
                 }
-                //echo "<br>";
                 if($noset == 1){
                     array_push($temp,$displayids[$j]);
                 }
@@ -1432,14 +1286,7 @@ if(sizeof($datecol) > 0){
     }
 }
 
-//echo "down";
-//for($i=0;$i<sizeof($temp);$i++)
-//echo $temp[$i];
-//echo "<br>";\
 $displayids = array_unique($displayids);
-// for($i=0;$i<sizeof($displayids);$i++)
-// echo $displayids[$i];
-// echo "<br>";
 
 for($i=0;$i<sizeof($table);$i++)
 {
@@ -1635,10 +1482,6 @@ for($i=0;$i<sizeof($table);$i++)
             if($col1[7] == 1) echo '<th>Joining Date</th>';
             if($col1[8] == 1) echo '<th>Promotion 1</th>';
             if($col1[9] == 1) echo '<th>Promotion 1 Date</th>';
-            if($col1[10] == 1) echo '<th>Promotion 2</th>';
-            if($col1[11] == 1) echo '<th>Promotion 2 Date</th>';
-            if($col1[12] == 1) echo '<th>Promotion 3</th>';
-            if($col1[13] == 1) echo '<th>Promotion 3 Date</th>';
             if($col1[14] == 1) echo '<th>Years Of Experience</th>';
         }
 
@@ -1740,36 +1583,6 @@ for($i=0;$i<sizeof($table);$i++)
                     $r = $conn->query($s);
                     $ro = mysqli_fetch_assoc($r);
                     $dv = $ro["Prom_1_Date"];
-                    $ab=date_create($fromvalue[$i]);
-                    $ba=date_create($tovalue[$i]);
-                    $dv=date_create($dv);
-                    $diff=date_diff($ab,$dv);
-                    $diff1=date_diff($dv,$ba);
-                    if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
-                        $showdata = -1;
-                }
-
-                if($datecol[$i] == 3)
-                {
-                    $s = "SELECT Prom_2_Date FROM personal_details WHERE Emp3_Id=$emp";
-                    $r = $conn->query($s);
-                    $ro = mysqli_fetch_assoc($r);
-                    $dv = $ro["Prom_2_Date"];
-                    $ab=date_create($fromvalue[$i]);
-                    $ba=date_create($tovalue[$i]);
-                    $dv=date_create($dv);
-                    $diff=date_diff($ab,$dv);
-                    $diff1=date_diff($dv,$ba);
-                    if(($diff->format("%R")=='-')||($diff1->format("%R")=='-'))
-                        $showdata = -1;
-                }
-
-                if($datecol[$i] == 4)
-                {
-                    $s = "SELECT Prom_3_Date FROM personal_details WHERE Emp3_Id=$emp";
-                    $r = $conn->query($s);
-                    $ro = mysqli_fetch_assoc($r);
-                    $dv = $ro["Prom_3_Date"];
                     $ab=date_create($fromvalue[$i]);
                     $ba=date_create($tovalue[$i]);
                     $dv=date_create($dv);
@@ -1912,41 +1725,6 @@ for($i=0;$i<sizeof($table);$i++)
                             else
                                 echo "<td>".$row1["Prom_1"]."</td>";
                         }
-                        if($col1[9] == 1)
-                        {
-                            if($row1["Prom_1_Date"] == '1950-01-01')
-                                echo "<td> - </td>";
-                            else
-                                echo "<td>".$row1["Prom_1_Date"]."</td>";
-                        }
-                        if($col1[10] == 1)
-                        {
-                            if($row1["Prom_2"] == '')
-                                echo "<td> - </td>";
-                            else
-                                echo "<td>".$row1["Prom_2"]."</td>";
-                        }
-                        if($col1[11] == 1)
-                        {
-                            if($row1["Prom_2_Date"] == '1950-01-01')
-                                echo "<td> - </td>";
-                            else
-                                echo "<td>".$row1["Prom_2_Date"]."</td>";
-                        }
-                        if($col1[12] == 1)
-                        {
-                            if($row1["Prom_3"] == '')
-                                echo "<td> - </td>";
-                            else
-                                echo "<td>".$row1["Prom_3"]."</td>";
-                        }
-                        if($col1[13] == 1)
-                        {
-                            if($row1["Prom_3_Date"] == '1950-01-01')
-                                echo "<td> - </td>";
-                            else
-                                echo "<td>".$row1["Prom_3_Date"]."</td>";
-                        }
                         if($col1[14] == 1)
                         {
                             if($row1["Years_Exp"] < 0)
@@ -1955,7 +1733,6 @@ for($i=0;$i<sizeof($table);$i++)
                                 echo "<td>".$row1["Years_Exp"]."</td>";
                         }
                     }
-
                     if($table[1] == 1){
 
                         $sql2 = "SELECT * FROM academic_details WHERE Emp2_Id=$emp";
@@ -3545,7 +3322,6 @@ for($i=0;$i<sizeof($table);$i++)
                         }
                         echo "</td>";
                     }
-
                     $srno++;
                     echo "</tr>";
                 }

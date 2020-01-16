@@ -1,15 +1,11 @@
 <?php
 include 'dbconnect.php';
-
 if(!isset($_SESSION["Emp_Id"]))
 	header('Location:logout.php');
 $continue = 0;
 $eid=$_SESSION["Emp_Id"];
-
 $myData1 = json_decode( base64_decode( $_GET['parameter'] ) );
 $empid = $myData1->val;
-
-
 $sql = "SELECT * FROM edit";
 $result = $conn->query($sql);
 while($row = mysqli_fetch_assoc($result))
@@ -19,19 +15,13 @@ while($row = mysqli_fetch_assoc($result))
 		break;
 	}
 }
-//if($continue == 0)
-
-//header('Location:main.php#section21');
-
 $_SESSION["EditId"] = $empid;
-
 $sql = "SELECT * FROM login WHERE Emp_Id=$empid";
 $result = $conn->query($sql);
 $row = mysqli_fetch_assoc($result);
 
 $myData = array('id'=>$empid);
 $arg = base64_encode( json_encode($myData) );
-
 //IMAGE//
 if(isset($_POST["submitprofile"]))
 {
@@ -45,7 +35,6 @@ if(isset($_POST["submitprofile"]))
 	}
 	header('Location:EditProfile.php?parameter='.$argx.'');
 }
-
 //profile section
 $sql = "SELECT * FROM personal_details WHERE Emp3_Id=$empid";
 $result = $conn->query($sql);
@@ -58,11 +47,7 @@ $address=$row["Address"];
 $join_pos=$row["Join_Pos"];
 $join_date=$row["Join_Date"];
 $pro1=$row["Prom_1"];
-$pro2=$row["Prom_2"];
-$pro3=$row["Prom_3"];
 $pro1_date=$row["Prom_1_Date"];
-$pro2_date=$row["Prom_2_Date"];
-$pro3_date=$row["Prom_3_Date"];
 $dob=$row["DOB"];
 $profilepic=$row["Profile_Pic"];
 
@@ -76,7 +61,7 @@ $sscMarksheet=$row1["SSC_Marksheet"];
 if(!$sscMarksheet == null){
 	$myData1 = array('pub'=>'','academic'=>'ssc','sttp'=>'','cid'=>'');
 	$arg1 = base64_encode( json_encode($myData1) );
-	$ssc='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+	$ssc='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 }
 else
 	$ssc = "PDF not Inserterd";
@@ -90,7 +75,7 @@ if($hscMarksheet == null)
 else{
 	$myData1 = array('pub'=>'','academic'=>'hsc','sttp'=>'','cid'=>'');
 	$arg1 = base64_encode( json_encode($myData1) );
-	$hsc='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+	$hsc='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 }
 $bachelorsIn=$row1["Bachelors_In"];
 $bachelorsInstitute=$row1["Bachelors_Institute"];
@@ -102,7 +87,7 @@ if($bachelorsMarksheet == null)
 else{
 	$myData1 = array('pub'=>'','academic'=>'btech','sttp'=>'','cid'=>'');
 	$arg1 = base64_encode( json_encode($myData1) );
-	$bach='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+	$bach='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 }
 $mastersIn=$row1["Masters_In"];
 $mastersInstitute=$row1["Masters_Institute"];
@@ -114,7 +99,7 @@ if($mastersMarksheet == null)
 else{
 	$myData1 = array('pub'=>'','academic'=>'mtech','sttp'=>'','cid'=>'');
 	$arg1 = base64_encode( json_encode($myData1) );
-	$mast='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+	$mast='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 }
 $phdIn=$row1["Phd_In"];
 $phdInstitute=$row1["Phd_Institute"];
@@ -126,22 +111,22 @@ if($phdMarksheet == null)
 else{
 	$myData1 = array('pub'=>'','academic'=>'phd','sttp'=>'','cid'=>'');
 	$arg1 = base64_encode( json_encode($myData1) );
-	$phdi='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+	$phdi='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 }
+$course_taught_id=array();
 $courseid=array();
 $coursecategory=array();
 $coursesem=array();
 $courseyear=array();
 $temp=0;
-
 $sql="SELECT * from courses where Emp8_Id=$empid";
 $result=$conn->query($sql);
 while($row = mysqli_fetch_assoc($result))
 {
+	$course_taught_id[$temp]=$row['course_taught_id'];
 	$courseid[$temp]=$row["Course_Id"];
 	$coursecategory[$temp]=$row["Category"];
 	$coursesem[$temp]=$row["Semester"];
 	$courseyear[$temp]=$row["Year"];
 	$temp++;
 }
-?>

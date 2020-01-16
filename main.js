@@ -14,11 +14,6 @@ function addDate()
 	var x = document.getElementById("from").value;
 	var y = document.getElementById("to").value;
 	var z = document.getElementById("datecategory").value;
-
-	//alert(x);
-	//alert(y);
-	//alert(z);
-
 	if(x == "" && y == ""){
 		alert("No Value Chosen");
 		document.report.from.style = "border:2px solid red";
@@ -82,7 +77,19 @@ function addDate()
 	var both2 = "";
 	document.getElementById("datecat").innerHTML = "<div class='cat'><b>From : "+from1+" - To : "+to1+", "+field+"</b></div>";
 	if(comb != "")
-	document.cookie ="comb ="+ comb;
-
-
+		document.cookie ="comb ="+ comb;
+}
+function deleteFaculty(faculty) {
+	var x=confirm("Do you want to remove this faculty?");
+	if(x){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				location.reload();
+				alert(this.responseText);
+			}
+		};
+		xmlhttp.open("GET", "deleteFaculty.php?q="+faculty, true);
+		xmlhttp.send();
+	}
 }

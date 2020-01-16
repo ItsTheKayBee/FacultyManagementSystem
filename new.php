@@ -65,6 +65,3 @@ if(isset($_POST["addmem_submit"]))
         $erradd = "* Member With This Id Already Exists";
     }
 }
-
-
-    ?>

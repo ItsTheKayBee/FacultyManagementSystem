@@ -28,20 +28,13 @@ $address=$row["Address"];
 $join_pos=$row["Join_Pos"];
 $join_date=$row["Join_Date"];
 $pro1=$row["Prom_1"];
-
-// $pro2=$row["Prom_2"];
-// $pro3=$row["Prom_3"];
 $pro1_date=$row["Prom_1_Date"];
-// $pro2_date=$row["Prom_2_Date"];
-// $pro3_date=$row["Prom_3_Date"];
 $dob=$row["DOB"];
 $profilepic=$row["Profile_Pic"];
 
 if(isset($_POST["submitpersonal"]))
 {
-
     $flag=0;
-
 	$name=trim($_POST["name"]);
 	$email=$_POST["email"];
 	$contact=$_POST["contact"];
@@ -53,8 +46,6 @@ if(isset($_POST["submitpersonal"]))
 	$address=trim($address);
 	$join_pos=trim($_POST["joining_position"]);
 	$pro1=trim($_POST["pro1"]);
-	// $pro2=trim($_POST["pro2"]);
-	// $pro3=trim($_POST["pro3"]);
 	$dob=$_POST["date"];
 	$dob=dateformatReverser($dob);
 	$dobyear = (int)substr($dob,0,4);
@@ -94,63 +85,6 @@ if(isset($_POST["submitpersonal"]))
             }
         }
     }
-
-	// if(!empty(($_POST["pro2_date"])))
-	// {
-	// 	$pro2_date=$_POST["pro2_date"];
-
-	// 	if(empty($_POST["joining_date"])){
-	// 		$err[27]="* Please Enter Joining Date First";
-	// 		$flag=1;
-	// 	}
-	// 	else if(empty($_POST["pro1_date"]))
-	// 	{
-	// 		$err[29]="* Please Enter Promotion 1 Date ";
-	// 		$flag=1;
-	// 	}
-	// 	else {
-	// 		$ab=date_create($pro1_date);
-	// 		$ba=date_create($pro2_date);
-
-	// 		$diff=date_diff($ab,$ba);
-	// 		if($diff->format("%R")=='-'){
-	// 			$err[30]="* Please Enter A Valid Promotion 2 Date";
-	// 			$flag=1;
-	// 		}
-	// 	}
-
-	// }
-	// if(!empty($_POST["pro3_date"]))
-	// {
-	// 	$pro3_date=$_POST["pro3_date"];
-
-	// 	if(empty($_POST["joining_date"])){
-	// 		$err[27]="* Please Enter Joining Date First ";
-	// 		$flag=1;
-	// 	}
-	// 	else if(empty($_POST["pro1_date"]))
-	// 	{
-	// 		$err[29]="* Please Enter Promotion 1 Date";
-	// 		$flag=1;
-	// 	}
-	// 	else if(empty($_POST["pro2_date"]))
-	// 	{
-	// 		$err[30]="* Please Enter Promotion 2 Date";
-	// 		$flag=1;
-	// 	}
-	// 	else
-	// 	{
-	// 		$ab=date_create($pro2_date);
-	// 		$ba=date_create($pro3_date);
-
-	// 		$diff=date_diff($ab,$ba);
-	// 		if($diff->format("%R")=='-'){
-
-	// 			$err[31]="* Please Enter A Valid Promotion 3 Date";
-	// 			$flag=1;
-	// 		}
-	// 	}
-	// }
 	$temp = (int)substr($join_date,0,4);
 	$temp1 = (int)date("Y");
 	$years_exp = $temp1-$temp;
@@ -162,17 +96,6 @@ if(isset($_POST["submitpersonal"]))
 	{
 		$pro2_date="1950-01-01";
 	}
-
-	// if(empty($pro2_date))
-	// {
-	// 	$pro2_date="1950-01-01";
-	// }
-
-	// if(empty($pro3_date))
-	// {
-	// 	$pro3_date="1950-01-01";
-	// }
-
     $ql="SELECT * from personal_details";
     $query=mysqli_query($conn,$ql);
     while($row=mysqli_fetch_assoc($query))
@@ -255,18 +178,8 @@ $curyear=date("Y");
 $dob= dateformatReverser($dob);
 $dobyear = (int)substr($dob,0,4);
 $yearArray = range($dobyear+12, $curyear);
-//echo $gender;
 if(isset($_POST["submitacademic1"]))
 {
-    //	$gender=trim($gender);
-
-    //if($gender == "null")
-    //{
-
-    //echo "<script type='text/javascript'>alert('$name');</script>";
-
-
-    //}
     $sscInstitute=$_POST["sscinstitute"];
     $sscPercentile=$_POST["sscmarks"];
     if($sscPercentile==null)
@@ -297,14 +210,6 @@ if(isset($_POST["submitacademic1"]))
 }
 if(isset($_POST["submitacademic2"]))
 {
-    /*	if($name=="" || $name == null)
-        {
-        echo '<script language="javascript">';
-        echo 'alert("Please fill Personal details first")';
-        echo '</script>';
-
-    }*/
-
     $hscInstitute=$_POST["hscinstitute"];
     $hscPercentile=$_POST["hscmarks"];
     if($hscPercentile==null)
@@ -341,7 +246,6 @@ if(isset($_POST["submitacademic3"]))
     $btechPercentile=$_POST["btechmarks"];
     if($btechPercentile==null)
         $btechPercentile=0.0;
-
 
     $btechYear=$_POST["btechyear"];
     if(!empty($_FILES["btechimage"]["tmp_name"])){
@@ -657,7 +561,6 @@ if(isset($_POST["submitjournals"]))
         $journalCoa2=$_POST["name2"];}
     else
         $journalCoa2=" ";
-    //echo "<script type='text/javascript'>alert('$journalCoa2');</script>";
     if(!empty($_POST["name3"])){
         $count++;
         $journalCoa3=$_POST["name3"];}
@@ -703,7 +606,6 @@ if(isset($_POST["submitjournals"]))
         $journalCoa2_Aff=$_POST["name2_affiliation"];
     else
         $journalCoa2_Aff=" ";
-    //echo "<script type='text/javascript'>alert('$journalCoa2_Aff');</script>";
     if(!empty($_POST["name3_affiliation"]))
         $journalCoa3_Aff=$_POST["name3_affiliation"];
     else
@@ -746,13 +648,10 @@ if(isset($_POST["submitjournals"]))
     $journalCitationIndex=$_POST["journal_cite"];
     $journalPaid=$_POST["journal_paid"];
     $journalSJR=$_POST["journal_sjr"];
-    //$a = $_POST["journal_fauth"];
-    //echo "<script type='text/javascript'>alert('$a');</script>";
     if($_POST["journal_fauth"] == "YES")
         $journalAuthName = $name;
     else if($_POST["journal_fauth"] == "NO")
         $journalAuthName = $_POST["journal_fauth_val"];
-    //echo "<script type='text/javascript'>alert('$journalAuthName');</script>";
     if(!empty($_FILES["paper_image"]["tmp_name"]))
     {
         $paperImage = addslashes(file_get_contents($_FILES["paper_image"]["tmp_name"]));
@@ -855,7 +754,6 @@ if(isset($_POST["submitconference"]))
         $confCoa2=$_POST["name2"];}
     else
         $confCoa2=" ";
-    //echo "<script type='text/javascript'>alert('$confCoa2');</script>";
     if(!empty($_POST["name3"])){
         $count++;
         $confCoa3=$_POST["name3"];}
@@ -901,7 +799,6 @@ if(isset($_POST["submitconference"]))
         $confCoa2_Aff=$_POST["name2_affiliation"];
     else
         $confCoa2_Aff=" ";
-    //echo "<script type='text/javascript'>alert('$confCoa2_Aff');</script>";
     if(!empty($_POST["name3_affiliation"]))
         $confCoa3_Aff=$_POST["name3_affiliation"];
     else
@@ -1391,4 +1288,3 @@ if(isset($_POST["submit_award"])) {
         }
     }
 }
-?>

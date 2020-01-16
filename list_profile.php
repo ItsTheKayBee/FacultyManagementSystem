@@ -1,14 +1,14 @@
 <?php
 include 'dbconnect.php';
 if(!isset($_SESSION["Emp_Id"]))
-    header('Location:logout.php');
-
+	header('Location:logout.php');
+function dateformatChanger($orgDate){
+	return date("d-m-Y", strtotime($orgDate));
+}
 $myData = json_decode( base64_decode( $_GET['parameter'] ) );
 
 if($_SESSION["Emp_Id"] == $myData->val)
-    header('Location:main.php');
-
-
+	header('Location:main.php');
 $eid = $_SESSION["Emp_Id"];
 $sql = "SELECT * FROM login WHERE Emp_Id=$eid";
 $result = $conn->query($sql);
@@ -29,96 +29,84 @@ $address=$row["Address"];
 $join_pos=$row["Join_Pos"];
 $join_date=$row["Join_Date"];
 $pro1=$row["Prom_1"];
-$pro2=$row["Prom_2"];
-$pro3=$row["Prom_3"];
 $pro1_date=$row["Prom_1_Date"];
-$pro2_date=$row["Prom_2_Date"];
-$pro3_date=$row["Prom_3_Date"];
 $dob=$row["DOB"];
-if(empty($pro3)){
-    if(empty($pro2)){
-        if(empty($pro1))
-        {
-            $curpos = $join_pos;
-        }
-        else
-            $curpos = $pro1;
-    }
-    else
-        $curpos =$pro2;
+if(empty($pro1))
+{
+	$curpos = $join_pos;
 }
 else
-    $curpos = $pro3;
+	$curpos = $pro1;
 if($dob != '1950-01-01')
 {
-    $temp = (int)substr($dob,0,4);
-    $temp1 = (int)date("Y");
-    $years_exp = $temp1-$temp;
+	$temp = (int)substr($dob,0,4);
+	$temp1 = (int)date("Y");
+	$years_exp = $temp1-$temp;
 }
 else
-    $years_exp = null;
+	$years_exp = null;
 if($join_date == '1950-01-01')
 {
-    $join_date = null;
+	$join_date = null;
 }
 $profilepic='<div class="thumbnail img-responsive"><img src="data:image/jpeg;base64,'.base64_encode($row["Profile_Pic"]).'"/></div>';
 
 if(isset($_POST["submit"]))
 {
-    $sql = "SELECT * FROM login WHERE Emp_Id=$id";
-    $result = $conn->query($sql);
-    $row = mysqli_fetch_assoc($result);
-    $priv[0] = $row["P1"];
-    $priv[1] = $row["P2"];
-    $priv[2] = $row["P3"];
-    $priv[3] = $row["P4"];
-    $priv[4] = $row["P5"];
-    if(isset($_POST["priv0"])){
-        if($_POST["priv0"] == 'TRUE')
-            $priv[0] = 'TRUE';
-    }
-    else
-        $priv[0] = 'FALSE';
-    if(isset($_POST["priv1"])){
-        if($_POST["priv1"] == 'TRUE')
-            $priv[1] = 'TRUE';
-    }
-    else
-        $priv[1] = 'FALSE';
-    if(isset($_POST["priv2"])){
-        if($_POST["priv2"] == 'TRUE')
-            $priv[2] = 'TRUE';
-    }
-    else
-        $priv[2] = 'FALSE';
-    if(isset($_POST["priv3"])){
-        if($_POST["priv3"] == 'TRUE')
-            $priv[3] = 'TRUE';
-    }
-    else
-        $priv[3] = 'FALSE';
-    if(isset($_POST["priv4"])){
-        if($_POST["priv4"] == 'TRUE')
-            $priv[4] = 'TRUE';
-    }
-    else
-        $priv[4] = 'FALSE';
-    if($priv[0] == "FALSE" && $priv[1] == "FALSE" && $priv[2] == "FALSE" && $priv[3] == "FALSE" && $priv[4] == "FALSE")
-        echo "<script type='text/javascript'>alert('Please Assign Atleast One Privelage');</script>";
-    else{
-        $sql = "UPDATE login SET P1='$priv[0]',P2='$priv[1]',P3='$priv[2]',P4='$priv[3]',P5='$priv[4]' WHERE Emp_Id=$id";
-        $conn->query($sql);
-        $myData = array('val'=>$id);
-        $arg = base64_encode( json_encode($myData) );
-        echo "<script>location.href='list_profile.php?parameter='.$arg.'';</script>";
-    }
+	$sql = "SELECT * FROM login WHERE Emp_Id=$id";
+	$result = $conn->query($sql);
+	$row = mysqli_fetch_assoc($result);
+	$priv[0] = $row["P1"];
+	$priv[1] = $row["P2"];
+	$priv[2] = $row["P3"];
+	$priv[3] = $row["P4"];
+	$priv[4] = $row["P5"];
+	if(isset($_POST["priv0"])){
+		if($_POST["priv0"] == 'TRUE')
+			$priv[0] = 'TRUE';
+	}
+	else
+		$priv[0] = 'FALSE';
+	if(isset($_POST["priv1"])){
+		if($_POST["priv1"] == 'TRUE')
+			$priv[1] = 'TRUE';
+	}
+	else
+		$priv[1] = 'FALSE';
+	if(isset($_POST["priv2"])){
+		if($_POST["priv2"] == 'TRUE')
+			$priv[2] = 'TRUE';
+	}
+	else
+		$priv[2] = 'FALSE';
+	if(isset($_POST["priv3"])){
+		if($_POST["priv3"] == 'TRUE')
+			$priv[3] = 'TRUE';
+	}
+	else
+		$priv[3] = 'FALSE';
+	if(isset($_POST["priv4"])){
+		if($_POST["priv4"] == 'TRUE')
+			$priv[4] = 'TRUE';
+	}
+	else
+		$priv[4] = 'FALSE';
+	if($priv[0] == "FALSE" && $priv[1] == "FALSE" && $priv[2] == "FALSE" && $priv[3] == "FALSE" && $priv[4] == "FALSE")
+		echo "<script type='text/javascript'>alert('Please Assign Atleast One Privelage');</script>";
+	else{
+		$sql = "UPDATE login SET P1='$priv[0]',P2='$priv[1]',P3='$priv[2]',P4='$priv[3]',P5='$priv[4]' WHERE Emp_Id=$id";
+		$conn->query($sql);
+		$myData = array('val'=>$id);
+		$arg = base64_encode( json_encode($myData) );
+		echo "<script>location.href='list_profile.php?parameter='.$arg.'';</script>";
+	}
 }
 
 if(isset($_POST["submitcv"]))
 {
-    $myData = array('id'=>$id);
-    $arg = base64_encode( json_encode($myData) );
-    header('Location:CV.php?parameter='.$arg.'');
+	$myData = array('id'=>$id);
+	$arg = base64_encode( json_encode($myData) );
+	header('Location:CV.php?parameter='.$arg.'');
 }
 ?>
 <!DOCTYPE html>
@@ -238,23 +226,16 @@ include 'Decision1.php';
             <li id ="section22"><a href="main.php#section2">Add faculty</a></li>
             <li id ="section23"><a href="main.php#section3">Report Generation</a></li>
     </nav>
-
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10">
-
-
         <div class="col-sm-5 col-lg-3 col-md-4 col-xs-5">
-
             <div class="form-group ">
                 <h3>Faculty Details :</h3>
-                <?php echo $profilepic; ?>
+				<?php echo $profilepic; ?>
                 <form action="" method="POST" name="cv"><center><input type="submit" name="submitcv" class="btn btn-primary" id ="cvbtn" <?php if($p2 == "FALSE") echo "disabled='true' title='You Do Not Have This Privelage'";?> value="Generate CV"></center></form>
                 <br><br>
                 <a href = "main.php#section21" title="Obviously not Simon! :P"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp<font size="5">Go Back</font></a>
-
             </div>
-
         </div>
-
         <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9" style="font-size:17px">
             <br><br>
             <div class="table-responsive">
@@ -286,7 +267,7 @@ include 'Decision1.php';
                     </tr>
                     <tr>
                         <td>Joining Date : </td>
-                        <td><b><?php if($join_date == null) echo " - ";else  echo $join_date; ?></b></td>
+                        <td><b><?php if($join_date == null) echo " - ";else  echo dateformatChanger($join_date); ?></b></td>
                     </tr>
 
                     <tr>
@@ -297,55 +278,54 @@ include 'Decision1.php';
                     </tbody>
                 </table>
             </div>
-            <?php
-            if($p1 == "TRUE"){
-                $myData = array('val'=>$id);
-                $arg = base64_encode( json_encode($myData) );
-                echo '<button id ="btn" class="editbutton"><span class="glyphicon glyphicon-collapse-down"></span>&nbspEdit Privelages</button>';
-                echo '<form name="change_privs" id ="change_privs" action="list_profile.php?parameter='.$arg.'" method="POST">';
-                echo '<hr>';
-                echo '<div class="form-group">';
-                echo '<label>Priveleges: </label>';
-                echo '<br>';
-                $sql = "SELECT * FROM login WHERE Emp_Id=$id";
-                $result = $conn->query($sql);
-                $row = mysqli_fetch_assoc($result);
-                $priv[0] = $row["P1"];
-                $priv[1] = $row["P2"];
-                $priv[2] = $row["P3"];
-                $priv[3] = $row["P4"];
-                $priv[4] = $row["P5"];
+			<?php
+			if($p1 == "TRUE"){
+				$myData = array('val'=>$id);
+				$arg = base64_encode( json_encode($myData) );
+				echo '<button id ="btn" class="editbutton"><span class="glyphicon glyphicon-collapse-down"></span>&nbspEdit Privelages</button>';
+				echo '<form name="change_privs" id ="change_privs" action="list_profile.php?parameter='.$arg.'" method="POST">';
+				echo '<hr>';
+				echo '<div class="form-group">';
+				echo '<label>Priveleges: </label>';
+				echo '<br>';
+				$sql = "SELECT * FROM login WHERE Emp_Id=$id";
+				$result = $conn->query($sql);
+				$row = mysqli_fetch_assoc($result);
+				$priv[0] = $row["P1"];
+				$priv[1] = $row["P2"];
+				$priv[2] = $row["P3"];
+				$priv[3] = $row["P4"];
+				$priv[4] = $row["P5"];
 
-                if(($priv[0]) == 'FALSE')
-                    echo '<input type="checkbox" class="checkbox-inline" name="priv0" value="TRUE">&nbspProfile</input><br>';
-                else
-                    echo '<input type="checkbox" checked class="checkbox-inline" name="priv0" value="TRUE">&nbspProfile</input><br>';
-                if(($priv[1]) == 'FALSE')
-                    echo '<input type="checkbox" class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
-                else
-                    echo '<input type="checkbox" checked class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
-                if(($priv[2]) == 'FALSE')
-                    echo '<input type="checkbox" class="checkbox-inline" name="priv2" value="TRUE">&nbspAdd Faculty</input><br>';
-                else
-                    echo '<input type="checkbox" checked class="checkbox-inline" name="priv2" value="TRUE">&nbspAdd Faculty</input><br>';
-                if(($priv[3]) == 'FALSE')
-                    echo '<input type="checkbox" class="checkbox-inline" name="priv3" value="TRUE">&nbspReport Generation</input><br>';
-                else
-                    echo '<input type="checkbox" checked class="checkbox-inline" name="priv3" value="TRUE">&nbspReport Generation</input><br>';
-                if(($priv[4]) == 'FALSE')
-                    echo "<input type='checkbox' class='checkbox-inline' name='priv4' value='TRUE'>&nbspGenerate Faculty CV's</input><br>";
-                else
-                    echo "<input type='checkbox' checked class='checkbox-inline' name='priv4' value='TRUE'>&nbspGenerate Faculty CV's</input><br>";
-                echo '</div>';
-                echo '<div class="form-group">';
-                echo '<input type="submit" class="btn btn-primary" name="submit" value="Change Privelege" />';
-                echo '</div>';
-                echo '</form>';
-            }
-            ?>
+				if(($priv[0]) == 'FALSE')
+					echo '<input type="checkbox" class="checkbox-inline" name="priv0" value="TRUE">&nbspProfile</input><br>';
+				else
+					echo '<input type="checkbox" checked class="checkbox-inline" name="priv0" value="TRUE">&nbspProfile</input><br>';
+				if(($priv[1]) == 'FALSE')
+					echo '<input type="checkbox" class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
+				else
+					echo '<input type="checkbox" checked class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
+				if(($priv[2]) == 'FALSE')
+					echo '<input type="checkbox" class="checkbox-inline" name="priv2" value="TRUE">&nbspAdd Faculty</input><br>';
+				else
+					echo '<input type="checkbox" checked class="checkbox-inline" name="priv2" value="TRUE">&nbspAdd Faculty</input><br>';
+				if(($priv[3]) == 'FALSE')
+					echo '<input type="checkbox" class="checkbox-inline" name="priv3" value="TRUE">&nbspReport Generation</input><br>';
+				else
+					echo '<input type="checkbox" checked class="checkbox-inline" name="priv3" value="TRUE">&nbspReport Generation</input><br>';
+				if(($priv[4]) == 'FALSE')
+					echo "<input type='checkbox' class='checkbox-inline' name='priv4' value='TRUE'>&nbspGenerate Faculty CV's</input><br>";
+				else
+					echo "<input type='checkbox' checked class='checkbox-inline' name='priv4' value='TRUE'>&nbspGenerate Faculty CV's</input><br>";
+				echo '</div>';
+				echo '<div class="form-group">';
+				echo '<input type="submit" class="btn btn-primary" name="submit" value="Change Privelege" />';
+				echo '</div>';
+				echo '</form>';
+			}
+			?>
         </div>
     </div>
 </div>
-
 </body>
 </html>

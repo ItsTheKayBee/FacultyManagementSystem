@@ -2,15 +2,11 @@
 include 'dbconnect.php';
 if(isset($_SESSION["Emp_Id"]))
     session_destroy();
-
-
 $err=array("","");
 if(isset($_POST["submit"]))
 {
     $empid = $_POST["empid"];
     $pass = $_POST["storepass"];
-
-
     $sql="SELECT * FROM login WHERE Emp_Id = $empid";
     if($result = $conn->query($sql))
     {
@@ -97,16 +93,13 @@ if(isset($_POST["submit"]))
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
 
-    <link rel="stylesheet" href="login_css.css">
+    <link rel="stylesheet" href="login.css">
     <style>
         body{
             background-color:#f2f2f2;
         }
         .boxtext{
-            float  :center;
-        }
-        .askrole{
-            float : right;
+            float:center;
         }
         .error{
             color : #fa0808;
