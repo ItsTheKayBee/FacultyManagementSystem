@@ -1917,7 +1917,7 @@ function dateformatChanger($orgDate){
     <!--FORM 7-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section7">
-            <form method="POST" onsubmit="return extra()" name="ext7">
+            <form method="POST" onsubmit="return extra()" name="ext7" enctype="multipart/form-data">
                 <fieldset>
                     <legend><h2>Extra Activities</h2></legend>
                     <br>
@@ -1959,6 +1959,14 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="extra_certificate_image" id="extra_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
+
                     <?php
                     $new_field_query="select * from new_fields where table_name='extra'";
                     $result=$conn->query($new_field_query);

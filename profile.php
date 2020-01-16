@@ -1608,6 +1608,7 @@ $date = $row1["Date"];
                 echo "<th>Location</th>";
                 echo "<th>Role</th>";
                 echo "<th>Date</th>";
+                echo "<th>Certificate</th>";
                 $new_field_query = "select * from new_fields where table_name='extra'";
                 $new_result = $conn->query($new_field_query);
                 if ($new_result->num_rows > 0) {
@@ -1623,6 +1624,18 @@ $date = $row1["Date"];
                 echo "</tr>";
                 while($row=mysqli_fetch_assoc($result))
                 {
+                      if($row["Certificate"] == null)
+                        $extracert="PDF Not Inserted";
+                    else
+                    {
+                        $myData2 = array('pub'=>'','academic'=>'','sttp'=>'','awd'=>'','extr'=>'1','cid'=>($extra-1));
+                        $arg2_awd = base64_encode( json_encode($myData2) );
+                        $extracert='<a href="showpdf.php?parameter='.$arg2_awd.'">View</a>';
+                    }
+
+
+
+
                     $myData = array('val'=>10, 'id'=>($extra-1));
                     $arg = base64_encode( json_encode($myData) );
                     $GLOBALS['extra_id'] =$row['extra_id'];
@@ -1632,10 +1645,13 @@ $date = $row1["Date"];
                     if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
                     if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
                     if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
+                    echo '<td><center>'.$extracert.'</center></td>';
+
                     $new_field_query = "select * from new_fields where table_name='extra'";
                     $newresult = $conn->query($new_field_query);
                     if ($newresult->num_rows > 0) {
                         while ($row = $newresult->fetch_assoc()) {
+                          
                             $field_name = $row['field_name'];
                             $label = $row['label'];
                             $display = $row['display'];

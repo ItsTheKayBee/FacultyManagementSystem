@@ -326,6 +326,37 @@ if($sttp == 1)
 	}
 }
 
+$extr = $myData->extr;
+
+if($extr == "1")
+{
+	$query = "SELECT Certificate FROM extra WHERE Emp11_Id=$empid" ;
+	$cid = $myData->cid;
+	$checkextra = 0;
+
+	$result = mysqli_query($conn, $query);
+	while($row = mysqli_fetch_assoc($result))
+	{
+		if($checkextra == $cid)
+		{
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Content-Type: $mime');
+			header('Content-Description: File Transfer');
+			header('Content-Transfer-Encoding: binary');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header("Content-type: application/pdf");
+			ob_clean();
+			flush();
+			$pdf_content = ($row["Certificate"]);
+			echo $pdf_content;
+			break;
+		}
+		else
+			$checkextra++;
+	}
+}
+
 $awd = $myData->awd;
 
 if($awd == "1")

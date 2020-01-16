@@ -5,7 +5,7 @@ if(!isset($_SESSION["Emp_Id"]))
 function dateformatReverser($orgDate){
     return date("Y-m-d", strtotime($orgDate));
 }
-$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 $empid=$_SESSION["Emp_Id"];
 $err=array("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","");
 
@@ -1294,7 +1294,15 @@ if(isset($_POST["submitextra"]))
     $ba=date_create($extradate);
     $ab=date_create($dob);
 
+
     $diff=date_diff($ab,$ba);
+     if (!empty($_FILES["extra_certificate_image"]["tmp_name"])) {
+        $extra_certificate_image = addslashes(file_get_contents($_FILES["extra_certificate_image"]["tmp_name"]));
+        $image[14] = 1;
+    } else
+        $image[14] = 0;
+
+
     if($diff->format("%R")=='-'){
 
         $err[44]="* Please Enter A Valid Date";
@@ -1315,7 +1323,15 @@ if(isset($_POST["submitextra"]))
                 }
             }
         }
-        $sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname'$newfieldsval)";
+        if ($image[14] == 1) {
+            $sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`,`Certificate`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname','$extra_certificate_image'$newfieldsval)";
+
+        } else {
+            echo "in the problem";
+            $sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`,`Certificate`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname',NULL$newfieldsval)";
+        }
+
+
         if($result=$conn->query($sql))
         {
             header('Location:profile.php#section7');
