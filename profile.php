@@ -171,7 +171,7 @@ function dateformatChanger($orgDate){
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
 
-            <b>Employee ID : <?php echo $empid."<br>" ;include 'Decision1.php';
+            <b>Employee ID : <?php echo $empid ;include 'Decision1.php';
 
 $sql1 = "SELECT * FROM edit WHERE Emp1_Id=$empid";
 $result1 = $conn->query($sql1);
@@ -191,7 +191,7 @@ $date = $row1["Date"];
 
 
 }
- echo $empid.'  has been assigned rights for editing of :'. $emp2_id. 'till' .$date;
+ echo ' || Assigned Rights of :'. $emp2_id. ' Till ' .dateformatChanger($date);
 
 }
 }
