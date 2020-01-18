@@ -725,6 +725,13 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                            <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
                     <?php
                     $new_field_query="select * from new_fields where table_name='courses'";
                     $result=$conn->query($new_field_query);
@@ -809,6 +816,13 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
+                            <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
                 <div class="form-group">
                     <label>ALL STUDENTS DETAILS : <br></label>
                     <div class="table-responsive">
@@ -1681,6 +1695,13 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
+                            <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
                 <?php
                 $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
                 $result=$conn->query($new_field_query);
@@ -1716,7 +1737,7 @@ function dateformatChanger($orgDate){
     <!--FORM 5.3-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section53">
-            <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered">
+            <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered" enctype="multipart/form-data">
                 <legend><h2>STTP</h2></legend>
                 <h3>Delivered</h3>
                 <br>
@@ -1772,6 +1793,7 @@ function dateformatChanger($orgDate){
                             <input type="text" name="placedelivered" class="form-control" placeholder="Place">
                         </div>
                     </div>
+
                     <br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Duration :</label>
@@ -1780,6 +1802,14 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
+                            <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
+
                     <?php
                     $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
                     $result=$conn->query($new_field_query);
@@ -1816,7 +1846,7 @@ function dateformatChanger($orgDate){
     <!--FORM 6-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section6">
-            <form method="POST" onsubmit="return co()" name="co6">
+            <form method="POST" onsubmit="return co()" name="co6" enctype="multipart/form-data">
                 <fieldset>
                     <legend><h2>Co-curricular Activities</h2></legend>
                     <br>
@@ -1862,10 +1892,18 @@ function dateformatChanger($orgDate){
                             </div>
                             <div class="col-md-6 col-sm-9 col-lg-3 col-xs-6">
                                 <input class="form-control" id ="name22" name="name22" disabled="true" type="text"/>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                     <br><br><br>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
+                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                        </div>
+                    </div>
+                    <br><br>
+
                     <?php
                     $new_field_query="select * from new_fields where table_name='co_curricular'";
                     $result=$conn->query($new_field_query);

@@ -98,7 +98,7 @@ function dateformatChanger($orgDate){
 <div class="container-fluid col-lg-6 col-md-8 col-xs-9 col-sm-8">
     <!-- COURSES TAUGHT -->
     <div id ="section3" class="well">
-        <form method="post" onsubmit="return coursesvalidation()" name="coursestaught">
+        <form method="post" onsubmit="return coursesvalidation()" name="coursestaught" enctype="multipart/form-data">
             <legend><h2><center>Courses Taught</center></h2></legend>
             <div style="font-size:17px;">
                 <div class="form-group">
@@ -116,6 +116,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Course Semester : </b><?php echo $coursesem; ?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='courses'";
@@ -171,6 +181,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Project Year :</b> <?php echo $year; ?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Attachment :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
                 <br>
                 <div class="form-group">
@@ -889,7 +909,7 @@ function dateformatChanger($orgDate){
         <br>
     </div>
     <div id ="section52" class="well">
-        <form onsubmit="return sttpo()" method="POST" name="sttporganised">
+        <form onsubmit="return sttpo()" method="POST" name="sttporganised" enctype="multipart/form-data">
             <center>
                 <legend><h2>STTP</h2></legend>
                 <h3>Organised</h3>
@@ -921,6 +941,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Number Of Participants :</b> <?php echo $noparticipants;?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Attachment :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
@@ -958,7 +988,7 @@ function dateformatChanger($orgDate){
     </div>
 
     <div id ="section53" class="well">
-        <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered">
+        <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered" enctype="multipart/form-data">
             <center>
                 <legend><h2>STTP</h2></legend>
                 <h3>Delivered</h3>
@@ -990,6 +1020,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Duration :</b> <?php echo $duration;?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Attachment :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
 	            <?php
 	            $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
@@ -1027,7 +1067,7 @@ function dateformatChanger($orgDate){
     </div>
     <!--FORM 6-->
     <div id ="section6" class="well">
-        <form method="POST" onsubmit="return co()" name="co6">
+        <form method="POST" onsubmit="return co()" name="co6" enctype="multipart/form-data">
             <legend><h2><center>Co-curricular Activities</center></h2></legend>
             <div style="font-size:17px;">
                 <div class="form-group">
@@ -1048,6 +1088,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Type :</b> <?php echo $type; ?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='co_curricular'";
@@ -1086,7 +1136,7 @@ function dateformatChanger($orgDate){
 
     <!--FORM 7-->
     <div id ="section7" class="well">
-        <form method="POST" onsubmit="return extra()" name="ext7">
+        <form method="POST" onsubmit="return extra()" name="ext7" enctype="multipart/form-data">
             <legend><h2><center>Extra Activities</center></h2></legend>
             <div style="font-size:17px;">
                 <div class="form-group">
@@ -1107,6 +1157,16 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Location :</b> <?php echo $place; ?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+                    <?php
+                    if(!empty($changeName_certificate))
+                        echo $changeName_pdf;
+                    else
+                        echo "<b>Not inserted</b>";
+                    ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='extra'";
