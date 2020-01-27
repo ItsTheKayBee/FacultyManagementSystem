@@ -785,7 +785,7 @@ if(isset($_POST["addmem_submit"]))
 	$sql = "INSERT INTO `login`(`Emp_Id`, `Password`, `P1`, `P2`, `P3`, `P4`, `P5`, `Security_Question`, `Security_Answer`, `admin_rights`)VALUES('$empid','$pwd','$p1','$p2','$p3','$p4','$p5','','',0)";
 	if($conn->query($sql) === true)
 	{
-		$erradd = "$file";
+		//$erradd = "$file";
 		$sql1 = "INSERT INTO `academic_details`(`Emp2_Id`) VALUES ('$empid')";
 		$conn->query($sql1);
 		$sql2="INSERT INTO `personal_details`(`Emp3_Id`, `Profile_Pic`) VALUES ('$empid','$file')";
@@ -796,7 +796,7 @@ if(isset($_POST["addmem_submit"]))
             $('#myModal1').modal('show');
             });
             </script>";
-		echo "<script>location.href='main.php#section22';</script>";
+		echo "<script>location.href='profile.php';</script>";
 	}
 	else{
 		$erradd = "* Member With This Id Already Exists";
@@ -904,6 +904,7 @@ if(!isset($_SESSION["firstvisit"]))
         <hr>
         <li class="section21" id ="sectionW"><a href="#section21">Faculty List</a></li>
         <li class="section24" id ="sectionX"><a href="#section24">Assign Profile Editing Rights</a></li>
+        <li class="section25" id="sectionV"><a href="#section25">Add Member</a></li>
 		<?php if($_SESSION['admin']) echo '<li class="section22" id ="sectionY"><a href="#section22">Admin Control</a></li>';?>
         <li class="section23" id ="sectionZ"><a href="#section23">Report Generation</a></li>
     </ul>
@@ -1041,9 +1042,8 @@ if(!isset($_SESSION["firstvisit"]))
             </form>
         </div>
 		<?php
-		if($_SESSION['admin']==1){
-			echo '<div>
-            <div id ="section22" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+
+            echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
                 <legend><h1>Add Member</h1></legend>
                 <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()">
 
@@ -1058,7 +1058,7 @@ if(!isset($_SESSION["firstvisit"]))
 
 			echo '</div>
     <br>
-    <p id ="assprivs" class="asspriv"><span id ="abc" class="glyphicon glyphicon-collapse-down"></span>&nbsp;Assign Privelege(s)</p>
+    <p id ="assprivs" class="asspriv"><span id ="abc" class="glyphicon glyphicon-collapse-down"></span>&nbsp;Assign Privilege(s)</p>
     <div class="form-group" id ="privs">
         <input type="checkbox" name="p1" id ="p1" value="TRUE" class="checkbox-inline">&nbsp;Profile
         <input type="checkbox" name="p2" id ="p2" value="TRUE" class="checkbox-inline">&nbsp;View And Edit Privileges
@@ -1076,7 +1076,10 @@ if(!isset($_SESSION["firstvisit"]))
         </form></center>
     </div>
 
-</div>
+</div>';
+
+        if($_SESSION['admin']==1){
+			echo '<div>
 <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
     <legend><h1>Add Course</h1></legend>
     <form  action="main.php" name="add_course" method="POST" onsubmit="return validateAddCourse()">
@@ -1137,11 +1140,11 @@ if(!isset($_SESSION["firstvisit"]))
     <form  action="main.php" name="add_field" method="POST" onsubmit="return validateAddField()">
         <div class="form-group">';
 			if(!empty($erraddField)){
-				echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Field Name" autofocus name="field_name">';
+				echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" style="border:2px solid red;" title="Should not contain spaces" placeholder="Enter Field Name" autofocus name="field_name">';
 				echo '<span class="error" id ="fname">'.$erraddField.'</span></div>';
 			}
 			else {
-				echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" placeholder="Enter Field Name" name="field_name" >';
+				echo '<div class="row"><div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" placeholder="Enter Field Name" title="Should not contain spaces" name="field_name" >';
 				echo '<span class="error" id ="fname"></span><br><br></div>';
 			}
 			echo '<div class="col-sm-6 col-md-6 col-lg-6 col-xs-6"><input type="text" class="form-control" placeholder="Enter a Label" name="field_label">';

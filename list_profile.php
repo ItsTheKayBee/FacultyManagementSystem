@@ -92,7 +92,7 @@ if(isset($_POST["submit"]))
 	else
 		$priv[4] = 'FALSE';
 	if($priv[0] == "FALSE" && $priv[1] == "FALSE" && $priv[2] == "FALSE" && $priv[3] == "FALSE" && $priv[4] == "FALSE")
-		echo "<script type='text/javascript'>alert('Please Assign Atleast One Privelage');</script>";
+		echo "<script type='text/javascript'>alert('Please Assign Atleast One Privilege');</script>";
 	else{
 		$sql = "UPDATE login SET P1='$priv[0]',P2='$priv[1]',P3='$priv[2]',P4='$priv[3]',P5='$priv[4]' WHERE Emp_Id=$id";
 		$conn->query($sql);
@@ -231,7 +231,7 @@ include 'Decision1.php';
             <div class="form-group ">
                 <h3>Faculty Details :</h3>
 				<?php echo $profilepic; ?>
-                <form action="" method="POST" name="cv"><center><input type="submit" name="submitcv" class="btn btn-primary" id ="cvbtn" <?php if($p2 == "FALSE") echo "disabled='true' title='You Do Not Have This Privelage'";?> value="Generate CV"></center></form>
+                <form action="" method="POST" name="cv"><center><input type="submit" name="submitcv" class="btn btn-primary" id ="cvbtn" <?php if($p2 == "FALSE") echo "disabled='true' title='You Do Not Have This Privilege'";?> value="Generate CV"></center></form>
                 <br><br>
                 <a href = "main.php#section21" title="Obviously not Simon! :P"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp<font size="5">Go Back</font></a>
             </div>
@@ -282,11 +282,11 @@ include 'Decision1.php';
 			if($p1 == "TRUE"){
 				$myData = array('val'=>$id);
 				$arg = base64_encode( json_encode($myData) );
-				echo '<button id ="btn" class="editbutton"><span class="glyphicon glyphicon-collapse-down"></span>&nbspEdit Privelages</button>';
+				echo '<button id ="btn" class="editbutton"><span class="glyphicon glyphicon-collapse-down"></span>&nbspEdit Privileges</button>';
 				echo '<form name="change_privs" id ="change_privs" action="list_profile.php?parameter='.$arg.'" method="POST">';
 				echo '<hr>';
 				echo '<div class="form-group">';
-				echo '<label>Priveleges: </label>';
+				echo '<label>Privileges: </label>';
 				echo '<br>';
 				$sql = "SELECT * FROM login WHERE Emp_Id=$id";
 				$result = $conn->query($sql);
@@ -302,9 +302,9 @@ include 'Decision1.php';
 				else
 					echo '<input type="checkbox" checked class="checkbox-inline" name="priv0" value="TRUE">&nbspProfile</input><br>';
 				if(($priv[1]) == 'FALSE')
-					echo '<input type="checkbox" class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
+					echo '<input type="checkbox" class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privileges</input><br>';
 				else
-					echo '<input type="checkbox" checked class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privelages</input><br>';
+					echo '<input type="checkbox" checked class="checkbox-inline" name="priv1" value="TRUE">&nbspView And Edit Privileges</input><br>';
 				if(($priv[2]) == 'FALSE')
 					echo '<input type="checkbox" class="checkbox-inline" name="priv2" value="TRUE">&nbspAdd Faculty</input><br>';
 				else
@@ -319,7 +319,7 @@ include 'Decision1.php';
 					echo "<input type='checkbox' checked class='checkbox-inline' name='priv4' value='TRUE'>&nbspGenerate Faculty CV's</input><br>";
 				echo '</div>';
 				echo '<div class="form-group">';
-				echo '<input type="submit" class="btn btn-primary" name="submit" value="Change Privelege" />';
+				echo '<input type="submit" class="btn btn-primary" name="submit" value="Change Privilege" />';
 				echo '</div>';
 				echo '</form>';
 			}
