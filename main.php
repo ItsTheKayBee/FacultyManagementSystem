@@ -53,8 +53,8 @@ if(isset($_POST["ReportSubmit"]))
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <script src="bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
@@ -796,7 +796,7 @@ if(isset($_POST["addmem_submit"]))
             $('#myModal1').modal('show');
             });
             </script>";
-		echo "<script>location.href='profile.php';</script>";
+		echo "<script>location.href='main.php#section22';</script>";
 	}
 	else{
 		$erradd = "* Member With This Id Already Exists";
@@ -1045,7 +1045,7 @@ if(!isset($_SESSION["firstvisit"]))
 
             echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
                 <legend><h1>Add Member</h1></legend>
-                <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()">
+                <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()" enctype="multipart/form-data">
 
                     <div class="form-group">';
 			if(!empty($erradd)){
