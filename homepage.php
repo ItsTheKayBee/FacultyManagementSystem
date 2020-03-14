@@ -2,7 +2,7 @@
 include 'homepage_php.php';
 
 function dateformatChanger($orgDate){
-    return date("d-m-Y", strtotime($orgDate));
+	return date("d-m-Y", strtotime($orgDate));
 }
 
 ?>
@@ -232,40 +232,40 @@ function dateformatChanger($orgDate){
                                 </div>
                             </div>
                             <br><br><br>
-                            <?php
-                            $new_field_query="select * from new_fields where table_name='personal_details'";
-                            $result=$conn->query($new_field_query);
-                            if($result->num_rows>0){
-                            while($row=$result->fetch_assoc()) {
-                            $field_name = $row['field_name'];
-                            $label = $row['label'];
-                            $display = $row['display'];
-                            if($display==1) {
-                            $table_sql = "select $field_name from personal_details where emp3_id=$empid";
-                            $tab_res = $conn->query($table_sql);
-                            if ($tab_res->num_rows > 0) {
-                            $tab_row = $tab_res->fetch_assoc();
-                            $new_field = $tab_row[$field_name];
-                            echo "<div class=\"form-group\">
+							<?php
+							$new_field_query="select * from new_fields where table_name='personal_details'";
+							$result=$conn->query($new_field_query);
+							if($result->num_rows>0){
+							while($row=$result->fetch_assoc()) {
+							$field_name = $row['field_name'];
+							$label = $row['label'];
+							$display = $row['display'];
+							if($display==1) {
+							$table_sql = "select $field_name from personal_details where emp3_id=$empid";
+							$tab_res = $conn->query($table_sql);
+							if ($tab_res->num_rows > 0) {
+							$tab_row = $tab_res->fetch_assoc();
+							$new_field = $tab_row[$field_name];
+							echo "<div class=\"form-group\">
                                 <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                 <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">"; ?>
                             <input class="form-control"
-                                <?php
-                                if ($new_field == '')
-                                    echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
-                                else
-                                    echo 'name="' . $field_name . '" value="' . $new_field . '"';
-                                ?>
+								<?php
+								if ($new_field == '')
+									echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
+								else
+									echo 'name="' . $field_name . '" value="' . $new_field . '"';
+								?>
                             >
                     </div>
             </div>
             <br><br><br>
-            <?php
-            }
-            }
-            }
-            }
-            ?>
+			<?php
+			}
+			}
+			}
+			}
+			?>
             <legend>Promotions</legend>
             <div class="form-group">
                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Promotion  : </label>
@@ -285,7 +285,7 @@ function dateformatChanger($orgDate){
                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Date of Promotion: </label>
                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                     <input <?php if(!empty($err[29])) echo "autofocus style='border:2px solid red;'"; ?> <?php if($pro1_date == '1950-01-01') echo "placeholder='Date Of Promotion'";
-                    else echo "value = ".dateformatChanger($pro1_date);?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='date')" name="pro1_date">
+					else echo "value = ".dateformatChanger($pro1_date);?> class="form-control"  onfocus="(this.type='date')" onblur="(this.type='date')" name="pro1_date">
                     <span class="error"><?php echo $err[29]; ?> </span>
                 </div>
             </div>
@@ -327,21 +327,21 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Year of Passing: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select name="sscyear" class="form-control">
-                                <?php
-                                if($gender=='null')
-                                {
-                                    echo "<option selected value=$curyear>".$curyear."</option>";
-                                }
-                                else
-                                {
-                                    echo '<option value="">* Please Select Year of Passing</option>';
-                                    foreach ($yearArray as $year)
-                                    {
-                                        $selected = ($year == $sscYear && $sscYear!=1950) ? 'selected' : '';
-                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                    }
-                                }
-                                ?>
+								<?php
+								if($gender=='null')
+								{
+									echo "<option selected value=$curyear>".$curyear."</option>";
+								}
+								else
+								{
+									echo '<option value="">* Please Select Year of Passing</option>';
+									foreach ($yearArray as $year)
+									{
+										$selected = ($year == $sscYear && $sscYear!=1950) ? 'selected' : '';
+										echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+									}
+								}
+								?>
                             </select>
                             <span class="error" id ="sscyear"></span>
                         </div>
@@ -350,15 +350,15 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">SSC Marksheet: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <?php
-                            if($sscMarksheet==null)
-                                echo "<input type='file' name='sscimage' id ='sscimage' accept='application/pdf' />";
-                            else
-                            {
-                                echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410; class='glyphicon glyphicon-ok'></span></h4><br><br>";
-                                echo "<input type='file' name='sscimage' id='sscimage' accept='application/pdf' />";
-                            }
-                            ?>
+							<?php
+							if($sscMarksheet==null)
+								echo "<input type='file' name='sscimage' id ='sscimage' accept='application/pdf' />";
+							else
+							{
+								echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410; class='glyphicon glyphicon-ok'></span></h4><br><br>";
+								echo "<input type='file' name='sscimage' id='sscimage' accept='application/pdf' />";
+							}
+							?>
                         </div>
                     </div>
                     <br><br>
@@ -392,21 +392,21 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Year of Passing: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select name="hscyear" class="form-control">
-                                <?php
-                                if($gender=='null')
-                                {
-                                    echo "<option selected value=$curyear>".$curyear."</option>";
-                                }
-                                else
-                                {
-                                    echo '<option value="">* Please Select Year of Passing</option>';
-                                    foreach ($yearArray as $year)
-                                    {
-                                        $selected = ($year == $hscYear && $hscYear!=1950) ? 'selected' : '';
-                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                    }
-                                }
-                                ?>
+								<?php
+								if($gender=='null')
+								{
+									echo "<option selected value=$curyear>".$curyear."</option>";
+								}
+								else
+								{
+									echo '<option value="">* Please Select Year of Passing</option>';
+									foreach ($yearArray as $year)
+									{
+										$selected = ($year == $hscYear && $hscYear!=1950) ? 'selected' : '';
+										echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+									}
+								}
+								?>
                             </select>
                             <span class="error" id ="hscyear"></span>
                         </div>
@@ -415,7 +415,7 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">HSC Marksheet: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <?php if($hscMarksheet==null) echo "<input type='file' name='hscimage' id ='hscimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='hscimage' id='hscimage' accept='application/pdf' />";} ?>
+							<?php if($hscMarksheet==null) echo "<input type='file' name='hscimage' id ='hscimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='hscimage' id='hscimage' accept='application/pdf' />";} ?>
                         </div>
                     </div>
                     <br><br>
@@ -451,21 +451,21 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Year of Passing: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select name="btechyear" class="form-control">
-                                <?php
-                                if($gender=='null')
-                                {
-                                    echo "<option selected value=$curyear>".$curyear."</option>";
-                                }
-                                else
-                                {
-                                    echo '<option value="">* Please Select Year of Passing</option>';
-                                    foreach ($yearArray as $year)
-                                    {
-                                        $selected = ($year == $bachelorsYear && $bachelorsYear!=1950) ? 'selected' : '';
-                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                    }
-                                }
-                                ?>
+								<?php
+								if($gender=='null')
+								{
+									echo "<option selected value=$curyear>".$curyear."</option>";
+								}
+								else
+								{
+									echo '<option value="">* Please Select Year of Passing</option>';
+									foreach ($yearArray as $year)
+									{
+										$selected = ($year == $bachelorsYear && $bachelorsYear!=1950) ? 'selected' : '';
+										echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+									}
+								}
+								?>
                             </select>
                         </div>
                     </div>
@@ -489,7 +489,7 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">B-Tech Marksheet: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <?php if($btechMarksheet==null) echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; }?>
+							<?php if($btechMarksheet==null) echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='btechimage' id ='btechimage' accept='application/pdf' />"; }?>
                         </div>
                     </div>
                     <br><br>
@@ -524,21 +524,21 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Year of Passing: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select name="mtechyear" class="form-control">
-                                <?php
-                                if($gender=='null')
-                                {
-                                    echo "<option selected value=$curyear>".$curyear."</option>";
-                                }
-                                else
-                                {
-                                    echo '<option value="">* Please Select Year of Passing</option>';
-                                    foreach ($yearArray as $year)
-                                    {
-                                        $selected = ($year == $mastersYear && $mastersYear!=1950) ? 'selected' : '';
-                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                    }
-                                }
-                                ?>
+								<?php
+								if($gender=='null')
+								{
+									echo "<option selected value=$curyear>".$curyear."</option>";
+								}
+								else
+								{
+									echo '<option value="">* Please Select Year of Passing</option>';
+									foreach ($yearArray as $year)
+									{
+										$selected = ($year == $mastersYear && $mastersYear!=1950) ? 'selected' : '';
+										echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+									}
+								}
+								?>
                             </select>
                         </div>
                     </div>
@@ -562,7 +562,7 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">M-Tech Marksheet: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <?php if($mtechMarksheet==null) echo "<input type='file' name='mtechimage' id ='mtechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>";  echo "<input type='file' name='mtechimage' id='mtechimage' accept='application/pdf' />";} ?>
+							<?php if($mtechMarksheet==null) echo "<input type='file' name='mtechimage' id ='mtechimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>";  echo "<input type='file' name='mtechimage' id='mtechimage' accept='application/pdf' />";} ?>
                         </div>
                     </div>
                     <br><br><br>
@@ -597,21 +597,21 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Year of Passing: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select name="phdyear" class="form-control">
-                                <?php
-                                if($gender=='null')
-                                {
-                                    echo "<option selected value=$curyear>".$curyear."</option>";
-                                }
-                                else
-                                {
-                                    echo '<option value="">* Please Select Year of Passing</option>';
-                                    foreach ($yearArray as $year)
-                                    {
-                                        $selected = ($year == $phdYear && $phdYear!=1950) ? 'selected' : '';
-                                        echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
-                                    }
-                                }
-                                ?>
+								<?php
+								if($gender=='null')
+								{
+									echo "<option selected value=$curyear>".$curyear."</option>";
+								}
+								else
+								{
+									echo '<option value="">* Please Select Year of Passing</option>';
+									foreach ($yearArray as $year)
+									{
+										$selected = ($year == $phdYear && $phdYear!=1950) ? 'selected' : '';
+										echo '<option '.$selected.' value="'.$year.'">'.$year.'</option>';
+									}
+								}
+								?>
                             </select>
                         </div>
                     </div>
@@ -635,7 +635,7 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">PHD Marksheet: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <?php if($phdMarksheet==null) echo "<input type='file' name='phdimage' id ='phdimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='phdimage' id='phdimage' accept='application/pdf' />"; }?>
+							<?php if($phdMarksheet==null) echo "<input type='file' name='phdimage' id ='phdimage' accept='application/pdf' />"; else {echo "<h4>Marksheet Already Inserted&nbsp<span style=color:#34E410;'' class='glyphicon glyphicon-ok'></span></h4><br><br>"; echo "<input type='file' name='phdimage' id='phdimage' accept='application/pdf' />"; }?>
                         </div>
                     </div>
                     <br><br><br>
@@ -657,23 +657,23 @@ function dateformatChanger($orgDate){
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Category: </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <div class="category_div" id ="category_div">
-                                <?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
-                                $res = $conn->query($sql);
-                                echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
-                                while ($row = $res->fetch_assoc()) {
-                                    if ($res->num_rows > 0) {
-                                        $course_type = $row['course_type_name'];
-                                        $course_value=$course_type;
-                                        if($course_value=="Lab Course"){
-                                            $course_value="Labcourses";
-                                        }
-                                        if($course_value=="Audit Course"){
-                                            $course_value="AC";
-                                        }
-                                        echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
-                                    }
-                                }
-                                echo "</select>";?>
+								<?php $sql = "SELECT * FROM course_type order by course_type_id ASC";
+								$res = $conn->query($sql);
+								echo "<select name='category' class='required-entry form-control' id='category_id' onchange='dynamicdropdown(options[this.selectedIndex].value);'><option value=''>* Select Course Type</option>";
+								while ($row = $res->fetch_assoc()) {
+									if ($res->num_rows > 0) {
+										$course_type = $row['course_type_name'];
+										$course_value=$course_type;
+										if($course_value=="Lab Course"){
+											$course_value="Labcourses";
+										}
+										if($course_value=="Audit Course"){
+											$course_value="AC";
+										}
+										echo "<option value='" . $course_value . "'>" . $course_type . "</option>";
+									}
+								}
+								echo "</select>";?>
                                 <span class="error" id ="coursetype"></span>
                             </div>
                         </div>
@@ -696,12 +696,12 @@ function dateformatChanger($orgDate){
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                             <select class="form-control" name="courseyear" id ="courseyear_id" >
                                 <option value="">* Select Year</option>
-                                <?php
-                                foreach ($yearArray as $year)
-                                {
-                                    echo '<option value="'.$year.'">'.$year.'</option>';
-                                }
-                                ?>
+								<?php
+								foreach ($yearArray as $year)
+								{
+									echo '<option value="'.$year.'">'.$year.'</option>';
+								}
+								?>
                             </select>
                             <span class="error" id ="courseyear1"></span>
                         </div>
@@ -725,38 +725,31 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
-                            <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
-                        </div>
-                    </div>
-                    <br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='courses'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='courses'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit"  type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcourses">
     </div>
@@ -805,24 +798,18 @@ function dateformatChanger($orgDate){
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
                         <select class="form-control" name="projyear" id ="projyearid" >
                             <option value="">* Select Year</option>
-                            <?php
-                            foreach ($yearArray as $year)
-                            {
-                                echo '<option value="'.$year.'">'.$year.'</option>';
-                            }
-                            ?>
+							<?php
+							foreach ($yearArray as $year)
+							{
+								echo '<option value="'.$year.'">'.$year.'</option>';
+							}
+							?>
                         </select>
                         <span class="error" id ="projyearerr"></span>
                     </div>
                 </div>
-                <br><br><br>
-                            <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
-                        </div>
-                    </div>
-                    <br><br>
+                <br>
+                <br><br>
                 <div class="form-group">
                     <label>ALL STUDENTS DETAILS : <br></label>
                     <div class="table-responsive">
@@ -877,31 +864,31 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='projects'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='projects'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    ?>
+					<?php
+					echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <!-- SUBMIT -->
         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitprojects">
@@ -1022,31 +1009,31 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='publication_books'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='publication_books'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
         </div> <br><br><br>
-        <?php
-        }
-        }
-        }
-        ?>
+		<?php
+		}
+		}
+		}
+		?>
         <div class="form-group">
             <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitpublicationbooks">
         </div>
@@ -1239,31 +1226,31 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='publication_journals'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='publication_journals'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
         </div> <br><br><br>
-        <?php
-        }
-        }
-        }
-        ?>
+		<?php
+		}
+		}
+		}
+		?>
         <div class="form-group">
             <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitjournals">
         </div>
@@ -1476,31 +1463,31 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='publication_conferences'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='publication_conferences'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
         </div> <br><br><br>
-        <?php
-        }
-        }
-        }
-        ?>
+		<?php
+		}
+		}
+		}
+		?>
         <div class="form-group">
             <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitconference">
         </div>
@@ -1596,31 +1583,31 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_attended'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                echo "<div class=\"form-group\">
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_attended'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    ?>
+					<?php
+					echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div><br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpattended">
     </div>
@@ -1630,7 +1617,7 @@ function dateformatChanger($orgDate){
     <!--FORM 5.2-->
     <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
         <div id ="section52">
-            <form onsubmit="return sttpo()" method="POST" name="sttporganised">
+            <form onsubmit="return sttpo()" method="POST" name="sttporganised" enctype="multipart/form-data">
                 <legend><h2>STTP</h2></legend>
                 <h3>Organised</h3>
                 <br>
@@ -1695,38 +1682,38 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br><br>
-                            <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
-                        </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
+                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
+                        <input type="file" name="sttpo_certificate_image" id="sttpo_certificate_image" accept="application/pdf" />
                     </div>
-                    <br><br>
-                <?php
-                $new_field_query="select * from new_fields where table_name='sttp_event_organized'";
-                $result=$conn->query($new_field_query);
-                if($result->num_rows>0){
-                while($row=$result->fetch_assoc()) {
-                $field_name = $row['field_name'];
-                $label = $row['label'];
-                $display = $row['display'];
-                if($display==1) {
-                echo "<div class=\"form-group\">
+                </div>
+                <br><br>
+				<?php
+				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
+				$result=$conn->query($new_field_query);
+				if($result->num_rows>0){
+				while($row=$result->fetch_assoc()) {
+				$field_name = $row['field_name'];
+				$label = $row['label'];
+				$display = $row['display'];
+				if($display==1) {
+				echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                 <input class="form-control"
-                    <?php
-                    echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                    ?>
+					<?php
+					echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+					?>
                 >
                 <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttporganized">
     </div>
@@ -1802,39 +1789,39 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br><br>
-                            <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                            <input type="file" name="sttpd_certificate_image" id="sttpd_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>
 
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
                 </div>
         </div> <br><br><br>
-        <?php
-        }
-        }
-        }
-        ?>
+		<?php
+		}
+		}
+		}
+		?>
         <div class="form-group">
             <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitsttpdelivered">
         </div>
@@ -1892,43 +1879,43 @@ function dateformatChanger($orgDate){
                             </div>
                             <div class="col-md-6 col-sm-9 col-lg-3 col-xs-6">
                                 <input class="form-control" id ="name22" name="name22" disabled="true" type="text"/>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                     <br><br><br>
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                            <input type="file" name="cocurr_certificate_image" id="cocurr_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>
 
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='co_curricular'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='co_curricular'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitcocurricular">
     </div>
@@ -1989,32 +1976,31 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br>
-
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='extra'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if($display==1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='extra'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while($row=$result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if($display==1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">";?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
-                        ?>
+						<?php
+						echo 'name="'.$field_name.'" placeholder="Enter '.$label.'"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div> <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?><br>
+	<?php
+	}
+	}
+	}
+	?><br>
     <div class="form-group">
         <input type="submit" <?php if($gender=='null') echo "disabled title='Please fill Personal details first'"?> style="color:white;" class="btn btn-primary btn-md" value="Submit" name = "submitextra">
     </div>
@@ -2067,32 +2053,32 @@ function dateformatChanger($orgDate){
                         </div>
                     </div>
                     <br><br>
-                    <?php
-                    $new_field_query="select * from new_fields where table_name='awards'";
-                    $result=$conn->query($new_field_query);
-                    if($result->num_rows>0){
-                    while ($row = $result->fetch_assoc()) {
-                    $field_name = $row['field_name'];
-                    $label = $row['label'];
-                    $display = $row['display'];
-                    if ($display == 1) {
-                    echo "<div class=\"form-group\">
+					<?php
+					$new_field_query="select * from new_fields where table_name='awards'";
+					$result=$conn->query($new_field_query);
+					if($result->num_rows>0){
+					while ($row = $result->fetch_assoc()) {
+					$field_name = $row['field_name'];
+					$label = $row['label'];
+					$display = $row['display'];
+					if ($display == 1) {
+					echo "<div class=\"form-group\">
                                                     <label class=\"col-sm-3 col-md-3 col-lg-3 col-xs-3\">" . $label . " : </label>
                                                     <div class=\"col-md-6 col-sm-9 col-lg-6 col-xs-6\">"; ?>
                     <input class="form-control"
-                        <?php
-                        echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
-                        ?>
+						<?php
+						echo 'name="' . $field_name . '" placeholder="Enter ' . $label . '"';
+						?>
                     >
                     <span class=\"error\"><?php echo $err[27]; ?></span>
         </div>
     </div>
     <br><br><br>
-    <?php
-    }
-    }
-    }
-    ?>
+	<?php
+	}
+	}
+	}
+	?>
     <div class="form-group">
         <input type="submit" style="color:white;" class="btn btn-primary btn-md" value="Submit" name="submit_award">
     </div>

@@ -1126,7 +1126,7 @@ function dateformatChanger($orgDate){
 			<?php
 			$sql="SELECT * FROM sttp_event_attended WHERE Emp6_Id=$empid";
 			$result=$conn->query($sql);
-			if(mysqli_num_rows($result) > 0)
+			if($result->num_rows > 0)
 			{
 				echo "<div class='table-responsive'>";
 				$sttpattended=1;
@@ -1163,14 +1163,14 @@ function dateformatChanger($orgDate){
 						$sttpcert="PDF Not Inserted";
 					else
 					{
-						$myData1 = array('pub'=>'','academic'=>'','sttp'=>'1','awd'=>'','cid'=>($sttpattended-1));
+						$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpa','awd'=>'','cid'=>($sttpattended-1));
 						$arg1 = base64_encode( json_encode($myData1) );
 						$sttpcert='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 					}
 					$myData = array('val'=>6, 'id'=>($sttpattended-1));
 					$arg = base64_encode( json_encode($myData) );
 					$GLOBALS['sttp_id']=$row['sttp_id'];
-					echo '<tr><td>'.$sttpattended.'</td><td><a href="EditEditPage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="EditDeletePage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
+					echo '<tr><td>'.$sttpattended.'</td><td><a href="editpage.php?parameter='.$arg.'"><span class="glyphicon glyphicon-edit">&nbsp</span></a></td><td><a href="deleteform.php?parameter='.$arg.'"><span class="glyphicon glyphicon-trash"></span></a></td>';
 					if($row["Title"] != "") echo '<td>'.$row["Title"].'</td>';else echo "<td>-</td>";
 					if($row["Speaker"] != "") echo '<td>'.$row["Speaker"].'</td>';else echo "<td>-</td>";
 					if($row["Organized_By"] != "") echo '<td>'.$row["Organized_By"].'</td>';else echo "<td>-</td>";
@@ -1233,6 +1233,7 @@ function dateformatChanger($orgDate){
 				echo "<th>Date From</th>";
 				echo "<th>Date To</th>";
 				echo "<th>Total Participation</th>";
+				echo "<th>Certificate</th>";
 				$new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
 				$new_result = $conn->query($new_field_query);
 				if ($new_result->num_rows > 0) {
@@ -1248,6 +1249,14 @@ function dateformatChanger($orgDate){
 				echo "</tr>";
 				while($row=mysqli_fetch_assoc($result))
 				{
+					if($row["Certificate"] == null)
+						$sttpocert="PDF Not Inserted";
+					else
+					{
+						$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpo','cocurr'=>'','extr'=>'','awd'=>'','cid'=>($sttporganized-1));
+						$arg_sttpo = base64_encode( json_encode($myData1) );
+						$sttpocert='<a href="showpdf.php?parameter='.$arg_sttpo.'">View</a>';
+					}
 					$myData = array('val'=>7, 'id'=>($sttporganized-1));
 					$arg = base64_encode( json_encode($myData) );
 					$GLOBALS['sttp_id']=$row['sttp_id'];
@@ -1259,6 +1268,7 @@ function dateformatChanger($orgDate){
 					if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
 					if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td>';else echo "<td>-</td>";
 					if($row["Number_Participants"] != 0) echo '<td>'.$row["Number_Participants"].'</td>';else echo "<td>-</td>";
+					echo '<td><center>'.$sttpocert.'</center></td>';
 					$new_field_query = "select * from new_fields where table_name='sttp_event_organized'";
 					$newresult = $conn->query($new_field_query);
 					if ($newresult->num_rows > 0) {
@@ -1310,6 +1320,7 @@ function dateformatChanger($orgDate){
 				echo "<th>Location</th>";
 				echo "<th>Date From</th>";
 				echo "<th>Date To</th>";
+				echo "<th>Certificate</th>";
 				$new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
 				$new_result = $conn->query($new_field_query);
 				if ($new_result->num_rows > 0) {
@@ -1325,6 +1336,14 @@ function dateformatChanger($orgDate){
 				echo "</tr>";
 				while($row=mysqli_fetch_assoc($result))
 				{
+					if($row["Certificate"] == null)
+						$sttpdcert="PDF Not Inserted";
+					else
+					{
+						$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpd','cocurr'=>'','extr'=>'','awd'=>'','cid'=>($sttpdelivered-1));
+						$sttpd_arg = base64_encode( json_encode($myData1) );
+						$sttpdcert='<a href="showpdf.php?parameter='.$sttpd_arg.'">View</a>';
+					}
 					$myData = array('val'=>8, 'id'=>($sttpdelivered-1));
 					$arg = base64_encode( json_encode($myData) );
 					$GLOBALS['sttp_id']=$row['sttp_id'];
@@ -1336,6 +1355,7 @@ function dateformatChanger($orgDate){
 					if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
 					if($row["Date_From"] != "") echo '<td>'.dateformatChanger($row["Date_From"]).'</td>';else echo "<td>-</td>";
 					if($row["Date_To"] != "") echo '<td>'.dateformatChanger($row["Date_To"]).'</td >';else echo "<td>-</td>";
+					echo '<td><center>'.$sttpdcert.'</center></td>';
 					$new_field_query = "select * from new_fields where table_name='sttp_event_delivered'";
 					$newresult = $conn->query($new_field_query);
 					if ($newresult->num_rows > 0) {
@@ -1385,6 +1405,7 @@ function dateformatChanger($orgDate){
 				echo "<th>Activity Type</th>";
 				echo "<th>Role</th>";
 				echo "<th>Date</th>";
+				echo "<th>Certificate</th>";
 				$new_field_query = "select * from new_fields where table_name='co_curricular'";
 				$new_result = $conn->query($new_field_query);
 				if ($new_result->num_rows > 0) {
@@ -1400,6 +1421,14 @@ function dateformatChanger($orgDate){
 				echo "</tr>";
 				while($row=mysqli_fetch_assoc($result))
 				{
+					if($row["Certificate"] == null)
+						$cocurrcert="PDF Not Inserted";
+					else
+					{
+						$myData1 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'1','extr'=>'','awd'=>'','cid'=>($cocurr-1));
+						$arg_cocurr = base64_encode( json_encode($myData1) );
+						$cocurrcert='<a href="showpdf.php?parameter='.$arg_cocurr.'">View</a>';
+					}
 					$myData = array('val'=>9, 'id'=>($cocurr-1));
 					$arg = base64_encode( json_encode($myData) );
 					$GLOBALS['curricular_id']=$row['curricular_id'];
@@ -1409,6 +1438,7 @@ function dateformatChanger($orgDate){
 					if($row["Type"] != "") echo '<td>'.$row["Type"].'</td>';else echo "<td>-</td>";
 					if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
 					if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
+					echo '<td><center>'.$cocurrcert.'</center></td>';
 					$new_field_query = "select * from new_fields where table_name='co_curricular'";
 					$newresult = $conn->query($new_field_query);
 					if ($newresult->num_rows > 0) {
@@ -1458,6 +1488,7 @@ function dateformatChanger($orgDate){
 				echo "<th>Location</th>";
 				echo "<th>Role</th>";
 				echo "<th>Date</th>";
+				echo "<th>Certificate</th>";
 				$new_field_query = "select * from new_fields where table_name='extra'";
 				$new_result = $conn->query($new_field_query);
 				if ($new_result->num_rows > 0) {
@@ -1473,6 +1504,14 @@ function dateformatChanger($orgDate){
 				echo "</tr>";
 				while($row=mysqli_fetch_assoc($result))
 				{
+					if($row["Certificate"] == null)
+						$extracert="PDF Not Inserted";
+					else
+					{
+						$myData2 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'','extr'=>'1','awd'=>'','cid'=>($extra-1));
+						$arg_extra = base64_encode( json_encode($myData2) );
+						$extracert='<a href="showpdf.php?parameter='.$arg_extra.'">View</a>';
+					}
 					$myData = array('val'=>10, 'id'=>($extra-1));
 					$arg = base64_encode( json_encode($myData) );
 					$GLOBALS['extra_id'] =$row['extra_id'];
@@ -1482,6 +1521,7 @@ function dateformatChanger($orgDate){
 					if($row["Place"] != "") echo '<td>'.$row["Place"].'</td>';else echo "<td>-</td>";
 					if($row["Role"] != "") echo '<td>'.$row["Role"].'</td>';else echo "<td>-</td>";
 					if($row["Date"] != "") echo '<td>'.dateformatChanger($row["Date"]).'</td>';else echo "<td>-</td>";
+					echo '<td><center>'.$extracert.'</center></td>';
 					$new_field_query = "select * from new_fields where table_name='extra'";
 					$newresult = $conn->query($new_field_query);
 					if ($newresult->num_rows > 0) {

@@ -30,11 +30,11 @@ else if($priv[0]!=1)
 
 if($priv[2]==1)
 {
-	echo "<style>"." #section22,#sectionY{ display:block; visibility:visible; } "."</style>";
+	echo "<style>"." #section25,#sectionV{ display:block; visibility:visible; } "."</style>";
 }
 else if($priv[2]!=1)
 {
-	echo "<style>"." #section22,#sectionY{ display:none; visibility:hidden; } .section22{ display:none; visibility:hidden; } "."</style>";
+	echo "<style>"." #section25,#sectionV{ display:none; visibility:hidden; } .section25{ display:none; visibility:hidden; } "."</style>";
 }
 
 if($priv[3]==1)

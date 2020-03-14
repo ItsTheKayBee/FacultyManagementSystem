@@ -189,17 +189,7 @@ function dateformatChanger($orgDate){
                             <span class="error" id ="coursesem1"></span>
                         </div>
                     </div>
-                    <br><br><br>
-                    <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
-                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
-                    </div>
-                </div><br><br>
+                    <br><br>
 					<?php
 					$new_field_query="select * from new_fields where table_name='courses'";
 					$result=$conn->query($new_field_query);
@@ -305,16 +295,6 @@ function dateformatChanger($orgDate){
                     </div>
                 </div>
                 <br><br>
-                <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
-                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
-                    </div>
-                </div><br><br>
                 <div class="form-group">
                     <label>STUDENT DETAILS : </label>
                     <br>
@@ -1524,13 +1504,13 @@ function dateformatChanger($orgDate){
                     </div></div>
                 <br><br><br>
                 <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($sttpo_certificate))
+							echo $sttpo_pdf;
+						?>
+                        <input type="file" name="sttpo_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br>
 				<?php
@@ -1642,13 +1622,13 @@ function dateformatChanger($orgDate){
                     </div>
                 </div><br><br><br>
                 <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($sttpd_certificate))
+							echo $sttpd_pdf;
+						?>
+                        <input type="file" name="sttpd_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br>
 				<?php
@@ -1746,11 +1726,11 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($cocurr_certificate))
+							echo $cocurr_certi;
+						?>
+                        <input type="file" name="cocurr_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br>
 				<?php
@@ -1846,13 +1826,13 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($extra_certificate))
+							echo $extra_pdf;
+						?>
+                        <input type="file" name="extra_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
-                </div><br><br>
+                </div><br><br><br><br>
 				<?php
 				$new_field_query="select * from new_fields where table_name='extra'";
 				$result=$conn->query($new_field_query);
@@ -1900,8 +1880,8 @@ function dateformatChanger($orgDate){
             <fieldset>
                 <legend>
                     <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
-	                    <?php echo "<a href = 'EditProfile.php?parameter=".$arg."#awards'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
-	                    ?>
+						<?php echo "<a href = 'EditProfile.php?parameter=".$arg."#awards'><font size='4'><span class='glyphicon glyphicon-arrow-left'></span>&nbspGo Back</font></a>";
+						?>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                         <h2>Awards and Achievements</h2>
@@ -1944,7 +1924,7 @@ function dateformatChanger($orgDate){
 						if(!empty($awd_certificate))
 							echo $awd_pdf;
 						?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+                        <input type="file" name="award_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br><br><br>
 				<?php

@@ -191,17 +191,7 @@ function dateformatChanger($orgDate){
                             <span class="error" id ="coursesem1"></span>
                         </div>
                     </div>
-                    <br><br><br>
-                <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
-                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
-                    </div>
-                </div><br><br>
+                    <br><br>
 					<?php
 					$new_field_query="select * from new_fields where table_name='courses'";
 					$result=$conn->query($new_field_query);
@@ -362,17 +352,7 @@ function dateformatChanger($orgDate){
                         </table>
                     </div>
                 </div>
-                <br><br><br>
-                <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
-                    <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
-                    </div>
-                </div><br><br>
+                <br>
 				<?php
 				$new_field_query="select * from new_fields where table_name='projects'";
 				$result=$conn->query($new_field_query);
@@ -1531,13 +1511,13 @@ function dateformatChanger($orgDate){
                     </div></div>
                 <br><br><br>
                 <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($sttpo_certificate))
+							echo $sttpo_pdf;
+						?>
+                        <input type="file" name="sttpo_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br>
 				<?php
@@ -1583,7 +1563,7 @@ function dateformatChanger($orgDate){
     </div>
     <!--STTP-DELIVERED-->
     <div id ="section53" class="well">
-        <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered">
+        <form action="" method="POST" onsubmit="return validateDeli()" name="sttpdelivered" enctype="multipart/form-data">
             <fieldset>
                 <legend>
                     <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
@@ -1651,13 +1631,13 @@ function dateformatChanger($orgDate){
                 </div>
                 <br><br><br>
                 <div class="form-group">
-                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment :</label>
+                    <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($sttpd_certificate))
+							echo $sttpd_pdf;
+						?>
+                        <input type="file" name="sttpd_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
                 </div><br><br>
 				<?php
@@ -1752,17 +1732,17 @@ function dateformatChanger($orgDate){
                         <label class="radio-inline"><input type="radio" name="cocurrtype" for="name2" <?php if($type != "KJ Somaiya(InHouse)") echo 'checked';?> onclick="var input = document.getElementById('name22'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Other</label>
                         <input class="form-control" id ="name22" name="name22" disabled="true" <?php if($type != "KJ Somaiya(InHouse)") echo 'value="'.$type.'"';?> type="text"/>
                     </div></div>
-                <br><br><br>
+                <br><br><br><br>
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($cocurr_certificate))
+							echo $cocurr_certi;
+						?>
+                        <input type="file" name="cocurr_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
-                </div><br><br>
+                </div><br><br><br>
 				<?php
 				$new_field_query="select * from new_fields where table_name='co_curricular'";
 				$result=$conn->query($new_field_query);
@@ -1856,13 +1836,13 @@ function dateformatChanger($orgDate){
                 <div class="form-group">
                     <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate :</label>
                     <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                        <?php
-                        if(!empty($changeName_certificate))
-                            echo $changeName_pdf;
-                        ?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+						<?php
+						if(!empty($extra_certificate))
+							echo $extra_pdf;
+						?>
+                        <input type="file" name="extra_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
-                </div><br><br>
+                </div><br><br><br><br>
 				<?php
 				$new_field_query="select * from new_fields where table_name='extra'";
 				$result=$conn->query($new_field_query);
@@ -1953,9 +1933,9 @@ function dateformatChanger($orgDate){
 						if(!empty($awd_certificate))
 							echo $awd_pdf;
 						?>
-                        <input type="file" name="certificate" accept="application/pdf" class="form-control" placeholder="Certificate">
+                        <input type="file" name="award_certificate_image" accept="application/pdf" class="form-control" placeholder="Certificate">
                     </div>
-                </div><br><br><br><br>
+                </div><br><br><br>
 				<?php
 				$new_field_query="select * from new_fields where table_name='awards'";
 				$result=$conn->query($new_field_query);

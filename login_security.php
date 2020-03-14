@@ -10,10 +10,11 @@ if(isset($_POST["submit"]))
 	$answer = $_POST["storepass"];
 	$sql = "UPDATE login SET Security_Question='$question',Security_Answer='$answer' WHERE Emp_Id=$empid";
 	if($conn->query($sql)){
+		$_SESSION["Security_Answer"] = 1;
 		$sql1 = "SELECT * FROM login WHERE Emp_Id=$empid";
 		$result1 = $conn->query($sql1);
 		$row1 = mysqli_fetch_assoc($result1);
-		if($row1["Password"] == "069ab86b69e20bc514a8eccda1b205bd")
+		if($row1["created_by"] != 1)
 		{
 			header('Location:ChangePassword.php');
 		}

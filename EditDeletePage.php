@@ -944,13 +944,13 @@ function dateformatChanger($orgDate){
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Attachment :</b>
-                    <?php
-                    if(!empty($changeName_certificate))
-                        echo $changeName_pdf;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($sttpo_certificate))
+			            echo $sttpo_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
@@ -1023,13 +1023,13 @@ function dateformatChanger($orgDate){
                 </div>
                 <br>
                 <div class="form-group">
-                    <b>Attachment :</b>
-                    <?php
-                    if(!empty($changeName_certificate))
-                        echo $changeName_pdf;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($sttpd_certificate))
+			            echo $sttpd_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
                 </div>
 	            <?php
 	            $new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
@@ -1092,12 +1092,12 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($changeName_certificate))
-                        echo $changeName_pdf;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+		            <?php
+		            if(!empty($cocurr_certificate))
+			            echo $cocurr_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='co_curricular'";
@@ -1161,12 +1161,12 @@ function dateformatChanger($orgDate){
                 <br>
                 <div class="form-group">
                     <b>Certificate :</b>
-                    <?php
-                    if(!empty($changeName_certificate))
-                        echo $changeName_pdf;
-                    else
-                        echo "<b>Not inserted</b>";
-                    ?>
+	                <?php
+	                if(!empty($exta_certificate))
+		                echo $extra_pdf;
+	                else
+		                echo "<b>Not inserted</b>";
+	                ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='extra'";

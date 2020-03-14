@@ -58,7 +58,6 @@ if(isset($_POST["submit"]))
     </style>
     <script>
         function validate() {
-
             var y = document.forms["myForm"]["sec_ans"].value;
             document.getElementById("ans").innerHTML = "";
             document.getElementById("sec_ans").style="";

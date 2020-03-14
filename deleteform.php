@@ -1,4 +1,7 @@
-<?php include 'deleteform_php.php'; ?>
+<?php include 'deleteform_php.php';
+function dateformatChanger($orgDate){
+	return date("d-m-Y", strtotime($orgDate));
+}?>
 <html lang="en">
 <head>
     <title>Delete : <?php echo $form; ?></title>
@@ -83,7 +86,6 @@
         </div>
     </div>
 </nav>
-
 <div class="col-lg-3 col-md-2 col-xs-1 col-sm-2"></div>
 
 <div class="container-fluid col-lg-6 col-md-8 col-xs-9 col-sm-8">
@@ -877,7 +879,7 @@
         <br>
     </div>
 
-    <!-- STTP-ORGNISED -->
+    <!-- STTP-ORGANISED -->
     <div id ="section52" class="well">
         <form onsubmit="return sttpo()" method="POST" name="sttporganised">
             <center>
@@ -911,6 +913,16 @@
                 <br>
                 <div class="form-group">
                     <b>Number Of Participants :</b> <?php echo $noparticipants;?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($sttpo_certificate))
+			            echo $sttpo_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='sttp_event_organized'";
@@ -982,6 +994,16 @@
                 <div class="form-group">
                     <b>Duration :</b> <?php echo $duration;?>
                 </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($sttpd_certificate))
+			            echo $sttpd_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
+                </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='sttp_event_delivered'";
 				$result=$conn->query($new_field_query);
@@ -1041,6 +1063,16 @@
                 <div class="form-group">
                     <b>Type :</b> <?php echo $type; ?>
                 </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($cocurr_certificate))
+			            echo $cocurr_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
+                </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='co_curricular'";
 				$result=$conn->query($new_field_query);
@@ -1099,6 +1131,16 @@
                 <br>
                 <div class="form-group">
                     <b>Location :</b> <?php echo $place; ?>
+                </div>
+                <br>
+                <div class="form-group">
+                    <b>Certificate :</b>
+		            <?php
+		            if(!empty($extra_certificate))
+			            echo $extra_pdf;
+		            else
+			            echo "<b>Not inserted</b>";
+		            ?>
                 </div>
 				<?php
 				$new_field_query="select * from new_fields where table_name='extra'";

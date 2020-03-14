@@ -367,7 +367,7 @@ if($val == 6)
         }
     }
 
-    $myData1 = array('pub'=>'','academic'=>'','sttp'=>'1','cid'=>$id);
+    $myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpa','cid'=>$id);
     $arg1 = base64_encode( json_encode($myData1) );
     $pdf6 = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
@@ -407,14 +407,19 @@ if($val == 7)
             $datefrom = $row["Date_From"];
             $dateto = $row["Date_To"];
             $name = $row["Name"];
-            break;
+	        $sttpo_certificate=$row["Certificate"];
+	        break;
         }
         else {
             $temp++;
         }
     }
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpo','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$sttpo_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
-    if(isset($_POST["return"]))
+
+	if(isset($_POST["return"]))
     {
         header('Location:profile.php#section52');
     }
@@ -450,14 +455,18 @@ if($val == 8)
             $dateto = $row["Date_To"];
             $name = $row["Name"];
             $eventtype = $row["Event_Type"];
-            break;
+	        $sttpd_certificate=$row["Certificate"];
+	        break;
         }
         else {
             $temp++;
         }
     }
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpd','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$sttpd_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
-    if(isset($_POST["return"]))
+	if(isset($_POST["return"]))
     {
         header('Location:profile.php#section53');
     }
@@ -491,12 +500,16 @@ if($val == 9)
             $role = $row["Role"];
             $name = $row["Name"];
             $type = $row["Type"];
-            break;
+	        $cocurr_certificate=$row["Certificate"];
+	        break;
         }
         else {
             $temp++;
         }
     }
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'1','extr'=>'','awd'=>'','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$cocurr_certi = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
     if(isset($_POST["return"]))
     {
@@ -532,12 +545,16 @@ if($val == 10)
             $name = $row["Name"];
             $place =  $row["Place"];
             $date = $row["Date"];
-            break;
+	        $extra_certificate=$row["Certificate"];
+	        break;
         }
         else {
             $temp++;
         }
     }
+	$myData1 = array('extr'=>'1','cid'=>$id);
+	$arg_extra = base64_encode( json_encode($myData1) );
+	$extra_pdf = "<a href='showpdf.php?parameter=".$arg_extra."'>View PDF</a>";
 
     if(isset($_POST["return"]))
     {
@@ -601,4 +618,3 @@ if($val == 11)
         }
     }
 }
-

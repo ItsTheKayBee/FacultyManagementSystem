@@ -63,7 +63,7 @@ else{
 		if(!$sscMarksheet == null){
 			$myData1 = array('pub'=>'','academic'=>'ssc','sttp'=>'','cid'=>'');
 			$arg1 = base64_encode( json_encode($myData1) );
-			$ssc='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+			$ssc='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 		}
 		else
 			$ssc = "PDF not Inserterd";
@@ -77,7 +77,7 @@ else{
 		else{
 			$myData1 = array('pub'=>'','academic'=>'hsc','sttp'=>'','cid'=>'');
 			$arg1 = base64_encode( json_encode($myData1) );
-			$hsc='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+			$hsc='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 		}
 		$bachelorsIn=$row1["Bachelors_In"];
 		$bachelorsInstitute=$row1["Bachelors_Institute"];
@@ -89,7 +89,7 @@ else{
 		else{
 			$myData1 = array('pub'=>'','academic'=>'btech','sttp'=>'','cid'=>'');
 			$arg1 = base64_encode( json_encode($myData1) );
-			$bach='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+			$bach='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 		}
 		$mastersIn=$row1["Masters_In"];
 		$mastersInstitute=$row1["Masters_Institute"];
@@ -101,7 +101,7 @@ else{
 		else{
 			$myData1 = array('pub'=>'','academic'=>'mtech','sttp'=>'','cid'=>'');
 			$arg1 = base64_encode( json_encode($myData1) );
-			$mast='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+			$mast='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 		}
 		$phdIn=$row1["Phd_In"];
 		$phdInstitute=$row1["Phd_Institute"];
@@ -113,7 +113,7 @@ else{
 		else{
 			$myData1 = array('pub'=>'','academic'=>'phd','sttp'=>'','cid'=>'');
 			$arg1 = base64_encode( json_encode($myData1) );
-			$phdi='<a href="showpdf.php?parameter='.$arg1.'">Read</a>';
+			$phdi='<a href="showpdf.php?parameter='.$arg1.'">View</a>';
 		}
 		$course_taught_id=array();
 		$courseid=array();

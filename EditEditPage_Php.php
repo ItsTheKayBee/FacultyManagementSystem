@@ -30,7 +30,7 @@ if($continue == 0)
 $myData = array('val'=>$empid);
 $arg = base64_encode(json_encode($myData));
 
-$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$image = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 $maxdate = (date("Y")-22)."-12-31";
 $err=array("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""."");
 $sql = "SELECT * FROM personal_details WHERE Emp3_Id=$empid";
@@ -1073,12 +1073,17 @@ if($val == 7)
 			$datefrom = $row["Date_From"];
 			$dateto = $row["Date_To"];
 			$name = $row["Name"];
+			$sttpo_certificate=$row["Certificate"];
 			break;
 		}
 		else {
 			$temp++;
 		}
 	}
+
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpo','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$sttpo_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
 	$flagorg=0;
 	if(isset($_POST["submitsttporganized"]))
@@ -1100,6 +1105,16 @@ if($val == 7)
 		{
 			$participantsorganized=0;
 		}
+		if(!empty($_FILES["sttpo_certificate_image"]["tmp_name"])){
+			$sttpo_certificate_image1 = addslashes(file_get_contents($_FILES["sttpo_certificate_image"]["tmp_name"]));
+			$image[17]=1;
+		}else{
+			$image[17]=0;
+		}
+		$myData1 = array('sttp'=>'sttpo','cid'=>$id);
+		$arg_sttpo = base64_encode( json_encode($myData1) );
+		$sttpo_certi = "<a href='showpdf.php?parameter=".$arg_sttpo."'>View PDF</a>";
+
 		$ba=date_create($datefromorganized);
 		$ab=date_create($dob);
 		$abc = date_create($datetoorganized);
@@ -1131,7 +1146,10 @@ if($val == 7)
 					}
 				}
 			}
-			$sql="UPDATE sttp_event_organized SET Type='$eventtype',Role='$role1',Number_Participants='$participantsorganized',Place='$placeorganized',Date_From='$datefromorganized',Date_To='$datetoorganized',Name='$organizedname'$newfields WHERE Emp7_Id='$empid' and sttp_id=$sttp_id and Type='$type' and Role='$role' and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
+			if($image[17]==1)
+				$sql="UPDATE sttp_event_organized SET Type='$eventtype',Role='$role1',Number_Participants='$participantsorganized',Place='$placeorganized',Date_From='$datefromorganized',Date_To='$datetoorganized',Name='$organizedname',Certificate='$sttpo_certificate_image1'$newfields WHERE Emp7_Id='$empid' and sttp_id=$sttp_id and Type='$type' and Role='$role' and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
+			else
+				$sql="UPDATE sttp_event_organized SET Type='$eventtype',Role='$role1',Number_Participants='$participantsorganized',Place='$placeorganized',Date_From='$datefromorganized',Date_To='$datetoorganized',Name='$organizedname'$newfields WHERE Emp7_Id='$empid' and sttp_id=$sttp_id and Type='$type' and Role='$role' and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
 			if($result=$conn->query($sql))
 			{
 				header('Location:EditProfile.php?parameter='.$arg.'#section52');
@@ -1160,12 +1178,16 @@ if($val == 8)
 			$dateto = $row["Date_To"];
 			$name = $row["Name"];
 			$eventtype = $row["Event_Type"];
+			$sttpd_certificate=$row["Certificate"];
 			break;
 		}
 		else {
 			$temp++;
 		}
 	}
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpd','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$sttpd_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
 	$flagdel=0;
 	if(isset($_POST["submitsttpdelivered"]))
@@ -1183,6 +1205,15 @@ if($val == 8)
 		if($eventtype1=="Other" && $deleventtype_new!=null){
 			$eventtype1=$deleventtype_new;
 		}
+		if(!empty($_FILES["sttpd_certificate_image"]["tmp_name"])){
+			$sttpd_certificate_image1 = addslashes(file_get_contents($_FILES["sttpd_certificate_image"]["tmp_name"]));
+			$image[16]=1;
+		}else{
+			$image[16]=0;
+		}
+		$myData1 = array('sttp'=>'sttpd','cid'=>$id);
+		$arg_sttpd = base64_encode( json_encode($myData1) );
+		$sttpd_certi = "<a href='showpdf.php?parameter=".$arg_sttpd."'>View PDF</a>";
 
 		$ba=date_create($datefromdelivered);
 		$ab=date_create($dob);
@@ -1217,7 +1248,11 @@ if($val == 8)
 					}
 				}
 			}
-			$sql="UPDATE sttp_event_delivered SET Description='$activitydescription',Place='$placedelivered',Duration='$durationdelivered',Date_From='$datefromdelivered',Date_To='$datetodelivered',Name='$deliveredname',Event_Type='$eventtype1'$newfields WHERE
+			if($image[16]==1)
+				$sql="UPDATE sttp_event_delivered SET Description='$activitydescription',Place='$placedelivered',Duration='$durationdelivered',Date_From='$datefromdelivered',Date_To='$datetodelivered',Name='$deliveredname',Event_Type='$eventtype1',Certificate='$sttpd_certificate_image1'$newfields WHERE
+        Emp9_Id='$empid' and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and sttp_id=$sttp_id and Event_Type='$eventtype'";
+			else
+				$sql="UPDATE sttp_event_delivered SET Description='$activitydescription',Place='$placedelivered',Duration='$durationdelivered',Date_From='$datefromdelivered',Date_To='$datetodelivered',Name='$deliveredname',Event_Type='$eventtype1'$newfields WHERE
         Emp9_Id='$empid' and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and sttp_id=$sttp_id and Event_Type='$eventtype'";
 			if($result=$conn->query($sql))
 			{
@@ -1246,12 +1281,16 @@ if($val == 9)
 			$role = $row["Role"];
 			$name = $row["Name"];
 			$type = $row["Type"];
+			$cocurr_certificate=$row["Certificate"];
 			break;
 		}
 		else {
 			$temp++;
 		}
 	}
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'1','extr'=>'','awd'=>'','cid'=>$id);
+	$arg1 = base64_encode( json_encode($myData1) );
+	$cocurr_certi = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
 
 	if(isset($_POST["submitcocurricular"]))
 	{
@@ -1259,6 +1298,15 @@ if($val == 9)
 		$cocurrdescription=$_POST["cocurrdescription"];
 		$cocurrdate=dateformatReverser($_POST["cocurrdate"]);
 		$cocurrrole=$_POST["cocurrrole"];
+		if(!empty($_FILES["cocurr_certificate_image"]["tmp_name"])){
+			$cocurr_certificate_image1 = addslashes(file_get_contents($_FILES["cocurr_certificate_image"]["tmp_name"]));
+			$image[15]=1;
+		}else{
+			$image[15]=0;
+		}
+		$myData1 = array('cocurr'=>'1','cid'=>$id);
+		$arg_cocurr = base64_encode( json_encode($myData1) );
+		$cocurr_pdf = "<a href='showpdf.php?parameter=".$arg_cocurr."'>View PDF</a>";
 		if(isset($_POST["name22"]))
 			$cocurrtype=$_POST["name22"];
 		else
@@ -1287,7 +1335,10 @@ if($val == 9)
 					}
 				}
 			}
-			$sql="UPDATE co_curricular SET Description='$cocurrdescription',Date='$cocurrdate',Role='$cocurrrole',Name='$cocurrname',Type='$cocurrtype'$newfields WHERE curricular_id=$cocurr_id and Emp10_Id='$empid' and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
+			if($image[15]==1)
+				$sql="UPDATE co_curricular SET Description='$cocurrdescription',Date='$cocurrdate',Role='$cocurrrole',Name='$cocurrname',Type='$cocurrtype',Certificate='$cocurr_certificate_image1'$newfields WHERE curricular_id=$cocurr_id and Emp10_Id='$empid' and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
+			else
+				$sql="UPDATE co_curricular SET Description='$cocurrdescription',Date='$cocurrdate',Role='$cocurrrole',Name='$cocurrname',Type='$cocurrtype'$newfields WHERE curricular_id=$cocurr_id and Emp10_Id='$empid' and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
 			if($result=$conn->query($sql))
 			{
 				header('Location:EditProfile.php?parameter='.$arg.'#section6');
@@ -1299,8 +1350,7 @@ if($val == 9)
 	}
 }
 
-if($val == 10)
-{
+if($val == 10) {
 	$form = "Extra";
 	$temp = 0;
 	$sql = "SELECT * FROM extra WHERE Emp11_Id=$empid";
@@ -1313,11 +1363,15 @@ if($val == 10)
 			$name = $row["Name"];
 			$place = $row["Place"];
 			$date = $row["Date"];
+			$extra_certificate=$row["Certificate"];
 			break;
 		} else {
 			$temp++;
 		}
 	}
+	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'','extr'=>'1','awd'=>'','cid'=>$id);
+	$arg_extra = base64_encode( json_encode($myData1) );
+	$extra_pdf = "<a href='showpdf.php?parameter=".$arg_extra."'>View PDF</a>";
 
 	if (isset($_POST["submitextra"])) {
 		$extraname = $_POST["extraname"];
@@ -1327,6 +1381,15 @@ if($val == 10)
 		$extraplace = $_POST["extraplace"];
 		$ba = date_create($extradate);
 		$ab = date_create($dob);
+		if(!empty($_FILES["extra_certificate_image"]["tmp_name"])){
+			$extra_certificate_image1 = addslashes(file_get_contents($_FILES["extra_certificate_image"]["tmp_name"]));
+			$image[14]=1;
+		}else{
+			$image[14]=0;
+		}
+		$myData1 = array('extr'=>'1','cid'=>$id);
+		$arg_extra = base64_encode( json_encode($myData1) );
+		$extra_pdf = "<a href='showpdf.php?parameter=".$arg_extra."'>View PDF</a>";
 
 		$diff = date_diff($ab, $ba);
 		if ($diff->format("%R") == '-') {
@@ -1348,7 +1411,10 @@ if($val == 10)
 					}
 				}
 			}
-			$sql = "UPDATE extra SET Description='$extradesc',Role='$extrarole',Place='$extraplace',Date='$extradate',Name='$extraname'$newfields WHERE Emp11_Id='$empid' and extra_id=$extra_id and Description='$description' and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
+			if($image[14]==1)
+				$sql = "UPDATE extra SET Description='$extradesc',Role='$extrarole',Place='$extraplace',Date='$extradate',Name='$extraname',Certificate='$extra_certificate_image1'$newfields WHERE Emp11_Id='$empid' and extra_id=$extra_id and Description='$description' and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
+			else
+				$sql = "UPDATE extra SET Description='$extradesc',Role='$extrarole',Place='$extraplace',Date='$extradate',Name='$extraname'$newfields WHERE Emp11_Id='$empid' and extra_id=$extra_id and Description='$description' and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
 			if ($result = $conn->query($sql)) {
 				header('Location:EditProfile.php?parameter='.$arg.'#section7');
 			} else {

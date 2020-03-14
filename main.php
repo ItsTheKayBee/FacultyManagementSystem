@@ -1,14 +1,25 @@
 <?php
 include 'dbconnect.php';
+
 if(!isset($_SESSION["Emp_Id"]))
 	header('Location:logout.php');
 if(isset($_COOKIE["cook"]))
 {
 	$_COOKIE["cook"] = "";
 }
+if(isset($_COOKIE["comb"]))
+{
+	$_COOKIE["comb"] = "";
+}
+
+function dateformatReverser($orgDate){
+	return date("Y-m-d", strtotime($orgDate));
+}
+function dateformatChanger($orgDate){
+	return date("d-m-Y", strtotime($orgDate));
+}
 setcookie("id", "", time() - 3600);
 $eid = $_SESSION["Emp_Id"];
-
 
 $sql2 = "SELECT * FROM personal_details";
 $result2 = $conn->query($sql2);
@@ -49,16 +60,17 @@ if(isset($_POST["ReportSubmit"]))
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="bootstrap-datetimepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-    <script src="bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
-            $('#datetimepicker2').datetimepicker({format: 'DD-MM-YYYY - hh:mm a'});
+            $('.datetimepicker').datetimepicker({format: 'DD-MM-YYYY',maxDate: $.now()});
+            $('.datetimepicker1').datetimepicker({format: 'DD-MM-YYYY',minDate:$.now(),maxDate: $.now()+15*86400000});
             $("#privs").hide();
             $("#assprivs").click(function(e)
             {
@@ -72,9 +84,9 @@ if(isset($_POST["ReportSubmit"]))
         var sql = "";
         var select = [0,0,0,0,0,0,0,0,0,0,0];
 
-        var key=[["Please select fields","All","Name","Gender","Email","Phone","DOB","Address","Joining Position","Joining Date","Years Of Experience","Promotion 1","Promotion 1 Date"],["Please select fields","All","SSC_Institute","SSC_Percentile","SSC_Year","HSC_Institute","HSC_Percentile","HSC_Year","Bachelors_In","Bachelors_Institute","Bachelors_Year","Bachelors_Percentile","Masters_In","Masters_Institute","Masters_Year","Masters_Percentile","Phd_In","Phd_Institute","Phd_Year","Phd_Percentile"],["Please Select Fields","All","Category","Course Id","Semester","Year"],["Please Select Fields","All","Book Name","ISBN","Date Published","Author","Authors Institute","Publisher Name","Co Authors","Edition"],["Please Select Fields","All","Name","Author","Title","Date","Type","Co Authors","Book Chapter","Peer Reviewed","Impact Factor","Publisher Name","Digital Object Identifier","Volume","Page Number","Issue","Citation","ISSN","Paid","SJR"],["Please Select Fields","All","Name","Location","Type","Date","Author","CoAuthors","H Index","Digital Object Identifier","Publisher Name","Proceding Name","Peer Reviewed","Theme","Paid","Page Number","ISSN","Organizer","Presented","Poster","Web","Citation Index"],["Please Select Fields","All","Title","Speaker","Organized By","Event Type","Location","Duration","Start Date","End Date","Number Of Participants"],["Please Select Fields","All","Name","Event Type","Role","Location","Start Date","End Date","Number Of Participants"],["Please Select Fields","All","Name","Description","Event Type","Duration","Location","Start Date","End Date"],["Please Select Fields","All","Name","Description","Type","Role","Date"],["Please Select Fields","All","Name","Description","Location","Role","Date"],["Please Select Fields","All","Title","Description","Type","Year","Student Details"]];
+        var key=[["Please select fields","All","Name","Gender","Email","Phone","DOB","Address","Joining Position","Joining Date","Years Of Experience","Promotion 1","Promotion 1 Date"],["Please select fields","All","SSC_Institute","SSC_Percentile","SSC_Year","HSC_Institute","HSC_Percentile","HSC_Year","Bachelors_In","Bachelors_Institute","Bachelors_Year","Bachelors_Percentile","Masters_In","Masters_Institute","Masters_Year","Masters_Percentile","Phd_In","Phd_Institute","Phd_Year","Phd_Percentile"],["Please Select Fields","All","Category","Course Id","Semester","Year"],["Please Select Fields","All","Book Name","ISBN","Date Published","Author","Authors Institute","Publisher Name","Co Authors","Edition"],["Please Select Fields","All","Name","Author","Title","Date","Type","Co Authors","Book Chapter","Peer Reviewed","Impact Factor","Publisher Name","Digital Object Identifier","Volume","Page Number","Issue","Citation","ISSN","Paid","SJR"],["Please Select Fields","All","Name","Location","Type","Date","Author","CoAuthors","H Index","Digital Object Identifier","Publisher Name","Proceding Name","Peer Reviewed","Theme","Paid","Page Number","ISSN","Organizer","Presented","Poster","Web","Citation Index"],["Please Select Fields","All","Title","Speaker","Organized By","Event Type","Location","Duration","Start Date","End Date","Number Of Participants"],["Please Select Fields","All","Name","Event Type","Role","Location","Start Date","End Date","Number Of Participants"],["Please Select Fields","All","Name","Description","Event Type","Duration","Location","Start Date","End Date"],["Please Select Fields","All","Name","Description","Type","Role","Date"],["Please Select Fields","All","Name","Description","Location","Role","Date"],["Please Select Fields","All","Title","Description","Type","Year","Student Details"],["Please Select Fields","All","Award Title","Description","Issuer","Honour Date"]];
         var val=[["","All","Name","Gender","Email","Contact","DOB","Address","Join_Pos","Join_Date","Years_Exp","Prom_1","Prom_1_Date"],["","All","SSC_Institute","SSC_Percentile","SSC_Year","HSC_Institute","HSC_Percentile","HSC_Year","Bachelors_In","Bachelors_Institute","Bachelors_Year","Bachelors_Percentile","Masters_In","Masters_Institute","Masters_Year","Masters_Percentile","Phd_In","Phd_Institute","Phd_Year","Phd_Percentile"],["","All","Category","Course_Id","Semester","Year"],["","All","Book_Name","ISBN","Date_Published"
-            ,"Author","Author_INST","Publisher_Name","Coauthors","Edition"],["","All","Name","Author","Title","Date","Type","CoAuthors","BookChapter","PeerReviewed","ImpactFactor","PublisherName","DigitalObjectIdentifier","Volume","PageNumber","Issue","Citation","ISSN","Paid","SJR"],["","All","Name","Place","Type","Date","Author","CoAuthors","H_Index","DOI","Pub_Name","Proc_Name","Peer","Theme","Paid","PageNo","ISSN","Organizer","Presented","Poster","Web","Citation_Index"],["","All","Title","Speaker","Organized_By","Event_Type","Place","Duration","Date_From","Date_To","Total_Participation"],["","All","Name","Type","Role","Place","Date_From","Date_To","Number_Participants"],["","All","Name","Description","Event_Type","Duration","Place","Date_From","Date_To"],["","All","Name","Description","Type","Role","Date"],["","All","Name","Description","Place","Role","Date"],["","All","Title","Description","Type","Year","StudentDetails"]];
+            ,"Author","Author_INST","Publisher_Name","Coauthors","Edition"],["","All","Name","Author","Title","Date","Type","CoAuthors","BookChapter","PeerReviewed","ImpactFactor","PublisherName","DigitalObjectIdentifier","Volume","PageNumber","Issue","Citation","ISSN","Paid","SJR"],["","All","Name","Place","Type","Date","Author","CoAuthors","H_Index","DOI","Pub_Name","Proc_Name","Peer","Theme","Paid","PageNo","ISSN","Organizer","Presented","Poster","Web","Citation_Index"],["","All","Title","Speaker","Organized_By","Event_Type","Place","Duration","Date_From","Date_To","Total_Participation"],["","All","Name","Type","Role","Place","Date_From","Date_To","Number_Participants"],["","All","Name","Description","Event_Type","Duration","Place","Date_From","Date_To"],["","All","Name","Description","Type","Role","Date"],["","All","Name","Description","Place","Role","Date"],["","All","Title","Description","Type","Year","StudentDetails"],["","All","AwardTitle","Description","Issuer","HonourDate"]];
         function dynamicdropdown(listindex)
         {
             document.getElementById("subcategory").length = 0;
@@ -128,6 +140,10 @@ if(isset($_POST["ReportSubmit"]))
                     for(var i = 0; i < key[11].length;i++)
                         document.getElementById("subcategory").options[i]=new Option(key[11][i],val[11][i]);
                     break;
+                case "awards" :
+                    for(var i = 0; i < key[12].length;i++)
+                        document.getElementById("subcategory").options[i]=new Option(key[12][i],val[12][i]);
+                    break;
             }
             return true;
         }
@@ -150,47 +166,46 @@ if(isset($_POST["ReportSubmit"]))
             document.getElementById("category").style = "";
             document.getElementById("subcaterror").innerHTML = "";
             document.getElementById("subcategory").style = "";
-            if(both=="")
+            if(both==="")
             {
-                if(a !="" && y == "")
+                if(a !=="" && y === "")
                 {
                     document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category Before Clicking The \"Add\" Button";
                     document.getElementById("subcategory").style = "border:2px solid red;";
-                    if(both!="")
+                    if(both!=="")
                         document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
                     return false;
                 }
-                else if(a=="" && y=="")
+                else if(a==="" && y==="")
                 {
                     document.getElementById("caterror").innerHTML = "* Please Select A Category";
                     document.getElementById("category").style = "border:2px solid red;";
                     document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
                     document.getElementById("subcategory").style = "border:2px solid red;";
-                    if(both!="")
+                    if(both!=="")
                         document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b>f/div>";
                     return false;
                 }
             }
-            else if(a !="" && y == "")
+            else if(a !=="" && y === "")
             {
                 document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
                 document.getElementById("subcategory").style = "border:2px solid red;";
                 document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
-                if(both!="")
+                if(both!=="")
                     document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
                 return false;
             }
-
             var t1 = document.getElementsByClassName("catele")[z.selectedIndex-1].label;
-            if(y=="")
+            if(y==="")
             {
                 return false;
             }
-            if(y=="All")
+            if(y==="All")
             {
                 z.remove(z.selectedIndex);
             }
-            if(table=="")
+            if(table==="")
             {
                 table=a;
                 table1 = t1;
@@ -348,7 +363,7 @@ if(isset($_POST["ReportSubmit"]))
                 case "projects" :
                     key[11].splice(x.selectedIndex,1);
                     val[11].splice(x.selectedIndex,1);
-                    if((y!="All") && (select[10] == 0))
+                    if((y!="All") && (select[11] == 0))
                     {
                         x.remove(1);
                         val[11].splice(1,1);
@@ -356,12 +371,21 @@ if(isset($_POST["ReportSubmit"]))
                         select[11]=1;
                     }
                     break;
+                case "awards" :
+                    key[12].splice(x.selectedIndex,1);
+                    val[12].splice(x.selectedIndex,1);
+                    if((y!=="All") && (select[12] === 0))
+                    {
+                        x.remove(1);
+                        val[12].splice(1,1);
+                        key[12].splice(1,1);
+                        select[12]=1;
+                    }
+                    break;
             }
-
             x.remove(x.selectedIndex);
             document.cookie ="cook ="+ both;
         }
-
         $(document).ready(function()
         {
             $("#myInput").on("keyup", function()
@@ -705,35 +729,20 @@ if(isset($_POST["assprivemp"]))
 		}
 		if($var==0)
 		{
-			$errvar = "Please Enter A Valid User Id";
+			$errvar = "*Please Enter A Valid User Id";
 		}
-		else {
-			echo $duration;
-			$date = $duration;
-			if($duration == "1Day"){
-				$d=strtotime("+1 Days");
-				$date =  date("Y-m-d", $d);
-			}
-			else if($duration == "2Days"){
-				$d=strtotime("+2 Days");
-				$date =  date("Y-m-d", $d);
-			}
-			if($duration == "3Days"){
-				$d=strtotime("+3 Days");
-				$date =  date("Y-m-d", $d);
-			}
-			if($duration == "1Week"){
-				$d=strtotime("+7 Days");
-				$date =  date("Y-m-d", $d);
-			}
-			$sql = "INSERT INTO edit VALUES($newemp,$eid,'$date')";
+		else if($newemp!=$eid){
+			$date =  dateformatReverser($duration);
+			$sql = "INSERT INTO edit VALUES($newemp,$eid,'$date',1)";
 			$conn->query($sql);
 			echo "<script type='text/javascript'>
-            $(document).ready(function(){
+             $(document).ready(function(){
                 $('#myModal2').modal('show');
-            });
+             });
             </script>";
 			echo "<script>location.href='main.php#section24';</script>";
+		}else{
+			$errvar = "*Please Enter A Different User Id";
 		}
 	}
 	else if($ar == "REVOKE")
@@ -755,7 +764,7 @@ if(isset($_POST["assprivemp"]))
 
 if(isset($_POST["addmem_submit"]))
 {
-	$empid = $_POST["empid"];
+	$new_empid = $_POST["empid"];
 	$pwd = md5("Kjsce1234");
 
 	if(isset($_POST["p1"]))
@@ -782,21 +791,20 @@ if(isset($_POST["addmem_submit"]))
 	$file = addslashes(file_get_contents('user.jpeg'));
 	echo "";
 
-	$sql = "INSERT INTO `login`(`Emp_Id`, `Password`, `P1`, `P2`, `P3`, `P4`, `P5`, `Security_Question`, `Security_Answer`, `admin_rights`)VALUES('$empid','$pwd','$p1','$p2','$p3','$p4','$p5','','',0)";
-	if($conn->query($sql) === true)
+	$sql = "INSERT INTO `login`(`Emp_Id`, `Password`, `P1`, `P2`, `P3`, `P4`, `P5`, `Security_Question`, `Security_Answer`, `admin_rights`)VALUES('$new_empid','$pwd','$p1','$p2','$p3','$p4','$p5','','',0)";
+	if($conn->query($sql))
 	{
-		//$erradd = "$file";
-		$sql1 = "INSERT INTO `academic_details`(`Emp2_Id`) VALUES ('$empid')";
+		$sql1 = "INSERT INTO `academic_details`(`Emp2_Id`) VALUES ('$new_empid')";
 		$conn->query($sql1);
-		$sql2="INSERT INTO `personal_details`(`Emp3_Id`, `Profile_Pic`) VALUES ('$empid','$file')";
+		$sql2="INSERT INTO `personal_details`(`Emp3_Id`, `Profile_Pic`) VALUES ('$new_empid','$file')";
 		$conn->query($sql2);
-		$_SESSION["newid"] = $empid;
+		$_SESSION["newid"] = $new_empid;
 		echo "<script type='text/javascript'>
             $(document).ready(function(){
-            $('#myModal1').modal('show');
+                $('#myModal1').modal('show');
+                location.href='main.php#section21';
             });
             </script>";
-		echo "<script>location.href='main.php#section22';</script>";
 	}
 	else{
 		$erradd = "* Member With This Id Already Exists";
@@ -838,8 +846,8 @@ if(isset($_POST["addfield_submit"])) {
 	$field_table = $_POST['field_table'];
 	$field_label = $_POST['field_label'];
 	$field_display = isset($_POST['field_display']);
-	if($field_display!=1)
-		$field_display=0;
+	if ($field_display != 1)
+		$field_display = 0;
 	if ($field_length == NULL || $field_length === "") {
 		$add_field_query = "ALTER TABLE " . $field_table . " ADD COLUMN " . $field_name . " " . $field_data_type . ";";
 	} else {
@@ -848,29 +856,15 @@ if(isset($_POST["addfield_submit"])) {
 	if ($conn->query($add_field_query) === TRUE) {
 		$succaddfield = "New field is added successfully!";
 		$new_field_query = "insert into new_fields(field_name,label,table_name,display) values('$field_name','$field_label','$field_table',$field_display)";
-		if($conn->query($new_field_query)===true){
+		if ($conn->query($new_field_query) === true) {
 			$succaddfield = "New field is added successfully!";
 		}
 	} else {
 		$erraddField = "*Field already exists in the table.";
 	}
 }
-if(!isset($_SESSION["firstvisit"]))
-{
-	$sql = "SELECT * FROM edit WHERE Emp1_Id=".$eid;
-	$result = $conn->query($sql);
-	while($row = mysqli_fetch_assoc($result))
-	{
-		echo "<script type='text/javascript'>
-        $(document).ready(function(){
-        $('#myModal').modal('show');
-        });
-        </script>";
-	}
-	$_SESSION["firstvisit"] = 0;
-}
 ?>
-<nav class="navbar " >
+<nav class="navbar" >
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id ="navleft">
             <b>Employee ID : <?php echo $empid; ?></b>
@@ -976,7 +970,7 @@ if(!isset($_SESSION["firstvisit"]))
 					$from_time = strtotime(date("H:i:s"));
 					$to_time = strtotime("23:59:59");
 					$time_diff = $to_time - $from_time;
-					$timeleft = gmdate('H', $time_diff)." Hours";
+					$timeleft = gmdate('H', $time_diff)." Hours ".gmdate('i', $time_diff)." Minutes";
 				}
 				else {
 					$timeleft = date_diff($ab,$ba)->format('%d Days');
@@ -1005,18 +999,23 @@ if(!isset($_SESSION["firstvisit"]))
 					echo '</div>';
 					echo '<br><br><br>';
 					echo '<div class="form-group">';
-					echo '<label class="col-sm-3 col-md-3 col-lg-4 col-xs-0">Duration : </label>';
+					echo '<label class="col-sm-3 col-md-3 col-lg-4 col-xs-0">End Date : </label>';
 					echo '<div class="col-md-9 col-sm-9 col-lg-6 col-xs-11">';
-                    echo ' <input type="date" name="duration">';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '<br><br><br>';
-                    echo '<div class="form-group">';
-                    echo '<center>';
-                    echo '<input type="submit" name="assprivemp" value="ASSIGN" class="btn btn-primary" />';
-                    echo '</center>';
-                    echo '</div>';
-                }
+					echo '<div class=\'input-group date datetimepicker1\'>
+                                <input type=\'text\' name="duration" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>';
+					echo '</div>';
+					echo '</div>';
+					echo '<br><br><br>';
+					echo '<div class="form-group">';
+					echo '<center>';
+					echo '<input type="submit" name="assprivemp" value="ASSIGN" class="btn btn-primary" />';
+					echo '</center>';
+					echo '</div>';
+				}
 				else {
 					echo '<div class="form-group">';
 					echo '<label class="col-sm-3 col-md-3 col-lg-4 col-xs-0">Rights Assigned To : </label>';
@@ -1042,21 +1041,19 @@ if(!isset($_SESSION["firstvisit"]))
             </form>
         </div>
 		<?php
-
-            echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+		echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
                 <legend><h1>Add Member</h1></legend>
                 <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()" enctype="multipart/form-data">
-
                     <div class="form-group">';
-			if(!empty($erradd)){
-				echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Employee ID" autofocus name="empid" >';
-				echo '<span class="error" id ="empid">'.$erradd.'</span>';
-			}
-			else {
-				echo '<input type="text" class="form-control" placeholder="Enter Employee ID" name="empid" >';
-			}
+		if(!empty($erradd)){
+			echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Employee ID" autofocus name="empid" >';
+			echo '<span class="error" id ="empid">'.$erradd.'</span>';
+		}
+		else {
+			echo '<input type="text" class="form-control" placeholder="Enter Employee ID" name="empid" >';
+		}
 
-			echo '</div>
+		echo '</div>
     <br>
     <p id ="assprivs" class="asspriv"><span id ="abc" class="glyphicon glyphicon-collapse-down"></span>&nbsp;Assign Privilege(s)</p>
     <div class="form-group" id ="privs">
@@ -1068,19 +1065,16 @@ if(!isset($_SESSION["firstvisit"]))
     </div>
     <span class="error" id ="privelages"></span>
     <input type="hidden" id ="storepass" name="storepass">
-
-
     <div class="form-group">
         <center>
         <input type="submit" class="btn btn-primary" name="addmem_submit" value="Submit">
         </form></center>
     </div>
-
 </div>';
 
-        if($_SESSION['admin']==1){
-			echo '<div>
-<div class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+		if($_SESSION['admin']==1){
+			echo '<div> 
+<div id ="section22" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
     <legend><h1>Add Course</h1></legend>
     <form  action="main.php" name="add_course" method="POST" onsubmit="return validateAddCourse()">
         <div class="form-group">';
@@ -1174,7 +1168,7 @@ if(!isset($_SESSION["firstvisit"]))
         </div>
     </form>
 </div>
-</div>';
+</div></div>';
 		}?>
         <div id ="section23" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
             <legend><h1>Report Generation</h1></legend>
@@ -1203,6 +1197,7 @@ if(!isset($_SESSION["firstvisit"]))
                                     <option class="catele" value="co_curricular" label="Co-curricular"></option>
                                     <option class="catele" value="extra" label="Extras"></option>
                                     <option class="catele" value="projects" label="Projects Guided"></option>
+                                    <option class="catele" value="awards" label="Awards"></option>
                                 </select>
                                 <span class="error" id ="caterror"></span>
                             </div>
@@ -1211,10 +1206,10 @@ if(!isset($_SESSION["firstvisit"]))
                         <div class="form-group">
                             <div class="sub_category_div" id ="sub_category_div">Please select attributes:
                                 <script type="text/javascript">
-                                    document.write('<select class="form-control"  name="subcategory" id="subcategory"><option  value="" >Please select type of report</option></select>');
+                                    document.write('<select class="form-control"  name="subcategory" id="subcategory"><option  value="" >* Please select type of report</option></select>');
                                 </script>
                                 <noscript>
-                                    <select  name="subcategory" id ="subcategory">
+                                    <select name="subcategory" id ="subcategory">
                                         <option value=""></option>
                                     </select>
                                 </noscript>
@@ -1230,20 +1225,20 @@ if(!isset($_SESSION["firstvisit"]))
                         <hr>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row">
                             FROM:
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
+                            <div class='input-group date datetimepicker'>
+                                <input type='text' name="from" id="from" class="form-control" />
                                 <span class="input-group-addon">
-	                        <span class="glyphicon glyphicon-calendar"></span>
-	                    </span>
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row" style="float: right">
                             TO:
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" />
+                            <div class='input-group date datetimepicker'>
+                                <input type='text' name="to" id="to" class="form-control" />
                                 <span class="input-group-addon">
-	                        <span class="glyphicon glyphicon-calendar"></span>
-	                    </span>
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1267,12 +1262,12 @@ if(!isset($_SESSION["firstvisit"]))
                                 <option class="datele" value="17" label="Co Curricular Activites - Date"></option>
                                 <option class="datele" value="18" label="Extra Curricular Activites - Date"></option>
                                 <option class="datele" value="19" label="Projects Guided - Year"></option>
+                                <option class="datele" value="20" label="Award Received - Date"></option>
                             </select>
                             <br>
                             <span class="error" id ="date"></span>
                             <input type="button" onclick="addDate()" value="Add"><br>
                         </div>
-                        <br>
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                             <div id ="datecat"></div>
                         </div>
@@ -1280,31 +1275,6 @@ if(!isset($_SESSION["firstvisit"]))
                     </div>
                 </fieldset>
             </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id ="myModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Editing Rights</h4>
-            </div>
-            <div class="modal-body">
-				<?php
-				$sql = "SELECT * FROM edit WHERE Emp1_Id=".$eid;
-				$result = $conn->query($sql);
-				echo "<ul>";
-				while($row = mysqli_fetch_assoc($result))
-				{
-					echo "<li><b>Id : ".$row["Emp2_Id"]."</b> has given you form editing permission till <b>".$row["Date"]."</b>.</li>";
-				}
-				echo "</ul>";
-				?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
         </div>
     </div>
 </div>
@@ -1351,7 +1321,7 @@ if(!isset($_SESSION["firstvisit"]))
                 You Have Assigned Your Profile Editing Rights To :<br>
                 <ul>
                     <li>User Id : &nbsp;<b><?php echo $id; ?></b>.</li>
-                    <li>Duration : <b><?php echo $date; ?></b>.</li>
+                    <li>End Date : <b><?php echo dateformatChanger($date); ?></b>.</li>
                 </ul>
             </div>
             <div class="modal-footer">

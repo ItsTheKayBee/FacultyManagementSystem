@@ -872,7 +872,7 @@ function dateformatChanger($orgDate){
                     <div class="form-group">
                         <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                            <input type="file" name="proj_certificate_image" id="proj_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>
@@ -1687,9 +1687,9 @@ function dateformatChanger($orgDate){
                 </div>
                 <br><br><br>
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                            <input type="file" name="sttpo_certificate_image" id="sttpo_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>
@@ -1793,9 +1793,9 @@ function dateformatChanger($orgDate){
                     </div>
                     <br><br><br>
                     <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Attachment : </label>
+                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
                         <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
+                            <input type="file" name="sttpd_certificate_image" id="sttpd_certificate_image" accept="application/pdf" />
                         </div>
                     </div>
                     <br><br>
@@ -1884,13 +1884,7 @@ function dateformatChanger($orgDate){
                             </div>
                         </div>
                     </div>
-                    <br><br><br>
-                    <div class="form-group">
-                        <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Certificate : </label>
-                        <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">
-                            <input type="file" name="changeName_certificate_image" id="changeName_certificate_image" accept="application/pdf" />
-                        </div>
-                    </div>
+                    <br>
                     <br><br>
 					<?php
 					$new_field_query="select * from new_fields where table_name='co_curricular'";

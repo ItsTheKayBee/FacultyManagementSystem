@@ -14,31 +14,28 @@ function addDate()
 	var x = document.getElementById("from").value;
 	var y = document.getElementById("to").value;
 	var z = document.getElementById("datecategory").value;
-	if(x == "" && y == ""){
+	if(x === "" && y === ""){
 		alert("No Value Chosen");
 		document.report.from.style = "border:2px solid red";
 		document.report.to.style = "border:2px solid red";
 		document.getElementById("from").focus();
 		temp = 1;
 	}
-	else if(z == ""){
+	else if(z === ""){
 		alert("Please Select a Field");
 		document.report.datecategory.style = "border:2px solid red";
 		document.getElementById("datecategory").focus();
 		temp = 1;
 	}
-	else if(x == ""){
+	else if(x === ""){
 		x = "1951-01-01";
-		//alert(x);
 	}
-	else if(y == ""){
-		var today = new Date().toISOString().slice(0, 10);
-		y = today;
-		//alert(y);
+	else if(y === ""){
+		y = new Date().toISOString().slice(0, 10);
 	}
-	if(temp != 1)
+	if(temp !== 1)
 	{
-		if(from=="")
+		if(from==="")
 		{
 			from=x;
 			from1 = x;
@@ -48,8 +45,7 @@ function addDate()
 			from= ","+x;
 			from1 = x;
 		}
-
-		if(to=="")
+		if(to==="")
 		{
 			to=y;
 			to1 = y;
@@ -59,24 +55,22 @@ function addDate()
 			to= ","+y;
 			to1 = y;
 		}
-
-		if(field=="")
+		if(field==="")
 			field=z;
 		else
 			field= ","+z;
 
-		if(comb=="")
+		if(comb==="")
 			comb=from+","+to+","+field;
 		else
 			comb+=from+to+field;
 	}
 
 	var dz= document.getElementById("datecategory");
-	var t1 = document.getElementsByClassName("datele")[dz.selectedIndex-1].label;
-	field = t1;
+	field = document.getElementsByClassName("datele")[dz.selectedIndex - 1].label;
 	var both2 = "";
 	document.getElementById("datecat").innerHTML = "<div class='cat'><b>From : "+from1+" - To : "+to1+", "+field+"</b></div>";
-	if(comb != "")
+	if(comb !== "")
 		document.cookie ="comb ="+ comb;
 }
 function deleteFaculty(faculty) {

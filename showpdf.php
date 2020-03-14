@@ -293,7 +293,7 @@ if($pub == "ccerti")
 // STTP ATTENDED : CERTIFICATE //
 $sttp = $myData->sttp;
 
-if($sttp == 1)
+if($sttp == 'sttpa')
 {
 	$query = "SELECT Certificate FROM sttp_event_attended WHERE Emp6_Id=$empid" ;
 	$cid = $myData->cid;
@@ -318,6 +318,79 @@ if($sttp == 1)
 		}
 		else
 			$checksa++;
+	}
+}
+
+if($sttp == 'sttpo') {
+	$query = "SELECT Certificate FROM sttp_event_organized WHERE Emp7_Id=$empid";
+	$cid = $myData->cid;
+	$checkso = 0;
+	$result2 = mysqli_query($conn, $query);
+	while ($row = mysqli_fetch_assoc($result2)) {
+		if ($checkso == $cid) {
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Content-Type: $mime');
+			header('Content-Description: File Transfer');
+			header('Content-Transfer-Encoding: binary');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header("Content-type: application/pdf");
+			ob_clean();
+			flush();
+			$pdf_content = ($row["Certificate"]);
+			echo $pdf_content;
+			break;
+		} else
+			$checkso++;
+	}
+}
+
+if($sttp == 'sttpd') {
+	$query = "SELECT Certificate FROM sttp_event_delivered WHERE Emp9_Id=$empid";
+	$cid = $myData->cid;
+	$checksd = 0;
+	$result2 = mysqli_query($conn, $query);
+	while ($row = mysqli_fetch_assoc($result2)) {
+		if ($checksd == $cid) {
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Content-Type: $mime');
+			header('Content-Description: File Transfer');
+			header('Content-Transfer-Encoding: binary');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header("Content-type: application/pdf");
+			ob_clean();
+			flush();
+			$pdf_content = ($row["Certificate"]);
+			echo $pdf_content;
+			break;
+		} else
+			$checksd++;
+	}
+}
+$cocurr = $myData->cocurr;
+
+if($cocurr == 1) {
+	$query = "SELECT Certificate FROM co_curricular WHERE Emp10_Id=$empid";
+	$cid = $myData->cid;
+	$checkco = 0;
+	$result2 = mysqli_query($conn, $query);
+	while ($row = mysqli_fetch_assoc($result2)) {
+		if ($checkco == $cid) {
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Content-Type: $mime');
+			header('Content-Description: File Transfer');
+			header('Content-Transfer-Encoding: binary');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header("Content-type: application/pdf");
+			ob_clean();
+			flush();
+			$pdf_content = ($row["Certificate"]);
+			echo $pdf_content;
+			break;
+		} else
+			$checkco++;
 	}
 }
 

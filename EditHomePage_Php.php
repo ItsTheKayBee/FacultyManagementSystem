@@ -1045,6 +1045,11 @@ if(isset($_POST["submitsttporganized"]))
 	$participantsorganized=$_POST["participantsorganized"];
 	$placeorganized=$_POST["placeorganized"];
 	$orgeventtype_new=$_POST['orgeventtype_new'];
+	if (!empty($_FILES["sttpo_certificate_image"]["tmp_name"])) {
+		$sttpo_certificate_image = addslashes(file_get_contents($_FILES["sttpo_certificate_image"]["tmp_name"]));
+		$image[17] = 1;
+	} else
+		$image[17] = 0;
 
 	if($eventtype=="Other" && $orgeventtype_new!=null){
 		$eventtype=$orgeventtype_new;
@@ -1086,7 +1091,10 @@ if(isset($_POST["submitsttporganized"]))
 				}
 			}
 		}
-		$sql="INSERT INTO sttp_event_organized(`Emp7_Id`, `Type`, `Role`, `Number_Participants`, `Place`, `Date_From`, `Date_To`, `Name`$newfields) VALUES($empid,'$eventtype','$role',$participantsorganized,'$placeorganized','$datefromorganized','$datetoorganized','$organizedname'$newfieldsval)";
+		if($image[17]==1)
+			$sql="INSERT INTO sttp_event_organized(`Emp7_Id`, `Type`, `Role`, `Number_Participants`, `Place`, `Date_From`, `Date_To`, `Name`,Certificate$newfields) VALUES($empid,'$eventtype','$role',$participantsorganized,'$placeorganized','$datefromorganized','$datetoorganized','$organizedname','$sttpo_certificate_image'$newfieldsval)";
+		else
+			$sql="INSERT INTO sttp_event_organized(`Emp7_Id`, `Type`, `Role`, `Number_Participants`, `Place`, `Date_From`, `Date_To`, `Name`,Certificate$newfields) VALUES($empid,'$eventtype','$role',$participantsorganized,'$placeorganized','$datefromorganized','$datetoorganized','$organizedname',NULL$newfieldsval)";
 		if($result=$conn->query($sql))
 		{
 			header('Location:EditProfile.php?parameter='.$arg.'#section52');
@@ -1108,6 +1116,11 @@ if(isset($_POST["submitsttpdelivered"]))
 	$placedelivered=$_POST["placedelivered"];
 	$durationdelivered=$_POST["durationdelivered"];
 	$deleventtype_new=$_POST['deleventtype_new'];
+	if (!empty($_FILES["sttpd_certificate_image"]["tmp_name"])) {
+		$sttpd_certificate_image = addslashes(file_get_contents($_FILES["sttpd_certificate_image"]["tmp_name"]));
+		$image[16] = 1;
+	} else
+		$image[16] = 0;
 
 	if($eventtype=="Other" && $deleventtype_new!=null){
 		$eventtype=$deleventtype_new;
@@ -1145,7 +1158,10 @@ if(isset($_POST["submitsttpdelivered"]))
 				}
 			}
 		}
-		$sql="INSERT INTO sttp_event_delivered(`Emp9_Id`, `Description`, `Place`, `Duration`, `Date_From`, `Date_To`, `Name`, `Event_Type`$newfields) VALUES($empid,'$activitydescription','$placedelivered','$durationdelivered','$datefromdelivered','$datetodelivered','$deliveredname','$eventtype'$newfieldsval)";
+		if($image[16]==1)
+			$sql="INSERT INTO sttp_event_delivered(`Emp9_Id`, `Description`, `Place`, `Duration`, `Date_From`, `Date_To`, `Name`, `Event_Type`,Certificate$newfields) VALUES($empid,'$activitydescription','$placedelivered','$durationdelivered','$datefromdelivered','$datetodelivered','$deliveredname','$eventtype','$sttpd_certificate_image'$newfieldsval)";
+		else
+			$sql="INSERT INTO sttp_event_delivered(`Emp9_Id`, `Description`, `Place`, `Duration`, `Date_From`, `Date_To`, `Name`, `Event_Type`,Certificate$newfields) VALUES($empid,'$activitydescription','$placedelivered','$durationdelivered','$datefromdelivered','$datetodelivered','$deliveredname','$eventtype',NULL$newfieldsval)";
 		if($result=$conn->query($sql))
 		{
 			header('Location:EditProfile.php?parameter='.$arg.'#section53');
@@ -1168,6 +1184,11 @@ if(isset($_POST["submitcocurricular"]))
 		$cocurrtype="KJ Somaiya(InHouse)";
 	$ba=date_create($cocurrdate);
 	$ab=date_create($dob);
+	if (!empty($_FILES["cocurr_certificate_image"]["tmp_name"])) {
+		$cocurr_certificate_image = addslashes(file_get_contents($_FILES["cocurr_certificate_image"]["tmp_name"]));
+		$image[15] = 1;
+	} else
+		$image[15] = 0;
 
 	$diff=date_diff($ab,$ba);
 	if($diff->format("%R")=='-'){
@@ -1190,7 +1211,10 @@ if(isset($_POST["submitcocurricular"]))
 				}
 			}
 		}
-		$sql="INSERT INTO co_curricular(`Emp10_Id`, `Description`, `Date`, `Role`, `Name`, `Type`$newfields) VALUES ($empid,'$cocurrdescription','$cocurrdate','$cocurrrole','$cocurrname','$cocurrtype'$newfieldsval)";
+		if($image[15]==1)
+			$sql="INSERT INTO co_curricular(`Emp10_Id`, `Description`, `Date`, `Role`, `Name`, `Type`,Certificate$newfields) VALUES ($empid,'$cocurrdescription','$cocurrdate','$cocurrrole','$cocurrname','$cocurrtype','$cocurr_certificate_image'$newfieldsval)";
+		else
+			$sql="INSERT INTO co_curricular(`Emp10_Id`, `Description`, `Date`, `Role`, `Name`, `Type`,Certificate$newfields) VALUES ($empid,'$cocurrdescription','$cocurrdate','$cocurrrole','$cocurrname','$cocurrtype',NULL$newfieldsval)";
 		if($result=$conn->query($sql))
 		{
 			header('Location:EditProfile.php?parameter='.$arg.'#section6');
@@ -1210,6 +1234,11 @@ if(isset($_POST["submitextra"]))
 	$extraplace=$_POST["extraplace"];
 	$ba=date_create($extradate);
 	$ab=date_create($dob);
+	if (!empty($_FILES["extra_certificate_image"]["tmp_name"])) {
+		$extra_certificate_image = addslashes(file_get_contents($_FILES["extra_certificate_image"]["tmp_name"]));
+		$image[14] = 1;
+	} else
+		$image[14] = 0;
 
 	$diff=date_diff($ab,$ba);
 	if($diff->format("%R")=='-'){
@@ -1232,7 +1261,12 @@ if(isset($_POST["submitextra"]))
 				}
 			}
 		}
-		$sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname'$newfieldsval)";
+		if ($image[14] == 1) {
+			$sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`,`Certificate`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname','$extra_certificate_image'$newfieldsval)";
+
+		} else {
+			$sql="INSERT INTO extra(`Emp11_Id`, `Description`, `Role`, `Place`, `Date`, `Name`,`Certificate`$newfields) VALUES($empid,'$extradesc','$extrarole','$extraplace','$extradate','$extraname',NULL$newfieldsval)";
+		}
 		if($result=$conn->query($sql))
 		{
 			header('Location:EditProfile.php?parameter='.$arg.'#section7');
