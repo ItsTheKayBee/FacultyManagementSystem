@@ -57,16 +57,16 @@ if(isset($_POST["ReportSubmit"]))
     <title>Privileges : <?php echo $eid; ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="libraries/bootstrap-3.3.7/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="libraries/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <script src="libraries/http_ajax.googleapis.com_ajax_libs_jquery_3.4.1_jquery.js"></script>
+    <script src="libraries/http_ajax.googleapis.com_ajax_libs_jquery_1.11.3_jquery.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script src="bootstrap-datetimepicker.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
+    <script src="libraries/http_cdnjs.cloudflare.com_ajax_libs_moment.js_2.10.6_moment.js"></script>
+    <script src="libraries/bootstrap-datetimepicker.min.js"></script>
+    <script src="libraries/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="libraries/md5-js/md5.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.datetimepicker').datetimepicker({format: 'DD-MM-YYYY',maxDate: $.now()});

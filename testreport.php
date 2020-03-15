@@ -1296,10 +1296,10 @@ for ($i = 0; $i < sizeof($table); $i++) {
 ?>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="libraries/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="libraries/jquery.min.js"></script>
+    <script src="libraries/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=NTR' rel='stylesheet'>
     <style>
         body, table {
@@ -1373,7 +1373,7 @@ for ($i = 0; $i < sizeof($table); $i++) {
             font-size: 20px;
         }
     </style>
-    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="libraries/http_unpkg.com_xlsx_dist_xlsx.full.min.js"></script>
     <script>
         function HandleBackFunctionality() {
             document.cookie = 'cook=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';

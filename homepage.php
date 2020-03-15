@@ -12,10 +12,10 @@ function dateformatChanger($orgDate){
     <title>Home : <?php echo $empid; ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="libraries/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="libraries/jquery.min.js"></script>
+    <script src="libraries/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=NTR' rel='stylesheet'>
     <style>
         body
@@ -192,7 +192,7 @@ function dateformatChanger($orgDate){
                                     <span class="error" id ="email"><?php echo $err[0]; ?></span> &nbsp &nbsp <br><br>
                                 </div>
                             </div>
-                            <br><br><br>
+                            <br><br><br><br>
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3 col-xs-3">Contact No : </label>
                                 <div class="col-md-6 col-sm-9 col-lg-6 col-xs-6">

@@ -1,124 +1,110 @@
 <?php
 include 'dbconnect.php';
 include 'Decision2.php';
-if(!isset($_SESSION["Emp_Id"]))
+if (!isset($_SESSION["Emp_Id"]))
     header('Location:logout.php');
 
-$empid=$_SESSION["Emp_Id"];
+$empid = $_SESSION["Emp_Id"];
 
 $sql = "SELECT * FROM login WHERE Emp_Id=$empid";
 $result = $conn->query($sql);
 $row = mysqli_fetch_assoc($result);
-if($row["P1"] == "FALSE")
-{
+if ($row["P1"] == "FALSE") {
     header('Location:profile.php');
 }
 $form = "";
 
-if($val == 1)
-{
+if ($val == 1) {
     $form = "Courses";
     $temp = 0;
-    $sql="SELECT * from courses where Emp8_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id){
-            $course_taught_id=$row['course_taught_id'];
-            $courseid=$row["Course_Id"];
-            $coursecategory=$row["Category"];
-            $coursesem=$row["Semester"];
-            $courseyear=$row["Year"];
+    $sql = "SELECT * from courses where Emp8_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $course_taught_id = $row['course_taught_id'];
+            $courseid = $row["Course_Id"];
+            $coursecategory = $row["Category"];
+            $coursesem = $row["Semester"];
+            $courseyear = $row["Year"];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section3');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM courses WHERE Emp8_Id=$empid and course_taught_id=$course_taught_id AND Category='$coursecategory' AND Course_Id='$courseid' AND Semester='$coursesem' AND Year='$courseyear'";
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM courses WHERE Emp8_Id=$empid and course_taught_id=$course_taught_id AND Category='$coursecategory' AND Course_Id='$courseid' AND Semester='$coursesem' AND Year='$courseyear'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section3');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val==2)
-{
+if ($val == 2) {
     $form = "Projects";
-    $temp=0;
-    $flagproject=0;
-    $sql="SELECT * FROM projects WHERE Emp12_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id){
-            $title=$row['Title'];
-            $type=$row['Type'];
-            $proj_id=$row['project_id'];
-            $description=$row['Description'];
-            $year=$row['Year'];
-            $s1name=$row['S1_name'];
-            $s2name=$row['S2_name'];
-            $s3name=$row['S3_name'];
-            $s4name=$row['S4_name'];
+    $temp = 0;
+    $flagproject = 0;
+    $sql = "SELECT * FROM projects WHERE Emp12_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $title = $row['Title'];
+            $type = $row['Type'];
+            $proj_id = $row['project_id'];
+            $description = $row['Description'];
+            $year = $row['Year'];
+            $s1name = $row['S1_name'];
+            $s2name = $row['S2_name'];
+            $s3name = $row['S3_name'];
+            $s4name = $row['S4_name'];
 
-            $s1roll=$row['S1_roll'];
-            $s2roll=$row['S2_roll'];
-            $s3roll=$row['S3_roll'];
-            $s4roll=$row['S4_roll'];
+            $s1roll = $row['S1_roll'];
+            $s2roll = $row['S2_roll'];
+            $s3roll = $row['S3_roll'];
+            $s4roll = $row['S4_roll'];
 
-            $s1email=$row['S1_email'];
-            $s2email=$row['S2_email'];
-            $s3email=$row['S3_email'];
-            $s4email=$row['S4_email'];
+            $s1email = $row['S1_email'];
+            $s2email = $row['S2_email'];
+            $s3email = $row['S3_email'];
+            $s4email = $row['S4_email'];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section4');
     }
 
-    if(isset($_POST["delete"]))
-    {
+    if (isset($_POST["delete"])) {
         $sql = "DELETE FROM projects
           WHERE Emp12_Id=$empid and project_id=$proj_id AND Title='$title'AND Type='$type' AND Description='$description' AND Year = '$year' AND S1_name ='$s1name' AND S1_roll='$s1roll' AND S1_email='$s1email' AND S2_name='$s2name' AND S2_roll='$s2roll' AND S2_email='$s2email' AND S3_name='$s3name' AND S3_roll='$s3roll'
            AND S3_email='$s3email' AND S4_name='$s4name' AND S4_roll='$s4roll' AND S4_email='$s4email'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section4');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 3)
-{
+if ($val == 3) {
     $form = "Books";
     $pdf1 = "";
-    $temp=0;
-    $sql="SELECT * FROM publication_books WHERE Emp1_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
+    $temp = 0;
+    $sql = "SELECT * FROM publication_books WHERE Emp1_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
             $bookname = $row["Book_Name"];
             $isbn = $row["ISBN"];
             $datepub = $row["Date_Published"];
@@ -134,46 +120,40 @@ if($val == 3)
             $authorinst = $row["Author_INST"];
             $cover = $row["Cover"];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    $myData1 = array('pub'=>'b','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg1 = base64_encode( json_encode($myData1) );
-    $pdf1 = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => 'b', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $pdf1 = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section41');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM publication_books WHERE Emp1_Id=$empid and Book_Name='$bookname' and ISBN='$isbn'
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM publication_books WHERE Emp1_Id=$empid and Book_Name='$bookname' and ISBN='$isbn'
           and Date_Published='$datepub' and Publisher_Name='$pubname' and COA1='$coa1' and COA1_INST='$coa1inst' and COA2='$coa2' and COA2_INST='$coa2inst' and COA3='$coa3' and COA3_INST='$coa3inst' and Edition='$edition' and Author='$author' and Author_INST='$authorinst'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section41');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 4)
-{
+if ($val == 4) {
     $form = "Journals";
     $pdf2 = "";
     $pdf3 = "";
-    $temp=0;
-    $sql="SELECT * FROM publication_journals WHERE Emp4_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
+    $temp = 0;
+    $sql = "SELECT * FROM publication_journals WHERE Emp4_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
             $type = $row["Type"];
             $name = $row["Name"];
             $title = $row["Title"];
@@ -215,50 +195,44 @@ if($val == 4)
             $count = $row["count"];
             $issue = $row["Issue"];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    $myData1 = array('pub'=>'jpaper','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg1 = base64_encode( json_encode($myData1) );
-    $pdf2 = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => 'jpaper', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $pdf2 = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-    $myData2 = array('pub'=>'jcerti','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg2 = base64_encode( json_encode($myData2) );
-    $pdf3 = "<a href='showpdf.php?parameter=".$arg2."'>View PDF</a>";
+    $myData2 = array('pub' => 'jcerti', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg2 = base64_encode(json_encode($myData2));
+    $pdf3 = "<a href='showpdf.php?parameter=" . $arg2 . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section42');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM publication_journals WHERE Emp4_Id='$empid' AND Type ='$type' and Name='$name' and Author='$author' and Date='$date' and ISSN='$issn' and Pub_Name='$pubname' AND DOI='$doi'";
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM publication_journals WHERE Emp4_Id='$empid' AND Type ='$type' and Name='$name' and Author='$author' and Date='$date' and ISSN='$issn' and Pub_Name='$pubname' AND DOI='$doi'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section42');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 
 }
 
-if($val == 5)
-{
+if ($val == 5) {
     $form = "Conferences";
     $pdf4 = "";
     $pdf5 = "";
-    $temp=0;
-    $sql="SELECT * FROM publication_conferences WHERE Emp5_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
+    $temp = 0;
+    $sql = "SELECT * FROM publication_conferences WHERE Emp5_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
             $type = $row["Type"];
             $name = $row["Name"];
             $place = $row["Place"];
@@ -303,53 +277,47 @@ if($val == 5)
             $coa10aff = $row["COA10_AFF"];
             $coa9aff = $row["COA9_AFF"];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    $myData1 = array('pub'=>'cpaper','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg1 = base64_encode( json_encode($myData1) );
-    $pdf4 = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => 'cpaper', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $pdf4 = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-    $myData2 = array('pub'=>'ccerti','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg2 = base64_encode( json_encode($myData2) );
-    $pdf5 = "<a href='showpdf.php?parameter=".$arg2."'>View PDF</a>";
+    $myData2 = array('pub' => 'ccerti', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg2 = base64_encode(json_encode($myData2));
+    $pdf5 = "<a href='showpdf.php?parameter=" . $arg2 . "'>View PDF</a>";
 
-    $myData3 = array('pub'=>'cposter','academic'=>'','sttp'=>'','cid'=>$id);
-    $arg3 = base64_encode( json_encode($myData3) );
-    $pdf7 = "<a href='showpdf.php?parameter=".$arg3."'>View PDF</a>";
+    $myData3 = array('pub' => 'cposter', 'academic' => '', 'sttp' => '', 'cid' => $id);
+    $arg3 = base64_encode(json_encode($myData3));
+    $pdf7 = "<a href='showpdf.php?parameter=" . $arg3 . "'>View PDF</a>";
 
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section43');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM publication_conferences WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM publication_conferences WHERE Name = '$name' AND Place = '$place' AND Date = '$date' AND Author = '$author' AND H_Index = '$hindex' AND DOI = '$doi' AND Organizer = '$organizer' AND Pub_Name = '$pubname' AND ISSN = '$issn'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section43');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
-if($val == 6)
-{
+if ($val == 6) {
     $form = "STTP Attended";
     $pdf6 = "";
     $temp = 0;
-    $sql="SELECT * FROM sttp_event_attended WHERE Emp6_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
-            $sttp_id=$row['sttp_id'];
+    $sql = "SELECT * FROM sttp_event_attended WHERE Emp6_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $sttp_id = $row['sttp_id'];
             $datefrom = $row['Date_From'];
             $dateto = $row['Date_To'];
             $organizedby = $row['Organized_By'];
@@ -361,45 +329,39 @@ if($val == 6)
             $certificate = $row['Certificate'];
             $title = $row['Title'];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    $myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpa','cid'=>$id);
-    $arg1 = base64_encode( json_encode($myData1) );
-    $pdf6 = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => '', 'academic' => '', 'sttp' => 'sttpa', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $pdf6 = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section51');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM sttp_event_attended
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM sttp_event_attended
           WHERE Emp6_Id = '$empid' and sttp_id=$sttp_id and Date_From = '$datefrom' and Date_To = '$dateto' and Organized_By = '$organizedby' and Place = '$place' and Duration = '$duration' and Total_Participation = '$totalparticipation' and Speaker = '$speaker' and Event_Type = '$eventtype' and Title = '$title'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section51');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 7)
-{
+if ($val == 7) {
     $form = "STTP Organised";
-    $temp =0;
-    $sql="SELECT * FROM sttp_event_organized WHERE Emp7_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
-            $sttp_id=$row['sttp_id'];
+    $temp = 0;
+    $sql = "SELECT * FROM sttp_event_organized WHERE Emp7_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $sttp_id = $row['sttp_id'];
             $type = $row["Type"];
             $role = $row["Role"];
             $noparticipants = $row["Number_Participants"];
@@ -407,47 +369,41 @@ if($val == 7)
             $datefrom = $row["Date_From"];
             $dateto = $row["Date_To"];
             $name = $row["Name"];
-	        $sttpo_certificate=$row["Certificate"];
-	        break;
-        }
-        else {
+            $sttpo_certificate = $row["Certificate"];
+            break;
+        } else {
             $temp++;
         }
     }
-	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpo','cid'=>$id);
-	$arg1 = base64_encode( json_encode($myData1) );
-	$sttpo_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => '', 'academic' => '', 'sttp' => 'sttpo', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $sttpo_pdf = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
 
-	if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section52');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM sttp_event_organized WHERE Emp7_Id='$empid' and Type=
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM sttp_event_organized WHERE Emp7_Id='$empid' and Type=
           '$type' and Role='$role' and sttp_id=$sttp_id  and Number_Participants='$noparticipants' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section52');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 8)
-{
+if ($val == 8) {
     $form = "STTP Delivered";
     $temp = 0;
-    $sql="SELECT * FROM sttp_event_delivered WHERE Emp9_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
-            $sttp_id=$row['sttp_id'];
+    $sql = "SELECT * FROM sttp_event_delivered WHERE Emp9_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $sttp_id = $row['sttp_id'];
             $description = $row["Description"];
             $place = $row["Place"];
             $duration = $row["Duration"];
@@ -455,166 +411,147 @@ if($val == 8)
             $dateto = $row["Date_To"];
             $name = $row["Name"];
             $eventtype = $row["Event_Type"];
-	        $sttpd_certificate=$row["Certificate"];
-	        break;
-        }
-        else {
+            $sttpd_certificate = $row["Certificate"];
+            break;
+        } else {
             $temp++;
         }
     }
-	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'sttpd','cid'=>$id);
-	$arg1 = base64_encode( json_encode($myData1) );
-	$sttpd_pdf = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => '', 'academic' => '', 'sttp' => 'sttpd', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $sttpd_pdf = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-	if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section53');
     }
 
-    if(isset($_POST["delete"]))
-    {
-	        $sql="DELETE FROM sttp_event_delivered WHERE
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM sttp_event_delivered WHERE
 	            Emp9_Id='$empid' and sttp_id=$sttp_id  and Description='$description' and Place='$place' and Duration='$duration' and Date_From='$datefrom' and Date_To='$dateto' and Name='$name' and Event_Type='$eventtype'";
-	        $result = $conn->query($sql);
-        if($result)
+        $result = $conn->query($sql);
+        if ($result)
             header('Location:profile.php#section53');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 9)
-{
+if ($val == 9) {
     $form = "Co-Curricular";
-    $temp=0;
-    $sql="SELECT * FROM co_curricular WHERE Emp10_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
-            $curricular_id=$row['curricular_id'];
+    $temp = 0;
+    $sql = "SELECT * FROM co_curricular WHERE Emp10_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $curricular_id = $row['curricular_id'];
             $description = $row["Description"];
             $date = $row["Date"];
             $role = $row["Role"];
             $name = $row["Name"];
             $type = $row["Type"];
-	        $cocurr_certificate=$row["Certificate"];
-	        break;
-        }
-        else {
+            $cocurr_certificate = $row["Certificate"];
+            break;
+        } else {
             $temp++;
         }
     }
-	$myData1 = array('pub'=>'','academic'=>'','sttp'=>'','cocurr'=>'1','extr'=>'','awd'=>'','cid'=>$id);
-	$arg1 = base64_encode( json_encode($myData1) );
-	$cocurr_certi = "<a href='showpdf.php?parameter=".$arg1."'>View PDF</a>";
+    $myData1 = array('pub' => '', 'academic' => '', 'sttp' => '', 'cocurr' => '1', 'extr' => '', 'awd' => '', 'cid' => $id);
+    $arg1 = base64_encode(json_encode($myData1));
+    $cocurr_certi = "<a href='showpdf.php?parameter=" . $arg1 . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section6');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM co_curricular WHERE
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM co_curricular WHERE
           Emp10_Id='$empid' and curricular_id=$curricular_id  and Description='$description' and Date='$date' and Role='$role' and Name='$name' and Type='$type'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section6');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 10)
-{
+if ($val == 10) {
     $form = "Extra";
-    $temp=0;
-    $sql="SELECT * FROM extra WHERE Emp11_Id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result))
-    {
-        if($temp == $id)
-        {
-            $extra_id=$row['extra_id'];
+    $temp = 0;
+    $sql = "SELECT * FROM extra WHERE Emp11_Id=$empid";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
+            $extra_id = $row['extra_id'];
             $description = $row["Description"];
             $role = $row["Role"];
             $name = $row["Name"];
-            $place =  $row["Place"];
+            $place = $row["Place"];
             $date = $row["Date"];
-	        $extra_certificate=$row["Certificate"];
-	        break;
-        }
-        else {
+            $extra_certificate = $row["Certificate"];
+            break;
+        } else {
             $temp++;
         }
     }
-	$myData1 = array('extr'=>'1','cid'=>$id);
-	$arg_extra = base64_encode( json_encode($myData1) );
-	$extra_pdf = "<a href='showpdf.php?parameter=".$arg_extra."'>View PDF</a>";
+    $myData1 = array('extr' => '1', 'cid' => $id);
+    $arg_extra = base64_encode(json_encode($myData1));
+    $extra_pdf = "<a href='showpdf.php?parameter=" . $arg_extra . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#section7');
     }
 
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM extra WHERE Emp11_Id='$empid'
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM extra WHERE Emp11_Id='$empid'
           and Description='$description' and extra_id=$extra_id and Role='$role' and Place='$place' and Date='$date' and Name='$name'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#section7');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }
 
-if($val == 11)
-{
+if ($val == 11) {
     $form = "Awards";
     $temp = 0;
-    $awd_pdf="";
-    $awd_id=0;
+    $awd_pdf = "";
+    $awd_id = 0;
     $sql = "SELECT * FROM awards WHERE emp_id=$empid";
-    $result=$conn->query($sql);
-    while($row = mysqli_fetch_assoc($result)) {
-        if($temp == $id) {
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($temp == $id) {
             $award_desc = $row["award_desc"];
-            $award_id=$row['award_id'];
-            $awd_id=$award_id;
+            $award_id = $row['award_id'];
+            $awd_id = $award_id;
             $award_issuer = $row["award_issuer"];
             $award_name = $row["award_title"];
             $award_date = $row["award_date"];
-            $awd_certificate=$row["certificate"];
+            $awd_certificate = $row["certificate"];
             break;
-        }
-        else {
+        } else {
             $temp++;
         }
     }
 
-    $myData1 = array('awd'=>'1','cid'=>$id);
-    $arg_awd = base64_encode( json_encode($myData1) );
-    $awd_pdf = "<a href='showpdf.php?parameter=".$arg_awd."'>View PDF</a>";
+    $myData1 = array('awd' => '1', 'cid' => $id);
+    $arg_awd = base64_encode(json_encode($myData1));
+    $awd_pdf = "<a href='showpdf.php?parameter=" . $arg_awd . "'>View PDF</a>";
 
-    if(isset($_POST["return"]))
-    {
+    if (isset($_POST["return"])) {
         header('Location:profile.php#awards');
     }
-    if(isset($_POST["delete"]))
-    {
-        $sql="DELETE FROM awards
+    if (isset($_POST["delete"])) {
+        $sql = "DELETE FROM awards
             WHERE emp_id = '$empid' and  award_id = '$awd_id'";
         $result = $conn->query($sql);
-        if($result)
+        if ($result)
             header('Location:profile.php#awards');
         else {
-            echo "<script type='text/javascript'>alert('".mysqli_error($conn)."');</script>";
+            echo "<script type='text/javascript'>alert('" . mysqli_error($conn) . "');</script>";
         }
     }
 }

@@ -5,12 +5,12 @@
     <base href="https://demos.telerik.com/kendo-ui/pdf-export/page-layout">
     <title><?php echo $name; ?>_CV</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common-material.min.css"/>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.min.css"/>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.mobile.min.css"/>
+    <script src="libraries/jquery.min.js"></script>
+    <script src="libraries/http_ajax.googleapis.com_ajax_libs_jquery_3.3.1_jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common-material.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.mobile.min.css" />
     <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
@@ -18,28 +18,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,fom,label,legend,table,caption,tbody,tfoot,thead,tr
-        ,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
-            border:0;
-            font:inherit;
-            margin:0;
-            padding:0;
-            vertical-align:baseline;
+        html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, fom, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+            border: 0;
+            font: inherit;
+            margin: 0;
+            padding: 0;
+            vertical-align: baseline;
         }
 
-        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
-            display:block;
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
         }
 
-        html, body {background : grey; font-family: 'Lato', helvetica, arial, sans-serif;  color: #222;}
+        html, body {
+            background: grey;
+            font-family: 'Lato', helvetica, arial, sans-serif;
+            color: #222;
+        }
 
-        .clear {clear: both;}
+        .clear {
+            clear: both;
+        }
 
         p {
             font-size: 1em;
             line-height: 1.4em;
             margin-bottom: 20px;
-            color : #1F54AB;
+            color: #1F54AB;
         }
 
         #cv {
@@ -71,9 +76,14 @@
         #mainArea {
             padding: 0 40px;
         }
-        #name { float: left; }
 
-        #contactDetails { float: right; }
+        #name {
+            float: left;
+        }
+
+        #contactDetails {
+            float: right;
+        }
 
         #contactDetails ul {
             list-style-type: none;
@@ -96,15 +106,17 @@
             transition: all .3s ease-in;
         }
 
-        #contactDetails ul li a:hover { color: #cf8a05; }
+        #contactDetails ul li a:hover {
+            color: #cf8a05;
+        }
 
         section {
             border-top: 1px solid #dedede;
             padding: 20px 0 0;
         }
 
-        #noborder{
-            border : none;
+        #noborder {
+            border: none;
         }
 
         section:first-child {
@@ -114,6 +126,7 @@
         section:last-child {
             padding: 20px 0 10px;
         }
+
         .sectionContent {
             float: right;
             width: 72.5%;
@@ -131,55 +144,63 @@
             font-size: 1.5em;
             margin-bottom: -2px;
         }
+
         .keySkills ul li {
             margin-bottom: 3px;
         }
-        #pdfbtn{
-            outline : 0;
-            background-color : #1F54AB;
-            color : white;
+
+        #pdfbtn {
+            outline: 0;
+            background-color: #1F54AB;
+            color: white;
         }
 
-        #back{
-            outline : 0;
-            color : white;
+        #back {
+            outline: 0;
+            color: white;
 
         }
-        button
-        {
+
+        button {
             width: 180px;
         }
 
-        a{
-            position : fixed;
+        a {
+            position: fixed;
         }
     </style>
 </head>
 <body>
 <div class="container" style="margin-top: 15px;">
-    <button id="back" class="btn btn-warning btn-lg" onclick="gotoProfile()" >Close</button>
-    <button id ="pdfbtn" class="btn btn-lg btn-success" onclick="ExportPdf()" style="float: right;margin-left:20px;">Export to PDF</button>
-    <button id ="docbtn" class="btn btn-lg btn-success" onclick="exportDoc()" style="float: right">Export to DOC</button>
+    <button id="back" class="btn btn-warning btn-lg" onclick="gotoProfile()">Close</button>
+    <button id="pdfbtn" class="btn btn-lg btn-info" onclick="ExportPdf()" style="float: right;margin-left:20px;">Export
+        to PDF
+    </button>
+    <button id="docbtn" class="btn btn-lg btn-success" onclick="exportDoc()" style="float: right">Export to DOC</button>
 </div>
 <!-- MAIN CV CONTENT -->
-<div id ="cv" >
+<div id="cv">
     <div class="mainDetails">
-        <div id ="name">
-            <h1 id ="name"><?php echo $name; ?></h1>
+        <div id="name">
+            <h1 id="name"><?php echo $name; ?></h1>
             <br><br><br>
-            <?php if(!empty($join_pos)){ echo "Current Position : ". $join_pos; }?>
+            <?php if (!empty($join_pos)) {
+                echo "Current Position : " . $join_pos;
+            } ?>
         </div>
 
-        <div id ="contactDetails">
+        <div id="contactDetails">
             <ul>
                 <li><?php echo $email; ?></a></li>
-                <li><?php if(!empty($contact)){echo "Mob: ". $contact;} ?></li>
+                <li><?php if (!empty($contact)) {
+                        echo "Mob: " . $contact;
+                    } ?></li>
             </ul>
         </div>
         <div class="clear"></div>
     </div>
-    <?php $nodata=1;?>
-    <div id ="mainArea">
+    <?php $nodata = 1; ?>
+    <div id="mainArea">
         <?php
         if(!empty($sscInstitute) || !empty($hscInstitute) || !empty($bachelorsInstitute) || !empty($mastersInstitute) || !empty($phdInstitute)) {
             echo '<section>
@@ -599,11 +620,11 @@
 </div>
 <script>
     kendo.pdf.defineFont({
-        "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
-        "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-        "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-        "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-        "WebComponentsIcons"      : "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
+        "DejaVu Sans": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+        "DejaVu Sans|Bold": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+        "DejaVu Sans|Bold|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+        "DejaVu Sans|Italic": "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+        "WebComponentsIcons": "https://kendo.cdn.telerik.com/2017.1.223/styles/fonts/glyphs/WebComponentsIcons.ttf"
     });
 </script>
 
@@ -612,22 +633,23 @@
     function ExportPdf() {
         kendo.drawing
             .drawDOM($("#cv"),
-                {
-                    paperSize: "A3",
-                    margin: { top: "1cm", bottom: "2cm" },
-                    scale: 0.85,
-                    height: 600
-                })
-            .then(function(group){
+            {
+                paperSize: "A3",
+                margin: {top: "1cm", bottom: "2cm"},
+                scale: 0.85,
+                height: 600
+            })
+            .then(function (group) {
                 kendo.drawing.pdf.saveAs(group, "CV.pdf")
             });
     }
-    function exportDoc(){
-        var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
-            "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+
+    function exportDoc() {
+        var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+            "xmlns:w='urn:schemas-microsoft-com:office:word' " +
             "xmlns='http://www.w3.org/TR/REC-html40'><body>";
         var footer = "</body></html>";
-        var sourceHTML = header+document.getElementById("cv").innerHTML+footer;
+        var sourceHTML = header + document.getElementById("cv").innerHTML + footer;
 
         var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
         var fileDownload = document.createElement("a");
@@ -637,8 +659,8 @@
         fileDownload.click();
         document.body.removeChild(fileDownload);
     }
-    function gotoProfile()
-    {
+
+    function gotoProfile() {
         window.location = "http://localhost/FacultyManagementSystem/profile.php";
     }
 </script>
