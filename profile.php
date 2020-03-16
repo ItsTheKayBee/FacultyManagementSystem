@@ -20,7 +20,6 @@ function dateformatChanger($orgDate)
     <link href='https://fonts.googleapis.com/css?family=NTR' rel='stylesheet'>
     <style>
         body {
-
             position: relative;
         }
 
@@ -174,7 +173,7 @@ function dateformatChanger($orgDate)
 </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 <?php include 'Decision1.php'; ?>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" >
     <div class="container-fluid">
         <div class="nav navbar-nav navbar-left" id="navleft">
 
@@ -306,7 +305,7 @@ function dateformatChanger($orgDate)
     </div>
 </div>
 <div class="container-fluid">
-    <div class="col-sm-9 col-lg-10 col-md-8 col-xs-9">
+    <div class="col-sm-9 col-lg-10 col-md-8 col-xs-9" style="padding-left:40px; padding-right:0;">
         <div id="section1">
             <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
@@ -419,7 +418,6 @@ function dateformatChanger($orgDate)
                 </div>
             </div>
         </div>
-        &nbsp
         <div id="section2">
             <legend><h1>Academic Details<a href="homepage.php#section2"><span
                                 class="glyphicon glyphicon-edit"></span></a></h1></legend>
@@ -564,14 +562,10 @@ function dateformatChanger($orgDate)
             } else
                 echo "<h4>No Courses Registered</h4>";
             ?>
-
-        </div>
+            </div>
 
         <div id="section4">
-            <legend><h1>Projects Guided <a href="homepage.php#section4"><span id="gly"
-                                                                              class="glyphicon glyphicon-plus-sign"></span></a>
-                </h1></legend>
-
+            <legend><h1>Projects Guided <a href="homepage.php#section4"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
             $sql = "SELECT * FROM projects WHERE Emp12_Id=$empid";
             $result = $conn->query($sql);
@@ -683,7 +677,6 @@ function dateformatChanger($orgDate)
         </div>
 
         <div id="section41">
-
             <legend><h1>Publications</span></h1></legend>
             <legend><h2>Books <a href="homepage.php#section41"><span id="gly"
                                                                      class="glyphicon glyphicon-plus-sign"></span></a>
@@ -811,14 +804,10 @@ function dateformatChanger($orgDate)
             } else
                 echo "<h4>No Books Published</h4>";
             ?>
-
         </div>
 
         <div id="section42">
-
-            <legend><h2>Journals <a href="homepage.php#section42"><span id="gly"
-                                                                        class="glyphicon glyphicon-plus-sign"></span></a>
-                </h2></legend>
+            <legend><h2>Journals <a href="homepage.php#section42"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
             $sql = "SELECT * FROM publication_journals WHERE Emp4_Id=$empid";
             $result = $conn->query($sql);
@@ -1006,13 +995,10 @@ function dateformatChanger($orgDate)
             } else
                 echo "<h4>No Journals Published</h4>";
             ?>
-
-        </div>
+            </div>
 
         <div id="section43">
-            <legend><h2>Conferences <a href="homepage.php#section43"><span id="gly"
-                                                                           class="glyphicon glyphicon-plus-sign"></span></a>
-                </h2></legend>
+            <legend><h2>Conferences <a href="homepage.php#section43"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
             $sql = "SELECT * FROM publication_conferences WHERE Emp5_Id=$empid";
             $result = $conn->query($sql);
@@ -1179,7 +1165,6 @@ function dateformatChanger($orgDate)
                         echo "</table>";
                         echo "</div>";
                     }
-
                     echo '</td>';
                     $GLOBALS['issn'] = $row['ISSN'];
                     if ($row["H_Index"] != 0) echo '<td>' . $row["H_Index"] . '</td>'; else echo "<td>-</td>";
@@ -1230,9 +1215,7 @@ function dateformatChanger($orgDate)
         </div>
         <div id="section51">
             <legend><h1>STTP</h1></legend>
-            <legend><h2>STTP attended <a href="homepage.php#section51"><span id="gly"
-                                                                             class="glyphicon glyphicon-plus-sign"></span></a>
-                </h2></legend>
+            <legend><h2>STTP attended <a href="homepage.php#section51"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
             $sql = "SELECT * FROM sttp_event_attended WHERE Emp6_Id=$empid";
             $result = $conn->query($sql);
@@ -1318,14 +1301,10 @@ function dateformatChanger($orgDate)
                 echo "<h4>No STTP Events Attended</h4>";
             }
             ?>
-
         </div>
 
         <div id="section52">
-
-            <legend><h2>STTP organised <a href="homepage.php#section52"><span id="gly"
-                                                                              class="glyphicon glyphicon-plus-sign"></span></a>
-                </h2></legend>
+            <legend><h2>STTP organised <a href="homepage.php#section52"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
             $sql = "SELECT * FROM sttp_event_organized WHERE Emp7_Id=$empid";
             $result = $conn->query($sql);
@@ -1408,9 +1387,7 @@ function dateformatChanger($orgDate)
             ?>
         </div>
         <div id="section53">
-            <legend><h2>STTP delivered <a href="homepage.php#section53"><span id="gly"
-                                                                              class="glyphicon glyphicon-plus-sign"></span></a>
-                </h2></legend>
+            <legend><h2>STTP delivered <a href="homepage.php#section53"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h2></legend>
             <?php
             $sql = "SELECT * FROM sttp_event_delivered WHERE Emp9_Id=$empid";
             $result = $conn->query($sql);
@@ -1492,10 +1469,9 @@ function dateformatChanger($orgDate)
             }
             ?>
         </div>
+
         <div id="section6">
-            <legend><h1>Co-curricular Activities <a href="homepage.php#section6"><span id="gly"
-                                                                                       class="glyphicon glyphicon-plus-sign"></span></a>
-                </h1></legend>
+            <legend><h1>Co-curricular Activities <a href="homepage.php#section6"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
             $sql = "SELECT * FROM co_curricular WHERE Emp10_Id=$empid";
             $result = $conn->query($sql);
@@ -1574,8 +1550,7 @@ function dateformatChanger($orgDate)
             ?>
         </div>
         <div id="section7">
-            <legend><h1>Extra Activities <a href="homepage.php#section7"><span id="gly"
-                                                                               class="glyphicon glyphicon-plus-sign"></span></a>
+            <legend><h1>Extra Activities <a href="homepage.php#section7"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a>
                 </h1></legend>
             <?php
             $sql = "SELECT * FROM extra WHERE Emp11_Id=$empid";
@@ -1655,9 +1630,7 @@ function dateformatChanger($orgDate)
             ?>
         </div>
         <div id="awards">
-            <legend><h1>Awards and Achievements <a href="homepage.php#awards"><span id="gly"
-                                                                                    class="glyphicon glyphicon-plus-sign"></span></a>
-                </h1></legend>
+            <legend><h1>Awards and Achievements <a href="homepage.php#awards"><span id="gly" class="glyphicon glyphicon-plus-sign"></span></a></h1></legend>
             <?php
             $sql = "SELECT * FROM awards WHERE emp_id=" . $empid;
             $result = $conn->query($sql);
@@ -1755,7 +1728,6 @@ if ($result->num_rows > 0) {
         }
     }
 }
-
 ?>
 <div class="modal fade" id="ass_rights" role="dialog">
     <div class="modal-dialog">

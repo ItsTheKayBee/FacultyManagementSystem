@@ -215,7 +215,7 @@ function dateformatChanger($orgDate){
     </div>
 </div>
 <div class="container-fluid">
-    <div class="col-sm-9 col-lg-10 col-md-8 col-xs-9">
+    <div class="col-sm-9 col-lg-10 col-md-8 col-xs-9" style="padding-left: 40px;padding-right: 0;">
         <div  id ="section1">
             <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
@@ -304,7 +304,6 @@ function dateformatChanger($orgDate){
                 </div>
             </div>
         </div>
-        &nbsp
         <div id = "section2">
             <h1>Academic Details<a href="EditHomePage.php#section2"><span class="glyphicon glyphicon-edit"></span></a></h1>
 			<?php

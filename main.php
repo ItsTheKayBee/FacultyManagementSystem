@@ -48,7 +48,7 @@ if(isset($_POST["ReportSubmit"]))
 {
 	if(isset($_POST["name3"]))
 		setCookie("id",$_POST["name3"]);
-	header('location:testreport.php');
+	header('location:report.php');
 }
 ?>
 <!DOCTYPE html>
@@ -166,14 +166,15 @@ if(isset($_POST["ReportSubmit"]))
             document.getElementById("category").style = "";
             document.getElementById("subcaterror").innerHTML = "";
             document.getElementById("subcategory").style = "";
+
             if(both==="")
             {
                 if(a !=="" && y === "")
                 {
-                    document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category Before Clicking The \"Add\" Button";
+                    document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category Before Clicking The 'Add' Button";
                     document.getElementById("subcategory").style = "border:2px solid red;";
                     if(both!=="")
-                        document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
+                        document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
                     return false;
                 }
                 else if(a==="" && y==="")
@@ -183,7 +184,7 @@ if(isset($_POST["ReportSubmit"]))
                     document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
                     document.getElementById("subcategory").style = "border:2px solid red;";
                     if(both!=="")
-                        document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b>f/div>";
+                        document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
                     return false;
                 }
             }
@@ -191,9 +192,18 @@ if(isset($_POST["ReportSubmit"]))
             {
                 document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
                 document.getElementById("subcategory").style = "border:2px solid red;";
-                document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
+                document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
                 if(both!=="")
-                    document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
+                    document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
+                return false;
+            }
+            if(z.selectedIndex===0){
+                document.getElementById("caterror").innerHTML = "* Please Select A Category";
+                document.getElementById("category").style = "border:2px solid red;";
+                document.getElementById("subcaterror").innerHTML = "* Please Select A Sub-Category";
+                document.getElementById("subcategory").style = "border:2px solid red;";
+                if(both!=="")
+                    document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
                 return false;
             }
             var t1 = document.getElementsByClassName("catele")[z.selectedIndex-1].label;
@@ -235,7 +245,7 @@ if(isset($_POST["ReportSubmit"]))
                 both+=(table+attribute);
                 both1+=(table1+attr1);
             }
-            document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div>";
+            document.getElementById("cat").innerHTML = "<div class='cat'><b>"+both1+"</b></div><br>";
             switch (a)
             {
                 case "personal_details" :
@@ -363,7 +373,7 @@ if(isset($_POST["ReportSubmit"]))
                 case "projects" :
                     key[11].splice(x.selectedIndex,1);
                     val[11].splice(x.selectedIndex,1);
-                    if((y!="All") && (select[11] == 0))
+                    if((y!=="All") && (select[11] === 0))
                     {
                         x.remove(1);
                         val[11].splice(1,1);
@@ -383,7 +393,19 @@ if(isset($_POST["ReportSubmit"]))
                     }
                     break;
             }
-            x.remove(x.selectedIndex);
+
+            if(y=='All'){
+                var i, L = x.options.length - 1;
+                for(i = L; i >= 0; i--) {
+                    x.remove(i);
+                }
+                var option = document.createElement("option");
+                option.text = "* Please select type of report";
+                x.add(option);
+            }else{
+                x.remove(x.selectedIndex);
+            }
+
             document.cookie ="cook ="+ both;
         }
         $(document).ready(function()
@@ -412,7 +434,7 @@ if(isset($_POST["ReportSubmit"]))
             document.add_fac.empid.style="";
 
             document.getElementById("empid").innerHTML = "";
-            document.getElementById("privelages").innerHTML = "";
+            document.getElementById("privileges").innerHTML = "";
 
             if (x === "" || x== null)
             {
@@ -429,7 +451,7 @@ if(isset($_POST["ReportSubmit"]))
             }
 
             if(c1 === false && c2 === false && c3 === false && c4 === false && c5 === false){
-                document.getElementById("privelages").innerHTML = "* Please Select At least One Privilege";
+                document.getElementById("privileges").innerHTML = "* Please Select At least One Privilege";
                 privflag=1;
             }
             if(empflag===1 || privflag===1)
@@ -593,12 +615,10 @@ if(isset($_POST["ReportSubmit"]))
                     document.getElementById("subcategory").style = "border:2px solid red;";
                     return false;
                 }
-
                 document.getElementById("subcaterror").innerHTML = "<br>* Please Add The Selected Values Before Submitting.";
                 return false;
             }
         }
-
         function validateGivePriv()
         {
             var a = document.getElementById("privempid").value;
@@ -606,21 +626,21 @@ if(isset($_POST["ReportSubmit"]))
             document.getElementById("emppriv").value = "";
             var flag = 0;
 
-            if(a=="")
+            if(a==="")
             {
                 alert("* Please Enter The Employee ID You Want To Assign Your Profile Editing Rights To.");
                 return false;
             }
 
-            if(a.length != 6)
+            if(a.length !== 6)
             {
                 document.getElementById("privempid").style = "border:2px solid red;";
                 document.getElementById("emppriv").innerHTML = "* Please Enter The Correct Employee Id.";
                 flag = 1;
             }
-            if(a.length != 6)
+            if(a.length !== 6)
                 document.getElementById("privempid").focus();
-            if(flag==1)
+            if(flag===1)
                 return false;
         }
     </script>
@@ -628,9 +648,7 @@ if(isset($_POST["ReportSubmit"]))
         body
         {
             position: relative;
-
         }
-
         ul.nav-pills
         {
             position: fixed;
@@ -718,6 +736,7 @@ if(isset($_POST["assprivemp"]))
 	$ar = $_POST["assprivemp"];
 	if($ar == "ASSIGN"){
 		$newemp = $_POST["privemp"];
+		$newemp= substr($newemp,0,6);
 		$duration = $_POST["duration"];
 		$var = 0;
 		$sql = "SELECT Emp_Id FROM login";
@@ -734,15 +753,16 @@ if(isset($_POST["assprivemp"]))
 		else if($newemp!=$eid){
 			$date =  dateformatReverser($duration);
 			$sql = "INSERT INTO edit VALUES($newemp,$eid,'$date',1)";
-			$conn->query($sql);
-			echo "<script type='text/javascript'>
+			if($res=$conn->query($sql)) {
+				echo "<script type='text/javascript'>
              $(document).ready(function(){
                 $('#myModal2').modal('show');
              });
             </script>";
-			echo "<script>location.href='main.php#section24';</script>";
+				echo "<script>location.href='main.php#section24';</script>";
+			}
 		}else{
-			$errvar = "*Please Enter A Different User Id";
+			$errvar = "*This ID Is Already Assigned!";
 		}
 	}
 	else if($ar == "REVOKE")
@@ -797,14 +817,15 @@ if(isset($_POST["addmem_submit"]))
 		$sql1 = "INSERT INTO `academic_details`(`Emp2_Id`) VALUES ('$new_empid')";
 		$conn->query($sql1);
 		$sql2="INSERT INTO `personal_details`(`Emp3_Id`, `Profile_Pic`) VALUES ('$new_empid','$file')";
-		$conn->query($sql2);
-		$_SESSION["newid"] = $new_empid;
-		echo "<script type='text/javascript'>
+		if($res=$conn->query($sql2)) {
+			$_SESSION["newid"] = $new_empid;
+			echo "<script type='text/javascript'>
             $(document).ready(function(){
                 $('#myModal1').modal('show');
                 location.href='main.php#section21';
             });
             </script>";
+		}
 	}
 	else{
 		$erradd = "* Member With This Id Already Exists";
@@ -824,7 +845,11 @@ if(isset($_POST["addcourse_submit"]))
 	}
 	$course_add_query="INSERT INTO courses_list (course_id,course_name,course_sem,course_type) VALUES ('".$course_id."','".$course_name."',".$course_sem.",'".$course_type."')";
 	if($conn->query($course_add_query)===TRUE){
-		$succaddcourse="Course has been successfully added!";
+		echo "<script type='text/javascript'>
+             $(document).ready(function(){
+                $('#myModal5').modal('show');
+             });
+            </script>";
 	}else{
 		$erraddcourse="*Course with this code already exists.";
 	}
@@ -834,17 +859,21 @@ if(isset($_POST["addprogram_submit"]))
 	$course_type_name = $_POST['program_name'];
 	$course_type_add_query="INSERT INTO course_type(course_type_name) VALUES('".$course_type_name."')";
 	if($conn->query($course_type_add_query)===TRUE){
-		$succaddcoursetype="Course Type has been successfully added!";
+		echo "<script type='text/javascript'>
+             $(document).ready(function(){
+                $('#myModal6').modal('show');
+             });
+            </script>";
 	}else{
 		$erraddcoursetype="*This Course Type already exists.";
 	}
 }
 if(isset($_POST["addfield_submit"])) {
-	$field_name = $_POST['field_name'];
+	$field_name = trim($_POST['field_name']);
 	$field_data_type = $_POST['field_data_type'];
 	$field_length = $_POST['field_length'];
 	$field_table = $_POST['field_table'];
-	$field_label = $_POST['field_label'];
+	$field_label = trim($_POST['field_label']);
 	$field_display = isset($_POST['field_display']);
 	if ($field_display != 1)
 		$field_display = 0;
@@ -857,7 +886,11 @@ if(isset($_POST["addfield_submit"])) {
 		$succaddfield = "New field is added successfully!";
 		$new_field_query = "insert into new_fields(field_name,label,table_name,display) values('$field_name','$field_label','$field_table',$field_display)";
 		if ($conn->query($new_field_query) === true) {
-			$succaddfield = "New field is added successfully!";
+			echo "<script type='text/javascript'>
+             $(document).ready(function(){
+                $('#myModal4').modal('show');
+             });
+            </script>";
 		}
 	} else {
 		$erraddField = "*Field already exists in the table.";
@@ -896,18 +929,20 @@ if(isset($_POST["addfield_submit"])) {
     <ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border:0.4px solid lightgray; padding:10px">
         <li class="dropdown" id ="section0"><a href="profile.php"><center>PROFILE</center></a></li>
         <hr>
-        <li class="section21" id ="sectionW"><a href="#section21">Faculty List</a></li>
+		<?php if($priv[0]) echo '<li class="section21" id ="sectionW"><a href="#section21">Faculty List</a></li>';?>
         <li class="section24" id ="sectionX"><a href="#section24">Assign Profile Editing Rights</a></li>
-        <li class="section25" id="sectionV"><a href="#section25">Add Member</a></li>
+		<?php if($priv[2]) echo '<li class="section25" id="sectionV"><a href="#section25">Add Member</a></li>';?>
 		<?php if($_SESSION['admin']) echo '<li class="section22" id ="sectionY"><a href="#section22">Admin Control</a></li>';?>
-        <li class="section23" id ="sectionZ"><a href="#section23">Report Generation</a></li>
+		<?php if($priv[3]) echo '<li class="section23" id ="sectionZ"><a href="#section23">Report Generation</a></li>';?>
     </ul>
 </nav>
 <div class="container-fluid">
     <div class="col-sm-9 col-lg-9 col-md-8 col-xs-9">
-        <div id ="section21" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+		<?php
+		if($priv[0]){
+			echo '<div id ="section21" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
             <legend><h1>Faculty List</h1></legend>
-            <p>Select a faculty's name to see his/her details</p>
+            <p>Select a faculty name to see his/her details</p>
             <input class="form-control" id ="myInput" type="text" placeholder="Search..">
             <br>
             <table class="table table-bordered ">
@@ -918,40 +953,40 @@ if(isset($_POST["addfield_submit"])) {
                     <th>Email</th>
                 </tr>
                 </thead>
-                <tbody id ='myTable'>
-				<?php
-				for($j=0;$j<$i;$j++)
-				{
-					$myData = array('val'=>$id[$j]);
-					$arg = base64_encode( json_encode($myData) );
-					echo "<tr>";
-					if($right[$j] == 1) echo "<td><a href='list_profile.php?parameter=$arg'>$id[$j]</a>";
-					else {
-						echo "<td><a href='list_profile.php?parameter=$arg'>$id[$j]</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-					}
-					if($right[$j] == 1) echo "&nbsp&nbsp&nbsp&nbsp&nbsp<a title='You Have To Fill Forms For This Employee' href='EditProfile.php?parameter=$arg'><span class='glyphicon glyphicon-edit' style='color:#337ab7;'>&nbsp</span></a>";
-					echo "<td>";
-					if($name[$j] == "")
-						echo "-";
-					else
-						echo $name[$j];
-					echo "</td>";
-					echo "<td>";
-					if($email[$j] == "")
-						echo "-";
-					else
-						echo $email[$j];
-					echo "</td>";
-					if($_SESSION['admin']){
-						echo "<td><span class='glyphicon glyphicon-trash' onclick='deleteFaculty(".$id[$j].")' style='font-size:18px;color:red'></span></td></tr>";
-					}
-					else
-						echo "</tr>";
+                <tbody id ="myTable">';
+
+			for($j=0;$j<$i;$j++)
+			{
+				$myData = array("val"=>$id[$j]);
+				$arg = base64_encode( json_encode($myData) );
+				echo "<tr>";
+				if($right[$j] == 1) echo "<td><a href='list_profile.php?parameter=$arg'>$id[$j]</a>";
+				else {
+					echo "<td><a href='list_profile.php?parameter=$arg'>$id[$j]</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
 				}
-				?>
-                </tbody>
+				if($right[$j] == 1) echo "&nbsp&nbsp&nbsp&nbsp&nbsp<a title='You Have To Fill Forms For This Employee' href='EditProfile.php?parameter=$arg'><span class='glyphicon glyphicon-edit' style='color:#337ab7;'>&nbsp</span></a>";
+				echo "<td>";
+				if($name[$j] == "")
+					echo "-";
+				else
+					echo $name[$j];
+				echo "</td>";
+				echo "<td>";
+				if($email[$j] == "")
+					echo "-";
+				else
+					echo $email[$j];
+				echo "</td>";
+				if($_SESSION['admin']){
+					echo "<td><span class='glyphicon glyphicon-trash' onclick='deleteFaculty(".$id[$j].")' style='font-size:18px;color:red'></span></td></tr>";
+				}
+				else
+					echo "</tr>";
+			}
+			echo '</tbody>
             </table>
-        </div>
+        </div>';}
+		?>
         <div id ="section24" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
             <legend><h1>Assign Profile Editing Rights : </h1></legend>
 			<?php
@@ -984,15 +1019,42 @@ if(isset($_POST["addfield_submit"])) {
                 <br>
 				<?php
 				if($idset == 0){
+					$emp_sql="select Emp3_Id,Name from personal_details";
+					$emp_res=$conn->query($emp_sql);
+
 					echo '<div class="form-group">';
 					echo '<label class="col-sm-3 col-md-3 col-lg-4 col-xs-0">Enter Employee ID : </label>';
 					echo '<div class="col-md-9 col-sm-9 col-lg-6 col-xs-11">';
 					if(!empty($errvar)){
-						echo '<input type="text" style="border:2px solid red;" name="privemp" autofocus id ="privempid" class="form-control" />';
+						echo '<input list="privempid" name="privemp" class="form-control">';
+						echo '<datalist style="border:2px solid red;" autofocus id ="privempid">';
+						if($emp_res->num_rows>0){
+							while($emp_row=$emp_res->fetch_assoc()){
+								$emp_name=$emp_row['Name'];
+								$emp_id=$emp_row['Emp3_Id'];
+								if($emp_name!='')
+									echo "<option value='".$emp_id." - ".$emp_name."'>";
+								else
+									echo "<option value='".$emp_id."'>";
+							}
+						}
+						echo "</datalist>";
 						echo '<span class="error" id ="emppriv">'.$errvar.'</span>';
 					}
 					else {
-						echo '<input type="text" name="privemp" id ="privempid" class="form-control" />';
+						echo '<input list="privempid" name="privemp" class="form-control">';
+						echo '<datalist id ="privempid">';
+						if($emp_res->num_rows>0){
+							while($emp_row=$emp_res->fetch_assoc()){
+								$emp_name=$emp_row['Name'];
+								$emp_id=$emp_row['Emp3_Id'];
+								if($emp_name!='')
+									echo "<option value='".$emp_id." - ".$emp_name."'>";
+								else
+									echo "<option value='".$emp_id."'>";
+							}
+						}
+						echo "</datalist>";
 						echo '<span class="error" id ="emppriv"></span>';
 					}
 					echo '</div>';
@@ -1041,36 +1103,37 @@ if(isset($_POST["addfield_submit"])) {
             </form>
         </div>
 		<?php
-		echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+		if($priv[2]){
+			echo'<div id ="section25" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
                 <legend><h1>Add Member</h1></legend>
                 <form  action="main.php" name="add_fac" method="POST" onsubmit="return validateAddFaculty()" enctype="multipart/form-data">
                     <div class="form-group">';
-		if(!empty($erradd)){
-			echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Employee ID" autofocus name="empid" >';
-			echo '<span class="error" id ="empid">'.$erradd.'</span>';
-		}
-		else {
-			echo '<input type="text" class="form-control" placeholder="Enter Employee ID" name="empid" >';
-		}
+			if(!empty($erradd)){
+				echo '<input type="text" class="form-control" style="border:2px solid red;" placeholder="Enter Employee ID" autofocus name="empid" >';
+				echo '<span class="error" id ="empid">'.$erradd.'</span>';
+			}
+			else {
+				echo '<input type="text" class="form-control" placeholder="Enter Employee ID" name="empid" >';
+			}
 
-		echo '</div>
+			echo '</div>
     <br>
     <p id ="assprivs" class="asspriv"><span id ="abc" class="glyphicon glyphicon-collapse-down"></span>&nbsp;Assign Privilege(s)</p>
     <div class="form-group" id ="privs">
         <input type="checkbox" name="p1" id ="p1" value="TRUE" class="checkbox-inline">&nbsp;Profile
         <input type="checkbox" name="p2" id ="p2" value="TRUE" class="checkbox-inline">&nbsp;View And Edit Privileges
         <input type="checkbox" name="p3" id ="p3" value="TRUE" class="checkbox-inline">&nbsp;Add Faculty
-        <input type="checkbox" name="p4" id ="p4" value="TRUE" class="checkbox-inline">&nbsp;Report Generation
+        <input type="checkbox" name="p4" id ="p4" value="TRUE" class="checkbox-inline"> Report Generation
         <input type="checkbox" name="p5" id ="p5" value="TRUE" class="checkbox-inline">&nbsp;Generate Faculty CVs
     </div>
-    <span class="error" id ="privelages"></span>
+    <span class="error" id ="privileges"></span>
     <input type="hidden" id ="storepass" name="storepass">
     <div class="form-group">
         <center>
         <input type="submit" class="btn btn-primary" name="addmem_submit" value="Submit">
         </form></center>
     </div>
-</div>';
+</div>';}
 
 		if($_SESSION['admin']==1){
 			echo '<div> 
@@ -1169,8 +1232,9 @@ if(isset($_POST["addfield_submit"])) {
     </form>
 </div>
 </div></div>';
-		}?>
-        <div id ="section23" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
+		}
+		if($priv[3]) {
+			echo '<div id ="section23" class="col-sm-10 col-lg-10 col-md-10 col-xs-10 well">
             <legend><h1>Report Generation</h1></legend>
             <form method="post" name="report" onsubmit="return validateReport()">
                 <fieldset>
@@ -1178,13 +1242,13 @@ if(isset($_POST["addfield_submit"])) {
                         <div class="category_div" id ="category_div">
                             <div class="form-group">
                                 <br>
-                                <label class="radio-inline"><input type="radio" checked name="report_emp" onclick="var input = document.getElementById('name3'); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">All Employee</label>
-                                <label class="radio-inline"><input type="radio" name="report_emp" for="name3" onclick="var input = document.getElementById('name3'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Give Employee ID</label>
+                                <label class="radio-inline"><input type="radio" checked name="report_emp" onclick="var input = document.getElementById(/"name3/"); if(this.checked){ input.disabled = true; input.focus();}else{input.disabled=false;}">All Employee</label>
+                                <label class="radio-inline"><input type="radio" name="report_emp" for="name3" onclick="var input = document.getElementById(/"name3/"); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">Give Employee ID</label>
                                 <input id ="name3" name="name3" type="text" disabled/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group">Select the category
                                 <select  name="category" class="required-entry form-control" id ="category" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-                                    <option value="">Select category</option>
+                                    <option value="">* Select category</option>
                                     <option class="catele" value="personal_details" label="Personal Details"></option>
                                     <option class="catele" value="AQ" label="Academic Qualifications"></option>
                                     <option class="catele" value="courses" label="Courses taught"></option>
@@ -1204,9 +1268,9 @@ if(isset($_POST["addfield_submit"])) {
                         </div>
                         <br>
                         <div class="form-group">
-                            <div class="sub_category_div" id ="sub_category_div">Please select attributes:
+                            <div class="sub_category_div" id ="sub_category_div">Select required attributes:
                                 <script type="text/javascript">
-                                    document.write('<select class="form-control"  name="subcategory" id="subcategory"><option  value="" >* Please select type of report</option></select>');
+                                    document.write("<select class=\"form-control\"  name=\"subcategory\" id=\"subcategory\"><option  value=\"\" >* Please select type of report</option></select>");
                                 </script>
                                 <noscript>
                                     <select name="subcategory" id ="subcategory">
@@ -1216,17 +1280,17 @@ if(isset($_POST["addfield_submit"])) {
                                 <span class="error" id ="subcaterror"></span>
                             </div>
                             <br>
-                            <input type="button" onclick="removeOption()" value="Add">
-                            <br><br>
+                            <input type="button" onclick="removeOption()" id="addbtn" value="Add" style="display: block;">
+                            <br>
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                                 <div id ="cat"></div>
                             </div>
                         </div>
-                        <hr>
+                       
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row">
                             FROM:
-                            <div class='input-group date datetimepicker'>
-                                <input type='text' name="from" id="from" class="form-control" />
+                            <div class="input-group date datetimepicker">
+                                <input type="text" name="from" id="from" class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -1234,15 +1298,15 @@ if(isset($_POST["addfield_submit"])) {
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 form-group row" style="float: right">
                             TO:
-                            <div class='input-group date datetimepicker'>
-                                <input type='text' name="to" id="to" class="form-control" />
+                            <div class="input-group date datetimepicker">
+                                <input type="text" name="to" id="to" class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <select  name="datecategory" class="required-entry form-control" id ="datecategory">
+                            <select name="datecategory" class="required-entry form-control" id ="datecategory">
                                 <option value="">Select Date Field</option>
                                 <option class="datele" value="0" label="Personal Details - Date Of Birth"></option>
                                 <option class="datele" value="1" label="Personal Details - Date Of Joining"></option>
@@ -1259,8 +1323,8 @@ if(isset($_POST["addfield_submit"])) {
                                 <option class="datele" value="14" label="STTP Events Attended - Date Of Event"></option>
                                 <option class="datele" value="15" label="STTP Events Organized - Date Of Event"></option>
                                 <option class="datele" value="16" label="STTP Events Delivered - Date Of Event"></option>
-                                <option class="datele" value="17" label="Co Curricular Activites - Date"></option>
-                                <option class="datele" value="18" label="Extra Curricular Activites - Date"></option>
+                                <option class="datele" value="17" label="Co Curricular Activities - Date"></option>
+                                <option class="datele" value="18" label="Extra Curricular Activities - Date"></option>
                                 <option class="datele" value="19" label="Projects Guided - Year"></option>
                                 <option class="datele" value="20" label="Award Received - Date"></option>
                             </select>
@@ -1275,7 +1339,9 @@ if(isset($_POST["addfield_submit"])) {
                     </div>
                 </fieldset>
             </form>
-        </div>
+        </div>';
+		}
+		?>
     </div>
 </div>
 <div class="modal fade" id ="myModal1" role="dialog">
@@ -1349,6 +1415,45 @@ if(isset($_POST["addfield_submit"])) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id ="myModal4" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Field Added Successfully!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id ="myModal5" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Course Added Successfully!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id ="myModal6" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Course Type Added Successfully!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>

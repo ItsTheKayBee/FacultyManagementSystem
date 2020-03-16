@@ -126,7 +126,6 @@ if(isset($_POST["submitcv"]))
             $("#btn").click(function(e)
             {
                 $("#change_privs").toggle(250);
-
             });
         });
 
@@ -217,26 +216,29 @@ include 'Decision1.php';
 </nav>
 
 <div class="container-fluid">
-
-    <nav class="col-sm-2 col-lg-2 col-md-2 col-xs-2" id ="myScrollspy">
-        <ul class="nav nav-pills nav-stacked">
-            <li id ="section0"><a href="profile.php#section0">PROFILE </a></li>
-            <hr>
-            <li id ="section21"><a href="main.php#section1">Faculty List</a></li>
-            <li id ="section22"><a href="main.php#section2">Add faculty</a></li>
-            <li id ="section23"><a href="main.php#section3">Report Generation</a></li>
-    </nav>
-    <div class="col-sm-10 col-lg-10 col-md-10 col-xs-10">
-        <div class="col-sm-5 col-lg-3 col-md-4 col-xs-5">
+	<nav class="col-sm-3 col-lg-3 col-md-3 col-xs-3" id ="myScrollspy">
+		<ul class="nav nav-pills nav-stacked" style="background-color: #F7F7F7; border-radius :7px; border:0.4px solid lightgray; ">
+			<li class="dropdown" id ="section0"><a href="profile.php"><center>PROFILE</center></a></li>
+			<hr>
+			<?php if($priv[0]) echo '<li class="section21" id ="sectionW"><a href="main.php#section21">Faculty List</a></li>';?>
+			<li class="section24" id ="sectionX"><a href="main.php#section24">Assign Profile Editing Rights</a></li>
+			<?php if($priv[2]) echo '<li class="section25" id="sectionV"><a href="main.php#section25">Add Member</a></li>';?>
+			<?php if($_SESSION['admin']) echo '<li class="section22" id ="sectionY"><a href="main.php#section22">Admin Control</a></li>';?>
+			<?php if($priv[3]) echo '<li class="section23" id ="sectionZ"><a href="main.php#section23">Report Generation</a></li>';?>
+		</ul>
+	</nav>
+    <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9">
+        <div class="col-sm-3 col-lg-3 col-md-3 col-xs-5">
             <div class="form-group ">
                 <h3>Faculty Details :</h3>
-				<?php echo $profilepic; ?>
-                <form action="" method="POST" name="cv"><center><input type="submit" name="submitcv" class="btn btn-primary" id ="cvbtn" <?php if($p2 == "FALSE") echo "disabled='true' title='You Do Not Have This Privilege'";?> value="Generate CV"></center></form>
-                <br><br>
-                <a href = "main.php#section21" title="Obviously not Simon! :P"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp<font size="5">Go Back</font></a>
+				<?php echo $profilepic;
+				if($priv[4]){
+					echo '<form action="" method="POST" name="cv"><center><input type="submit" name="submitcv" class="btn btn-primary" id ="cvbtn" title=\'You Do Not Have This Privilege\' value="Generate CV"></center></form><br><br>';
+				}?>
+                <a href = "main.php"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp<font size="5">Go Back</font></a>
             </div>
         </div>
-        <div class="col-sm-9 col-lg-9 col-md-9 col-xs-9" style="font-size:17px">
+        <div class="col-sm-9 col-lg-9 col-md-9 col-xs-7" style="font-size:17px">
             <br><br>
             <div class="table-responsive">
                 <table class="table table-sm table-bordered">

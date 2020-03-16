@@ -179,9 +179,12 @@ function dateformatChanger($orgDate){
 				echo "<th>Email</th>";
 				echo "</tr>";
 				echo '<tr><td>1</td><td>'.$s1name.'</td><td>'.$s1roll.'</td><td>'.$s1email.'</td></tr>';
-				echo '<tr><td>2</td><td>'.$s2name.'</td><td>'.$s2roll.'</td><td>'.$s2email.'</td></tr>';
-				echo '<tr><td>3</td><td>'.$s3name.'</td><td>'.$s3roll.'</td><td>'.$s3email.'</td></tr>';
-				echo '<tr><td>4</td><td>'.$s4name.'</td><td>'.$s4roll.'</td><td>'.$s4email.'</td></tr>';
+				if($s2name!='')
+					echo '<tr><td>2</td><td>'.$s2name.'</td><td>'.$s2roll.'</td><td>'.$s2email.'</td></tr>';
+				if($s3name!='')
+					echo '<tr><td>3</td><td>'.$s3name.'</td><td>'.$s3roll.'</td><td>'.$s3email.'</td></tr>';
+				if($s4name!='')
+					echo '<tr><td>4</td><td>'.$s4name.'</td><td>'.$s4roll.'</td><td>'.$s4email.'</td></tr>';
 				echo "</table>";
 				echo "</div>";
 				?>
